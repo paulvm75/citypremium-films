@@ -1,0 +1,7 @@
+node_modules/
+shots/
+seg*_*.mp4
+mzvideo_*.mp4
+*audio_render*.m4a
+*-render.html
+mz1.html

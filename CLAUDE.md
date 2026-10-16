@@ -1,0 +1,59 @@
+# Working on the City Premium films
+
+The client is Paul Tuil, Director of Client Affairs at City Premium. He reviews every cut closely and gives blunt feedback. The bar is premium, simple, high-quality motion design, not "AI slop".
+
+## Non-negotiable rules
+- **No orange**, anywhere. The palette is navy and indigo (`#141A33`, `#1B2140`, `#2B3150`), ivory (`#F4F2ED`), steel and silver, with one accent per film: deep purple for the first ribbon, red for the Maisons bow.
+- **Sans serif only** (Instrument Sans). No serif fonts.
+- **No em dashes** in any on-screen text or copy.
+- **Full sentences** in the voice-over and the copy. No tiny captions; text must be readable on a phone.
+- **ElevenLabs is only for TTS and SFX** (and music if asked). Never use it to generate images or video, which wastes the client's credits.
+- Describe City Premium as an **operator**, never a "chauffeur company" or a "broker".
+- **Check for glitches yourself** before sending anything:
+  - text overflow (`ovf.py`)
+  - one-frame flashes (scan MP4 frames for black blocks)
+  - elements reappearing
+  - hard cuts between scenes
+- Deliver both formats (16:9 and 9:16), each under 30 MB, and republish the artifact page each time.
+
+## Sound
+- **SFX:** motion-design sounds only (soft clicks, flicks, satin, car pass, jet). No "magic" shimmers, used once at most. No swooshes without a visible reason; the client calls them parasitic.
+- **Music:** the client wants it audible, with **real bass**. The current Maisons settings were tuned over many rounds:
+  - track: Exclusive French Afternoon
+  - processing: `bass=g=14:f=95`, `equalizer f=55 g=6`, loudnorm -18
+  - volume 0.256 in the mix
+  - **gentle** ducking under the voice: sidechain ratio 2.2, threshold 0.03, plus a 20% dip on emphasised words
+  - a +150% swell after the voice ends
+- **Changing levels:** the page player's music level is set by the `DUCK` chase targets in `gen.py` (`.24` while speaking, `.284` otherwise), not by `.volume`. Change both the page and `mix.py`.
+
+## 3D (Maisons, `mz/three/mz3d.js`)
+Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
+
+- **Jet (Le Bourget scene), modelled on a Bombardier Challenger 350:**
+  - Long ogive nose with the tip low.
+  - The windscreen is **on the front of the nose**, wrapping over its top front. It's defined by the angle around the fuselage axis, not by height. A windscreen on the flank is wrong; the client was very clear that pilots have to see forward.
+  - A plug door just behind the cockpit, curved flush with the fuselage, swinging out on its front hinge.
+  - A separate airstair with handrails that unfolds from the sill to the tarmac.
+- **First ribbon (m2):**
+  - A real rope simulation: position-based dynamics with 64 nodes, precomputed and sampled per frame so renders are deterministic.
+  - Movement: pulled taut between two off-screen posts. It goes from grey to deep purple, and the "Your brand" luggage tag lowers on its cord.
+  - The cut, on "home", is a thin streak of light plus a soft flash. The halves recoil and fall. **No scissors.**
+- **Closing bow (m9):**
+  - A grey ribbon swoops in along a flight path and twists in the air.
+  - It turns red **in flight**, starting from the head.
+  - It ties into a bow on **"your brand"**: a morph with overshoot, the knot cinches, the tails are notched, and there's a zoom punch.
+  - The voice-over has a 0.8 s pause inserted after "brand", so the bow holds before the crossfade to m10. The originals are kept as `vo_mz_orig.mp3` (not in repo) and `words_mz_orig.json`.
+
+## Lessons learned (avoid repeating these bugs)
+- **SVG filters vs canvases:** an SVG `filter` (drop shadow) on a group that contains a `foreignObject` canvas makes Chrome draw black blocks. Put the filters on sibling groups instead.
+- **Cue lookup:** `C('word')` returns the **first** occurrence of a word. Use `C('word#n')` to get the n-th.
+- **Overlapping tweens:** a `foc()` that overlaps a `go()` on the camera causes jumps. Never overlap camera tweens on the same property; use absolute values.
+- **Ribbon rendering:** use rotation-minimising frames to avoid flips. Don't use a tapered head; it looks like a cut thread.
+- **Rendering cost:** renders are slow (about 35 minutes for both formats). Re-render only the changed span with `rseg.py` and splice with ffmpeg trim and concat (see `pipe2.sh`).
+- **Background jobs:** in background jobs, don't wait on `pgrep -f "bash pipe.sh"`; it matches the parent shell and never exits.
+
+## Using this as a reference for a new film
+1. Copy `mz/` as the starting point. It's the most evolved: scene system, emphasis markup in TXT (`*` italic accent, `^` highlight, `!` big, `|` chunk), ribbon and 3D hooks.
+2. Write the script with the `citypremium-expert` positioning for the target audience (corporates, travel agencies, banks and roadshows, family offices, embassies, palaces). Generate the voice-over with ElevenLabs and get the word timings.
+3. Rewrite `scenes.py`, `tl.js`, `cam.js` and `sfx.js` per station. Keep every cue tied to voice-over words.
+4. Build, take screenshots in both formats, fix, render, check, then deliver.
