@@ -57,3 +57,16 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 2. Write the script with the `citypremium-expert` positioning for the target audience (corporates, travel agencies, banks and roadshows, family offices, embassies, palaces). Generate the voice-over with ElevenLabs and get the word timings.
 3. Rewrite `scenes.py`, `tl.js`, `cam.js` and `sfx.js` per station. Keep every cue tied to voice-over words.
 4. Build, take screenshots in both formats, fix, render, check, then deliver.
+
+## Agencies v9 (experiences section, 1:08 to 1:28) and its lessons
+- Built as kinetic type. Photo slats open from a horizon line and flip like a split-flap board. GUIDES, CHAMPAGNE and COTSWOLDS rise letter by letter with photos inside the letters. CHAMPAGNE swings open like cellar doors onto a line-drawn flute that fills. COTSWOLDS rolls in like hills. The "?" is drawn (outline, then fill) with two extruded colour layers and is pushed out of frame as the tape measure slides in.
+- The client rejected: big upscaled photos (blurry), plain cards, a map with pins and routes, hills and sun lines, a ring or moon around the "?", photo fills inside the "?", fog or glow in the door gap, jumps and zoom punches on calm moments, and swooshes.
+- The engine used to add a swoosh on every text chunk (`VIS.forEach ... add('swish')`). It is removed in gen.py; keep it removed.
+- `renderAt()` seeks with callbacks suppressed, so GSAP `onUpdate`/`onComplete` never fire in renders. Drive anything procedural from `frameA(t)` (the opening flight uses `window.FLY`).
+- One value must drive things that have to stay in sync (jet, its line, its trail, the camera). Use `pathLength="1"` for dash draws; hard-coded dash lengths drift.
+- A camera value that must hold on frame 0 needs `fromTo(..., {immediateRender:true})`. A plain `tl.set` at 0 is skipped on the first frame.
+- Per-letter tspans: give each tspan an absolute x (measured with the font), because text-anchor applies per text chunk. Don't use the class `lt`, which the engine animates.
+- Mask and outline letter sets must be staggered separately (the `G2` helper), or the outlines lag behind.
+- `filter: blur` on SVG groups at opacity 0 can draw dark bars in Chrome. Use opacity and transforms instead.
+- Check new SVG ids for duplicates. A second `mfade2` silently disabled the map feather.
+- Review densely before shipping: shoot every 0.25 to 0.35 s of the changed span in both formats, look at contact sheets, then run `tools/flash.py` on the MP4s.

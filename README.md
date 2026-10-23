@@ -5,7 +5,7 @@ This repo holds the motion-design ads for **City Premium**, the Paris and London
 | Film | Audience | Source folder | Final renders | Interactive page |
 |---|---|---|---|---|
 | Explainer (v18) | Corporates, executive assistants, finance | `cp/` (`v18.html`, `build18.py`) | `renders/CityPremium_explainer_v18_*.mp4` | `pages/explainer.html` |
-| For Agencies (v8) | Luxury travel advisors, DMCs, Virtuoso | `ta/` (sources) and `cp/` (`buildta8.py`) | `renders/CityPremium_agencies_v8_*.mp4` | `pages/agencies.html` |
+| For Agencies (v9) | Luxury travel advisors, DMCs, Virtuoso | `ta/` (sources) and `cp/` (`buildta9.py`) | `renders/CityPremium_agencies_v9_*.mp4` | `pages/agencies.html` |
 | For Maisons (v6) | Luxury fashion maisons, VIC programmes | `mz/` | `renders/CityPremium_maisons_v6_*.mp4` | `pages/maisons.html` |
 
 Every film ships in 16:9 and 9:16. The pages in `pages/` are self-contained, so you can open one in a browser and press play.
@@ -57,3 +57,15 @@ The intermediate full-quality master is named `CityPremium_maisons_v3_*` by `mix
 - After each render, sample frames from the MP4 with ffmpeg and look at them.
 
 See `CLAUDE.md` for the creative rules, the client's preferences and the lessons learned. Read it before changing anything.
+
+## Agencies v9 pipeline
+
+```bash
+cd /home/claude/ta && python3 gen.py && cp ta1.html ../cp/      # build the film page
+cd /home/claude/cp && python3 buildta9.py                        # -> cp-ta9-render.html, cp-ta9-pub.html
+bash tools/run9.sh                                               # render both formats, mix, compress to send9/, flash scan, overflow scan
+```
+
+- Voice: Barb, ElevenLabs take 2 (`ta/v9/vo_take2_raw.mp3`), sped up 8% (`atempo=1.08`), whisper boosted only on "something truly unusual", compressed and loudnorm -15. Word timings are the Scribe timings divided by 1.08 (`cp/assets6/words_ta9.json`).
+- The jet is the Maisons Challenger, exposed as `window.PLANE3D` by `mz/three/planejet.js` (bundled to `cp/plane.bundle.js`).
+- Photos for the experiences section are in `ta/img/`. They are only shown small (inside letters, slats or circles) because the sources are low resolution.

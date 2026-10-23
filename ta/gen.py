@@ -39,11 +39,11 @@ for i, (ic, tm, lb) in enumerate(rows):
     if i < 2: rws += f'<line x1="210" y1="{y+52}" x2="790" y2="{y+52}" stroke="rgba(15,20,38,.07)" stroke-width="2"/>'
 a1 = f'''<!-- a1 flight path, then the itinerary -->
   <g filter="url(#ds)" class="st" data-st="a1">
-    <path id="fa1g" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#9FB0FF" stroke-width="16" stroke-linecap="round" opacity=".35" filter="url(#glow1)" stroke-dasharray="720" stroke-dashoffset="720"/>
-    <path id="fa1" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#C7CEF0" stroke-width="3" stroke-linecap="round" stroke-dasharray="720" stroke-dashoffset="720"/>
+    <path id="fa1g" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#9FB0FF" stroke-width="16" stroke-linecap="round" opacity=".35" filter="url(#glow1)" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    <path id="fa1" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#C7CEF0" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0.006 0.012" pathLength="1" stroke-dashoffset="0" opacity="0"/><path id="fa1s" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#C7CEF0" stroke-width="3" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/><path class="ft1" data-l="0.34" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#F4F2ED" stroke-width="10" stroke-linecap="round" opacity="0.1" pathLength="1" stroke-dasharray="0.34 3" stroke-dashoffset="0.34"/><path class="ft1" data-l="0.2" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#F4F2ED" stroke-width="6" stroke-linecap="round" opacity="0.22" pathLength="1" stroke-dasharray="0.2 3" stroke-dashoffset="0.2"/><path class="ft1" data-l="0.09" d="M-60 360 C120 120 330 70 500 150" fill="none" stroke="#F4F2ED" stroke-width="4" stroke-linecap="round" opacity="0.6" pathLength="1" stroke-dasharray="0.09 3" stroke-dashoffset="0.09"/>
     <g id="pin1"><circle id="pin1r" cx="500" cy="150" r="14" fill="none" stroke="#EEF0F6" stroke-width="3"/><circle cx="500" cy="150" r="14" fill="#EEF0F6"/><circle cx="500" cy="150" r="5" fill="#3E4A88"/>
       <text x="536" y="164" font-weight="600" font-size="42" fill="#EEF0F6">Paris</text></g>
-    <use id="jet1" href="#jetT" x="-40" y="-40" width="80" height="80"/>
+    <g id="jw1"><use id="jet1" href="#jetT" x="-48" y="-48" width="96" height="96"/></g>
     <g id="card1">
       <rect x="170" y="290" width="660" height="560" rx="36" fill="#FFFFFF"/>
       <text x="210" y="370" font-weight="700" font-size="40" fill="#0F1426">Your client's trip</text>
@@ -132,8 +132,10 @@ a8 = f'''<!-- a8 airports map -->
       <filter id="cg8" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
       <radialGradient id="spot8"><stop offset="0" stop-color="rgba(185,196,255,.32)"/><stop offset=".5" stop-color="rgba(142,124,240,.12)"/><stop offset="1" stop-color="rgba(142,124,240,0)"/></radialGradient>
       <radialGradient id="hubH"><stop offset="0" stop-color="rgba(255,255,255,.55)"/><stop offset="1" stop-color="rgba(159,176,255,0)"/></radialGradient>
-      <linearGradient id="pinG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#9FB0FF"/></linearGradient></defs>
-    <g clip-path="url(#clip8)" mask="url(#mfade2)">{mapg}
+      <linearGradient id="pinG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#9FB0FF"/></linearGradient>
+      <radialGradient id="mf8g" gradientUnits="userSpaceOnUse" cx="520" cy="470" r="640" gradientTransform="translate(520 470) scale(1 .78) translate(-520 -470)"><stop offset=".7" stop-color="#FFFFFF"/><stop offset="1" stop-color="#000000"/></radialGradient>
+      <mask id="mf8x" maskUnits="userSpaceOnUse" x="-1200" y="-1200" width="3400" height="3400"><rect x="-1200" y="-1200" width="3400" height="3400" fill="url(#mf8g)"/></mask></defs>
+    <g mask="url(#mf8x)">{mapg}
       <g id="rad8" fill="none" stroke="#C7CEF0" stroke-width="2"><circle r="10" opacity="0"/><circle r="10" opacity="0"/></g></g>
     <g id="arcs8" fill="none" stroke-width="3.5" stroke-linecap="round"></g>
     <g id="dots8"></g>
@@ -155,10 +157,9 @@ def flap(x,y,code,name,k):
 st=''
 for k,(ic,lb) in enumerate([('door-open','Aircraft door'),('identification-card','Passport'),('suitcase-rolling','Customs'),('car-profile','Your car')]):
     x=150+round(k*233.3)
-    st+=(f'<g class="s8" id="s8{k}"><circle class="sr" cx="{x}" cy="800" r="52" fill="none" stroke="#9FB0FF" stroke-width="4" opacity="0"/>'
-         f'<circle cx="{x}" cy="800" r="50" fill="#232B55" stroke="rgba(199,206,240,.35)" stroke-width="2"/>'+icon(ic,x,800,56,'#EEF0F6')+
-         f'<g class="sl"><circle cx="{x}" cy="800" r="50" fill="#9FB0FF"/>'+icon(ic,x,800,56,'#0F1426')+'</g>'
-         f'<text x="{x}" y="892" text-anchor="middle" font-weight="600" font-size="31" fill="#C7CEF0">{lb}</text></g>')
+    st+=(f'<g class="s8" id="s8{k}"><circle class="sr" cx="{x}" cy="960" r="36" fill="none" stroke="#9FB0FF" stroke-width="4" opacity="0"/>'
+         f'<circle cx="{x}" cy="960" r="32" fill="#232B55" stroke="rgba(199,206,240,.35)" stroke-width="2"/>'+icon(ic,x,960,38,'#EEF0F6')+
+         f'<g class="sl"><circle cx="{x}" cy="960" r="32" fill="#9FB0FF"/>'+icon(ic,x,960,38,'#0F1426')+'</g></g>')
 wait=''
 for k,b in [(1,'45 min'),(2,'30 min')]:
     x=150+round(k*233.3)
@@ -174,11 +175,14 @@ a8b = f"""<!-- a8b airside and fast track -->
     <linearGradient id="fmg8" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset=".3" stop-color="#fff"/><stop offset=".92" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient><mask id="fm8" maskUnits="userSpaceOnUse" x="-60" y="-20" width="1300" height="650"><rect x="-60" y="-20" width="1300" height="650" fill="url(#fmg8)"/></mask>
     <g id="pl8g" mask="url(#fm8)"><foreignObject id="fo8" x="-60" y="-20" width="1300" height="650"><canvas xmlns="http://www.w3.org/1999/xhtml" id="pl3d" width="1800" height="900" style="width:1300px;height:650px;display:block"></canvas></foreignObject></g>
     {flap(30,40,'LHR','London Heathrow',0)}{flap(270,40,'CDG','Paris CDG',1)}
-    <g id="jp8o" transform="translate(0 -60)"><g id="jp8w"><rect x="70" y="586" width="860" height="404" rx="40" fill="url(#jp8)" stroke="rgba(199,206,240,.28)" stroke-width="2"/>
-    <g id="sw8"><text x="116" y="648" font-weight="700" font-size="34" fill="#EEF0F6">Fast track</text><circle id="swR" cx="346" cy="636" r="34" fill="none" stroke="#9FB0FF" stroke-width="3" opacity="0"/><rect id="swT" x="288" y="606" width="116" height="60" rx="30" fill="rgba(238,240,246,.18)"/><circle id="swK" cx="318" cy="636" r="24" fill="#EEF0F6"/></g>
-    <rect x="150" y="793" width="700" height="14" rx="7" fill="rgba(238,240,246,.12)"/>
-    <rect id="pl8" x="150" y="793" width="700" height="14" rx="7" fill="url(#fl8)"/>
-    {st}{wait}{stamp}</g></g>
+    <g id="jp8o" transform="translate(0 -88)"><g id="jp8w"><rect x="70" y="586" width="860" height="432" rx="40" fill="url(#jp8)" stroke="rgba(199,206,240,.28)" stroke-width="2"/>
+    <text x="116" y="650" font-weight="700" font-size="34" fill="#EEF0F6">Arrival, London Heathrow</text>
+    <text x="116" y="690" font-size="26" fill="#C7CEF0">Aircraft door to your car</text>
+    <g id="sw8"><text x="776" y="650" text-anchor="end" font-weight="700" font-size="30" fill="#EEF0F6">Fast track</text><circle id="swR" cx="858" cy="640" r="34" fill="none" stroke="#9FB0FF" stroke-width="3" opacity="0"/><rect id="swT" x="800" y="610" width="116" height="60" rx="30" fill="rgba(238,240,246,.18)"/><circle id="swK" cx="830" cy="640" r="24" fill="#EEF0F6"/></g>
+    <text id="ft8c" x="116" y="776" font-weight="700" font-size="88" fill="#EEF0F6" style="font-variant-numeric:tabular-nums" letter-spacing="-3"><tspan id="ft8n">75</tspan><tspan font-size="36" font-weight="600" dx="12" letter-spacing="0">min</tspan></text>
+    <rect x="150" y="955" width="700" height="10" rx="5" fill="rgba(238,240,246,.12)"/>
+    <rect id="pl8" x="150" y="955" width="700" height="10" rx="5" fill="url(#fl8)"/>
+    {st}</g></g>
     <g id="tok8"><g id="tokI"><rect x="-84" y="-42" width="168" height="84" rx="42" fill="#EEF0F6"/>
       <g id="tkC"><circle cx="-40" cy="0" r="32" fill="#9FB0FF"/><use href="#chf" x="-61" y="-29" width="42" height="58" style="color:#0F1426"/></g>
       <g id="tkU"><circle cx="40" cy="0" r="32" fill="#0F1426"/>{icon('user',40,0,38,'#EEF0F6')}</g>
@@ -199,6 +203,105 @@ a9 = a9.replace('>The team on site<', '>Ad hoc requests<').replace('>Hosts, coor
 # swap the cloche icon for a jet
 _i=a9.index('<g transform="translate(110 115) scale(3.3)"');_j=a9.index('<path d="M6 46 H54"/></g>',_i)+len('<path d="M6 46 H54"/></g>')
 a9 = a9[:_i]+'<circle cx="210" cy="215" r="80" fill="#EEF1FB"/>'+icon('airplane-tilt',210,215,96,'#3E4A88',iid='jet9')+a9[_j:]
+
+
+# a9x bespoke experiences: a cinematic photo reel inside a 16:9 frame, then the trip folds into a sealed itinerary
+import base64 as _b64
+def _img(n): return 'data:image/jpeg;base64,'+_b64.b64encode(open(f'/home/claude/ta/img/{n}.jpg','rb').read()).decode()
+import math as _m
+from PIL import ImageFont as _IF
+_FB='/mnt/skills/examples/canvas-design/canvas-fonts/InstrumentSans-Bold.ttf'
+def _ts(w,y,fs,ls,cls,cx=500):
+    f=_IF.truetype(_FB,200);adv=[f.getlength(c)*fs/200+ls for c in w];tot=sum(adv)-ls;x=cx-tot/2;o=''
+    for k_,(c,a) in enumerate(zip(w,adv)):
+        side=(' '+cls+('L' if k_<4 else 'R')) if cls=='lC' else ''
+        o+=f'<tspan class="k9 {cls}{side}" x="{x:.1f}" y="{y}">{c}</tspan>';x+=a
+    return o
+def _split(w,fs,ls,n=4,cx=500):
+    f=_IF.truetype(_FB,200);adv=[f.getlength(c)*fs/200+ls for c in w];tot=sum(adv)-ls
+    return cx-tot/2+sum(adv[:n])-ls/2
+def _wd(w,y,fs,ls,cls,mask):
+    if mask: return f'<text font-weight="700" font-size="{fs}" fill="#FFFFFF">{_ts(w,y,fs,ls,cls)}</text>'
+    return f'<text font-weight="700" font-size="{fs}" fill="none" stroke="rgba(244,242,237,.7)" stroke-width="1.6">{_ts(w,y,fs,ls,cls)}</text>' 
+def _contour(R,k):
+    pts=[]
+    for n in range(73):
+        th=2*_m.pi*n/72;r=R*(1+.09*_m.sin(3*th+k)+.05*_m.sin(5*th+2*k)+.03*_m.cos(7*th+k))
+        pts.append((500+r*_m.cos(th),470+.62*r*_m.sin(th)))
+    return 'M'+' L'.join(f'{x:.1f} {y:.1f}' for x,y in pts)+'Z'
+SPX=round(_split('CHAMPAGNE',136,-3))
+_cw=_split('CHAMPAGNE',136,-3,9)+1.5;CX0=round(1000-_cw);CX1=round(_cw);DK=.62
+FLX=round(((CX0+DK*(SPX-CX0))+(CX1-DK*(CX1-SPX)))/2)
+cont=''.join(f'<path class="ct9x" d="{_contour(70+62*i,i*.9)}" fill="none" stroke="rgba(199,206,240,{.5-.06*i:.2f})" stroke-width="2" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>' for i in range(6))
+QP="M 382 400 C 382 300 450 246 502 246 C 572 246 622 296 622 368 C 622 450 502 468 502 560 L 502 600"
+FBUB=''.join(f'<circle class="fb9x" cx="{FLX-14+(i*9)%28}" cy="516" r="{2+(i%3)*.8}" fill="#FFFFFF" opacity="0"/>' for i in range(8))
+bub=''.join(f'<circle class="bb9x" cx="{FLX-16+(i*11)%32}" cy="{392+(i*7)%10}" r="{4+(i*7)%9}" fill="none" stroke="rgba(244,242,237,.75)" stroke-width="2" opacity="0"/>' for i in range(14))
+ticks=''.join(f'<line x1="{80+20*i}" y1="612" x2="{80+20*i}" y2="{612+(28 if i%5==0 else 14)}" stroke="#141A33" stroke-width="{3 if i%5==0 else 2}"/>' for i in range(43))
+nums=''.join(f'<text x="{86+100*i}" y="660" font-weight="700" font-size="20" fill="#141A33">{i}</text>' for i in range(9))
+_DI={'guide':('pg9x',960,500,553.5),'champagne':('pc9x',1320,500,536),'cotswolds':('pt9x',960,500,497)}
+def _uimg(n,cx,cy,w,clip):
+    i,W,X,Y=_DI[n];s=w/W
+    return f'<g clip-path="url(#{clip})"><use href="#{i}" transform="translate({cx} {cy}) scale({s:.4f}) translate({-X} {-Y})"/></g>'
+def _pc(n,cx,cy,r,cls,idp):
+    # sharp small photo in a circle, reusing the one embedded copy of each photo
+    return (f'<g class="{cls}" id="{idp}"><clipPath id="{idp}c"><circle cx="{cx}" cy="{cy}" r="{r-6}"/></clipPath>'
+            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#141A33" stroke="#9FB0FF" stroke-width="3"/>'
+            +_uimg(n,cx,cy,r*3.8,idp+'c')+'</g>')
+POI=''.join(_pc(n,x,y,46,'poi9x',f'poi9x{k}') for k,(n,x,y) in enumerate([('guide',318,430),('champagne',650,352),('cotswolds',712,566)]))
+circ=''.join(_pc(n,x,520,66,'cc9x',f'cc9x{k}') for k,(n,x) in enumerate([('guide',240),('champagne',500),('cotswolds',760)]))
+labs=''.join(f'<text class="lb9x" x="{x}" y="744" text-anchor="middle" font-weight="600" font-size="38" fill="#F4F2ED">{t}</text>' for x,t in [(240,'Guided visit'),(500,'Champagne'),(760,'Cotswolds')])
+seal=('<g id="seal9x"><circle cx="0" cy="0" r="96" fill="#2F3A7A"/><circle cx="0" cy="0" r="96" fill="none" stroke="#9FB0FF" stroke-width="3"/>'
+      '<circle cx="0" cy="0" r="60" fill="none" stroke="rgba(238,240,246,.35)" stroke-width="2"/>'
+      '<path id="sp9x" d="M -76 0 A 76 76 0 1 1 76 0 A 76 76 0 1 1 -76 0" fill="none"/>'
+      '<text font-weight="700" font-size="18" fill="#EEF0F6"><textPath href="#sp9x" textLength="462" lengthAdjust="spacing">MADE TO MEASURE • MADE TO MEASURE •</textPath></text>'
+      '<image href="__EMBLEM__" x="-38" y="-38" width="76" height="76"/></g>')
+a9x = f"""<!-- a9x bespoke experiences: kinetic type, photos live inside the letters, the unusual is a question mark -->
+  <g class="st" data-st="a9x">
+    <defs>
+      <image id="pg9x" href="{_img('guide')}" x="20" y="330" width="960" height="447" preserveAspectRatio="xMidYMid slice"/>
+      <image id="pc9x" href="{_img('champagne')}" x="-160" y="200" width="1320" height="672" preserveAspectRatio="xMidYMid slice"/>
+      <image id="pt9x" href="{_img('cotswolds')}" x="20" y="250" width="960" height="494" preserveAspectRatio="xMidYMid slice"/>
+      <image id="pp9x" href="{_img('planet')}" x="-60" y="220" width="1120" height="569" preserveAspectRatio="xMidYMid slice"/>
+      <clipPath id="sG9x"><rect x="-100" y="370" width="1200" height="236"/></clipPath>
+      <clipPath id="sC9x"><rect x="-100" y="420" width="1200" height="150"/></clipPath>
+      <clipPath id="sT9x"><rect x="-100" y="420" width="1200" height="150"/></clipPath>
+      <clipPath id="hA9x"><rect x="-100" y="300" width="1200" height="196"/></clipPath>
+      <clipPath id="hB9x"><rect x="-100" y="496" width="1200" height="200"/></clipPath>
+      <mask id="mG9x" maskUnits="userSpaceOnUse" x="-200" y="0" width="1400" height="1000"><g clip-path="url(#sG9x)">{_wd('GUIDES',572,250,-6,'lG',True)}</g></mask>
+      <mask id="mC9x" maskUnits="userSpaceOnUse" x="-200" y="0" width="1400" height="1000"><g clip-path="url(#sC9x)">{_wd('CHAMPAGNE',546,136,-3,'lC',True)}</g></mask>
+      <mask id="mT9x" maskUnits="userSpaceOnUse" x="-200" y="0" width="1400" height="1000"><g clip-path="url(#sT9x)">{_wd('COTSWOLDS',546,146,-3,'lT',True)}</g></mask>
+      <mask id="qm9x" maskUnits="userSpaceOnUse" x="-200" y="0" width="1400" height="1000"><text fill="#FFFFFF" x="312" y="760" font-weight="700" font-size="640">?</text></mask>
+      <clipPath id="qhc9x"><rect x="0" y="0" width="1000" height="620"/></clipPath>
+      <clipPath id="qdc9x"><rect x="0" y="620" width="1000" height="400"/></clipPath>
+      <linearGradient id="qgr9x" gradientUnits="userSpaceOnUse" x1="0" y1="280" x2="0" y2="620"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#B7C1F4"/></linearGradient><linearGradient id="qgr9d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9D1F8"/><stop offset="1" stop-color="#9FB0FF"/></linearGradient>
+      <linearGradient id="qsg9x" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="rgba(255,255,255,0)"/><stop offset=".5" stop-color="rgba(255,255,255,.55)"/><stop offset="1" stop-color="rgba(255,255,255,0)"/></linearGradient>
+      <radialGradient id="cg9x"><stop offset="0" stop-color="rgba(244,242,237,.55)"/><stop offset="1" stop-color="rgba(244,242,237,0)"/></radialGradient>
+    </defs>
+    <g id="tp9x">
+      <line id="hz9x" x1="500" y1="470" x2="500" y2="470" stroke="#F4F2ED" stroke-width="3" stroke-linecap="round"/>
+      <clipPath id="sc9x0"><rect class="scr9x" x="73.0" y="470" width="80.0" height="0" rx="6" data-y="245.0" data-h="450.1"/></clipPath><g class="sl9x" id="sl9x0" data-cx="113.0"><g clip-path="url(#sc9x0)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x1"><rect class="scr9x" x="159.0" y="470" width="80.0" height="0" rx="6" data-y="267.6" data-h="404.7"/></clipPath><g class="sl9x" id="sl9x1" data-cx="199.0"><g clip-path="url(#sc9x1)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x2"><rect class="scr9x" x="245.0" y="470" width="80.0" height="0" rx="6" data-y="230.1" data-h="479.9"/></clipPath><g class="sl9x" id="sl9x2" data-cx="285.0"><g clip-path="url(#sc9x2)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x3"><rect class="scr9x" x="331.0" y="470" width="80.0" height="0" rx="6" data-y="267.6" data-h="404.8"/></clipPath><g class="sl9x" id="sl9x3" data-cx="371.0"><g clip-path="url(#sc9x3)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x4"><rect class="scr9x" x="417.0" y="470" width="80.0" height="0" rx="6" data-y="245.1" data-h="449.9"/></clipPath><g class="sl9x" id="sl9x4" data-cx="457.0"><g clip-path="url(#sc9x4)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x5"><rect class="scr9x" x="503.0" y="470" width="80.0" height="0" rx="6" data-y="261.6" data-h="416.8"/></clipPath><g class="sl9x" id="sl9x5" data-cx="543.0"><g clip-path="url(#sc9x5)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x6"><rect class="scr9x" x="589.0" y="470" width="80.0" height="0" rx="6" data-y="257.7" data-h="424.7"/></clipPath><g class="sl9x" id="sl9x6" data-cx="629.0"><g clip-path="url(#sc9x6)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x7"><rect class="scr9x" x="675.0" y="470" width="80.0" height="0" rx="6" data-y="250.6" data-h="438.9"/></clipPath><g class="sl9x" id="sl9x7" data-cx="715.0"><g clip-path="url(#sc9x7)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x8"><rect class="scr9x" x="761.0" y="470" width="80.0" height="0" rx="6" data-y="265.9" data-h="408.2"/></clipPath><g class="sl9x" id="sl9x8" data-cx="801.0"><g clip-path="url(#sc9x8)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g><clipPath id="sc9x9"><rect class="scr9x" x="847.0" y="470" width="80.0" height="0" rx="6" data-y="236.3" data-h="467.5"/></clipPath><g class="sl9x" id="sl9x9" data-cx="887.0"><g clip-path="url(#sc9x9)"><g class="sp9x"><use class="si0" href="#pg9x" opacity="1" transform="translate(500 470) scale(1.0833) translate(-500 -553.5)"/><use class="si1" href="#pc9x" opacity="0" transform="translate(500 470) scale(0.7197) translate(-500 -536)"/><use class="si2" href="#pt9x" opacity="0" transform="translate(500 470) scale(0.9792) translate(-500 -497)"/></g></g></g></g>
+    <g id="wG9x" mask="url(#mG9x)"><use class="u9" href="#pg9x"/></g><g clip-path="url(#sG9x)">{_wd('GUIDES',572,250,-6,'lG',False)}</g>
+    <clipPath id="dLc9x"><rect x="-200" y="300" width="{SPX+200}" height="400"/></clipPath><clipPath id="dRc9x"><rect x="{SPX}" y="300" width="1400" height="400"/></clipPath>
+    <g id="wC9x">
+      <g id="dL9x" clip-path="url(#dLc9x)"><g mask="url(#mC9x)"><use class="u9" href="#pc9x"/></g><g clip-path="url(#sC9x)">{_wd('CHAMPAGNE',546,136,-3,'lC',False)}</g></g>
+      <g id="dR9x" clip-path="url(#dRc9x)"><g mask="url(#mC9x)"><use class="u9" href="#pc9x"/></g><g clip-path="url(#sC9x)">{_wd('CHAMPAGNE',546,136,-3,'lC',False)}</g></g></g>
+    <g id="fl9x"><g transform="translate({FLX} 500) scale(1.7) translate({-FLX} -500)">
+      <clipPath id="flc9x"><path d="M{FLX-29} 392 C {FLX-31} 460 {FLX-14} 512 {FLX} 520 C {FLX+14} 512 {FLX+31} 460 {FLX+29} 392 Z"/></clipPath>
+      <rect id="flq9x" x="{FLX-40}" y="524" width="80" height="0" fill="#EAE0B8" opacity=".92" clip-path="url(#flc9x)"/>
+      <g clip-path="url(#flc9x)">{FBUB}</g>
+      <path class="fls9x" d="M{FLX-29} 392 C {FLX-31} 460 {FLX-14} 512 {FLX} 520 C {FLX+14} 512 {FLX+31} 460 {FLX+29} 392" fill="none" stroke="#F4F2ED" stroke-width="4" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="fls9x" d="M{FLX} 520 L {FLX} 598" fill="none" stroke="#F4F2ED" stroke-width="4" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path class="fls9x" d="M{FLX-34} 603 Q {FLX} 594 {FLX+34} 603" fill="none" stroke="#F4F2ED" stroke-width="4" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></g></g>
+    <g id="bbs9x">{bub}</g>
+    <g id="wT9x" mask="url(#mT9x)"><use class="u9" href="#pt9x"/></g><g clip-path="url(#sT9x)">{_wd('COTSWOLDS',546,146,-3,'lT',False)}</g>
+    <g id="q9x"><g id="qG9x"><g class="ql9x" id="ql9x2"><g clip-path="url(#qhc9x)"><text fill="#4A3FB0" x="312" y="760" font-weight="700" font-size="640">?</text></g><g><circle cx="506" cy="706" r="54" fill="#4A3FB0"/></g></g><g class="ql9x" id="ql9x1"><g clip-path="url(#qhc9x)"><text fill="#9FB0FF" x="312" y="760" font-weight="700" font-size="640">?</text></g><g><circle cx="506" cy="706" r="54" fill="#9FB0FF"/></g></g><g class="ql9x" id="ql9x0"><g id="qH9x" clip-path="url(#qhc9x)"><text fill="url(#qgr9x)" stroke="#F4F2ED" stroke-width="4" stroke-linejoin="round" stroke-dasharray="2100" stroke-dashoffset="2100" fill-opacity="0" x="312" y="760" font-weight="700" font-size="640">?</text></g><g id="qD9x"><circle cx="506" cy="706" r="54" fill="url(#qgr9x)" stroke="#F4F2ED" stroke-width="4" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" fill-opacity="0" transform="rotate(-90 506 706)"/></g></g></g></g>
+    <g id="ms9x"><g transform="translate(500 560) scale(1.2) translate(-500 -560)">
+      <clipPath id="tc9xx"><rect id="tcr9x" x="70" y="600" width="0" height="80"/></clipPath>
+      <g clip-path="url(#tc9xx)"><rect x="80" y="610" width="840" height="56" rx="8" fill="#F4F2ED"/>{ticks}{nums}<rect x="904" y="604" width="22" height="68" rx="5" fill="#C7CEF0"/></g>
+      {circ}{labs}
+      <g transform="translate(500 330) rotate(-8)">{seal}</g></g></g>
+  </g>
+"""
 
 # a10 white label: the confirmation flips from our brand to the agency's
 a10 = '''<!-- a10 white label -->
@@ -243,7 +346,7 @@ dawn = '''<g id="dawnW" transform="translate(1700 -920)" opacity="0" style="poin
     <ellipse id="dawnS" cx="500" cy="150" rx="320" ry="70" fill="url(#flG)"/>
     <ellipse id="flare" cx="500" cy="150" rx="340" ry="9" fill="url(#flG)" opacity="0"/>
   </g>'''
-stations = a1 + '\n  ' + dawn + a2 + '\n  ' + a6 + '\n  ' + a7 + a8 + '\n  ' + a8b + '\n  ' + a9 + a10 + '\n  ' + a11 + '\n  '
+stations = a1 + '\n  ' + dawn + a2 + '\n  ' + a6 + '\n  ' + a7 + a8 + '\n  ' + a8b + '\n  ' + a9 + '\n  ' + a9x + a10 + '\n  ' + a11 + '\n  '
 cut('<!-- s1 countdown -->', '<use id="car0"', stations)
 rep('riser:"__RISER__"}', 'riser:"__RISER__",pop:"__POP__",popl:"__POPL__",shim:"__SHIM__"}')
 rep("['logo','swish','tick','car','jet','phone','keycard','riser'].forEach(k=>{if(ASSET[k]", "['logo','swish','tick','car','jet','phone','keycard','riser','pop','popl','shim'].forEach(k=>{if(ASSET[k]")
@@ -260,6 +363,7 @@ TXT = {
  'a8': "We greet your clients|at private terminals|like *Le *Bourget,|*Farnborough and *Biggin *Hill,|and at airports|across ^Europe.",
  'a8b': "On commercial flights,|we can even meet them|!airside|at *Heathrow and *Charles de *Gaulle,|with ^fast ^track|through passport control|and customs,|if you want it.",
  'a9': "And when the brief|goes further,|our *concierge|charters the ^jet,|books the hotel|with !zero fees,|and handles every|^ad ^hoc request|around the clock.",
+ 'a9x': "And because we know|the ground like *locals,|we design the moments|your clients will ^remember.|We arrange private visits|with expert ^guides,|a tour of *Champagne|with a cellar|opened just for them,|or a weekend|in the *Cotswolds.|And sometimes,|something truly *unusual.|Every experience|is ^made to ^measure.",
  'a10': "Everything is|!white !label,|so your client only|ever sees ^your ^name.",
  'a11': "Since !2010,|luxury ^maisons,|^embassies|and *VIC clients|have trusted us.",
 }
@@ -282,18 +386,18 @@ rep('.st[data-st="s8"] [fill="#EEF0F6"]{fill:#0F1426}', '.st[data-st="a9"] [fill
 rep('.st[data-st="s8"] text[fill="#C7CEF0"]{fill:#5A6690}', '.st[data-st="a9"] text[fill="#C7CEF0"]{fill:#5A6690}')
 
 # ------------------------------------------------------------------ JS: scenes, layout
-rep("const SCN=['s1','s2','s3','s4','s5','s6','s7a','s7b','s8','s9','s10','s11','s12']", "const SCN=['a1','a2','a3','a4','a5','a6','a7','a8','a8b','a9','a10','a11','a12']")
+rep("const SCN=['s1','s2','s3','s4','s5','s6','s7a','s7b','s8','s9','s10','s11','s12']", "const SCN=['a1','a2','a3','a4','a5','a6','a7','a8','a8b','a9','a9x','a10','a11','a12']")
 rep("const POS={s1:[0,0],s2:[2200,-420],s3:[4400,160],s5:[6600,-380],s6:[8800,180],s7a:[11000,-400],s7b:[13200,160],s8:[15400,-360],s9:[17600,180],s10:[19800,-340],s11:[22000,140]};",
-    "const POS={a1:[0,0],a2:[2200,-420],a6:[4400,160],a7:[6600,-380],a8:[8800,180],a8b:[11000,-400],a9:[13200,160],a10:[15400,-360],a11:[17600,180]};")
-rep("const ROAD=crPath([[-1800,450],...RP,[23800,570]]);", "const ROAD=crPath([[-1800,450],...RP,[19400,570]]);")
+    "const POS={a1:[0,0],a2:[2200,-420],a6:[4400,160],a7:[6600,-380],a8:[8800,180],a8b:[11000,-400],a9:[13200,160],a9x:[15400,-360],a10:[17600,180],a11:[19800,-340]};")
+rep("const ROAD=crPath([[-1800,450],...RP,[23800,570]]);", "const ROAD=crPath([[-1800,450],...RP,[21600,570]]);")
 # drop old static builders (dial ticks, chain)
 i = s.index('// static builders'); j = s.index("const STS=")
 s = s[:i] + s[j:]
 rep("const STS=$$('.st').map(el=>({el,sc:{s1:['s1'],s2:['s2'],s3:['s3','s4'],s5:['s4','s5'],s6:['s6'],s7a:['s7a'],s7b:['s7b'],s8:['s8'],s9:['s9'],s10:['s10'],s11:['s11']}[el.dataset.st]}));",
-    "const STS=$$('.st').map(el=>({el,sc:{a1:['a1'],a2:['a2','a3','a4','a5'],a6:['a6'],a7:['a7'],a8:['a8'],a8b:['a8b'],a9:['a9'],a10:['a10'],a11:['a11']}[el.dataset.st]}));")
+    "const STS=$$('.st').map(el=>({el,sc:{a1:['a1'],a2:['a2','a3','a4','a5'],a6:['a6'],a7:['a7'],a8:['a8'],a8b:['a8b'],a9:['a9'],a9x:['a9x'],a10:['a10'],a11:['a11']}[el.dataset.st]}));")
 rep("const chN=$$('#chainNodes>g'),chL=$$('#chainLines path');let chT=[];", "")
 rep("const TONE={s1:'#0F1426',s2:'#0F1426',s3:'#EEF0F6',s4:'#0F1426',s5:'#5A6690',s6:'#0F1426',s7a:'#0F1426',s7b:'#2B3561',s8:'#EEF0F6',s9:'#C7CEF0',s10:'#0F1426',s11:'#0F1426',s12:'#0F1426'};",
-    "const TONE={a1:'#0F1426',a2:'#EEF0F6',a3:'#EEF0F6',a4:'#0F1426',a5:'#5A6690',a6:'#EEF0F6',a7:'#0F1426',a8:'#0F1426',a8b:'#2B3561',a9:'#EEF0F6',a10:'#C7CEF0',a11:'#0F1426',a12:'#0F1426'};")
+    "const TONE={a1:'#0F1426',a2:'#EEF0F6',a3:'#EEF0F6',a4:'#0F1426',a5:'#5A6690',a6:'#EEF0F6',a7:'#0F1426',a8:'#0F1426',a8b:'#2B3561',a9:'#EEF0F6',a9x:'#2B3561',a10:'#C7CEF0',a11:'#0F1426',a12:'#0F1426'};")
 rep("const LIGHT={s3:1,s8:1,s9:1};", "const LIGHT={a2:1,a3:1,a6:1,a9:1,a10:1};")
 rep("let prev=TONE.s1", "let prev=TONE.a1")
 rep("d.style.background=id==='s7b'?", "d.style.background=id==='none'?")
@@ -303,13 +407,16 @@ rep("  J1.a0=C('lands')-.6;J1.o0=C('bourget')-.1;J1.o1=C('forty')+.35;\n", "")
 # camera
 i = s.index("  // zoom-through: punch into the dial's centre"); j = s.index("  // the car drives the road between scenes")
 s = s[:i] + """  const foc=(id,px,py,z,t,d=1,ease='power3.inOut')=>{if(portrait){py=Math.min(py,480);z=Math.min(z,1.05)}return tl.to(cam,{x:POS[id][0]+px-500,y:POS[id][1]+py-500,z,duration:d,ease},t);}
-  foc('a1',500,520,1.2,C('itinerary')-.7,2.2,'power2.inOut');
+  const fz=(id,px,py,z,t,d=.9,ease='expo.inOut')=>{if(portrait){py=Math.min(py,480);z=Math.min(z*.92,1.22)}return tl.to(cam,{x:POS[id][0]+px-500,y:POS[id][1]+py-500,z,duration:d,ease},t)};
+  fz('a1',500,520,1.24,C('itinerary')-.8,1.3,'power3.inOut');
+  tl.to(cam,{z:portrait?1.12:1.36,duration:.5,ease:'power4.out'},C('perfect')-.2);
   go('a2',SA('a2')-.15);
-  tl.to(cam,{z:1.08,duration:SA('a3')-C('dmc#1')+.4,ease:'sine.inOut'},C('dmc#1')-.4);
-  tl.to(cam,{z:1,duration:1.4,ease:'power2.inOut'},SA('a3')-.1);
-  foc('a2',470,330,1.16,C('aircraft')-.6,.95);
-  foc('a2',560,540,1.16,C('restaurant')-.55,.9);
-  foc('a2',420,640,1.16,C('two')-.55,.9);
+  fz('a2',590,420,1.42,C('dmc#1')-.45,.85);
+  fz('a2',400,580,1.42,C('virtuoso')-.5,.9);
+  fz('a2',500,500,.96,C('ground')-.45,1.1,'power3.inOut');
+  fz('a2',470,330,1.28,C('aircraft')-.55,.8);
+  fz('a2',560,540,1.28,C('restaurant')-.5,.8);
+  fz('a2',420,640,1.28,C('two')-.5,.8);
   tl.to(cam,{x:2200,y:-420,z:.62,sx:.5,sy:.5,dim:.9,duration:1.1,ease:'power3.inOut'},SA('a4')-.25);
   tl.to('#world',{filter:'blur(6px)',duration:.7,ease:'power2.out'},SA('a4')-.2);tl.to('#world',{filter:'blur(0px)',duration:.5,ease:'power2.inOut'},SA('a5')-.5);
   go('a2',SA('a5')-.45,{d:1.3,z:1.5,py:500,dip:1});
@@ -329,11 +436,15 @@ s = s[:i] + """  const foc=(id,px,py,z,t,d=1,ease='power3.inOut')=>{if(portrait)
   foc('a8b',500,320,1,C('heathrow')-.5,1.2);foc('a8b',520,730,1.08,C('fast')-.6,1.05);foc('a8b',540,730,1.13,C('passport')+.1,C('want')-C('passport'),'sine.inOut');
   go('a9',SA('a9')-.15);
   foc('a9',500,280,1.2,C('jet')-.7,1);foc('a9',500,520,1.2,C('hotel')-.6,.9);foc('a9',500,740,1.2,C('ad')-.7,.9);foc('a9',500,500,.98,C('clock')-.5,1.1);
+  go('a9x',SA('a9x')-.15,{z:1.02});
+  fz('a9x',500,470,1.12,SA('a9x')+1.2,C('visits')-SA('a9x')-1.65,'sine.inOut');fz('a9x',500,480,1.0,C('visits')-.4,.7,'expo.inOut');fz('a9x',500,480,1.06,C('champagne')-.4,.7);
+  fz('a9x',500,500,1.0,C('weekend')-.4,.8);
+  fz('a9x',500,500,1.14,C('sometimes')-.2,C('unusual')-C('sometimes')-.1,'sine.inOut');tl.to(cam,{z:portrait?1.12:1.22,duration:1.1,ease:'sine.inOut'},C('unusual')-.15);fz('a9x',500,500,.98,C('experience')-.45,.8);
   go('a10',SA('a10')-.15,{z:.92});
   foc('a10',500,450,1.28,C('name')-.7,1.3);
-  go('a11',SA('a11')-.15,{z:1.12,py:300});
-  foc('a11',500,560,1,C('vic')-.6,C('trusted')-C('vic')+.6,'power2.inOut');
-  {const kf=portrait?Math.min(W*.92,H*.5)/1000:Math.min(W*.5,H*.86)/1000;const zf=(W*.98)/(20000*kf);tl.to(cam,{x:8800,y:-90,z:zf,sx:.5,sy:.42,dim:.7,duration:2.2,ease:'power3.inOut'},SA('a12')-.3)}
+  go('a11',SA('a11')-.15,{z:1.22,py:260});
+  fz('a11',500,470,1.2,C('embassies')-.5,.8);fz('a11',500,640,1.1,C('vic')-.5,.8);fz('a11',500,500,.98,C('trusted')-.35,.9,'power3.inOut');
+  {const kf=portrait?Math.min(W*.92,H*.5)/1000:Math.min(W*.5,H*.86)/1000;const zf=(W*.98)/(22200*kf);tl.to(cam,{x:9900,y:-90,z:zf,sx:.5,sy:.42,dim:.7,duration:2.2,ease:'power3.inOut'},SA('a12')-.3)}
 """ + s[j:]
 rep("const go=(id,t,o={})=>{const [x,y]=POS[id];tl.to(cam,{x,y,z:o.z||1,sx:o.sx||.72,sy:o.sy||.5,dim:o.dim||0,duration:o.d||1.3,ease:o.ease||'expo.inOut'},t)};",
     "const go=(id,t,o={})=>{const d=o.d||1.3,z=o.z||1,x=POS[id][0]+(o.px||500)-500,y=POS[id][1]+(o.py||500)-500;tl.to(cam,{x,y,sx:o.sx||.72,sy:o.sy||.5,dim:o.dim||0,duration:d,ease:o.ease||'expo.inOut'},t);tl.to(cam,{keyframes:[{z:z*(o.dip||.78),duration:d*.5,ease:'power2.inOut'},{z,duration:d*.5,ease:'power3.out'}]},t)};")
@@ -362,7 +473,8 @@ i = s.index("  {const sec=Math.max(0,2400"); j = s.index("  $('#text').querySele
 s = s[:i] + s[j:]
 rep("v=o.sc.includes('s11')?", "v=o.sc.includes('a11')?")
 rep("let DUCK=.55,T=C('city#1')+1.2", "let DUCK=.55,T=0")
-rep("tl.fromTo(cam,{z:1.25},{z:1,duration:2.2,ease:'power2.out'},0);", "tl.fromTo(cam,{z:1.32},{z:1.1,duration:2.6,ease:'power2.out'},0);")
+rep("DUCK+=((sp?.36:.6)-DUCK)*.12;", "const wz=t>C('sometimes')-.3&&t<C('unusual')+.9,iz=t<C('city')-.4;DUCK+=((wz?.13:sp?(iz?.19:.23):.4)-DUCK)*.12;")
+rep("tl.fromTo(cam,{z:1.25},{z:1,duration:2.2,ease:'power2.out'},0);", "{const L=C('paris#1')+.25;tl.fromTo(cam,{x:-560,y:-140,z:portrait?1.5:1.95},{x:-560,y:-140,z:portrait?1.5:1.95,duration:.001,immediateRender:true},0);tl.to(cam,{z:portrait?1.25:1.5,duration:L-.1,ease:'sine.inOut'},.1)}")
 rep("tl.fromTo('#rip',{x:()=>cw()*.62-W*.03,y:()=>chh()*.45-W*.03,scale:.3,opacity:.9},{scale:3,opacity:0,duration:.6},C('book')+1.15);","tl.set('#rip',{opacity:0},0);tl.fromTo('#rip',{x:()=>cw()*.62-W*.03,y:()=>chh()*.45-W*.03,scale:.3,opacity:.9},{scale:3,opacity:0,duration:.6,immediateRender:false},C('book')+1.15);")
 
 # richer colour: layered gradients on every background panel, plus slow drifting light blobs
@@ -379,5 +491,12 @@ rep('<div id="panels"></div>', '<div id="panels"></div><div id="glow"><i></i><i>
 rep('#panels{position:absolute;inset:0}', '#glow{position:absolute;inset:0;pointer-events:none;opacity:.3}#glow i{position:absolute;width:80cqmax;height:80cqmax;left:0;top:0;will-change:transform}#glow i:nth-child(1){background:radial-gradient(closest-side,rgba(142,124,240,.9),rgba(142,124,240,0))}#glow i:nth-child(2){background:radial-gradient(closest-side,rgba(79,163,224,.8),rgba(79,163,224,0))}#glow i:nth-child(3){background:radial-gradient(closest-side,rgba(199,206,240,.8),rgba(199,206,240,0))}#panels{position:absolute;inset:0}')
 rep('<svg id="world" xmlns="http://www.w3.org/2000/svg">', '<svg id="world" xmlns="http://www.w3.org/2000/svg"><defs><filter id="mb" x="-4%" y="-4%" width="108%" height="108%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbB" stdDeviation="0 0"/></filter></defs>')
 rep("const go=(id,t,o={})=>{const d=o.d||1.3,z=o.z||1,", "const go=(id,t,o={})=>{if(o.dip!==1)tl.to(MB,{keyframes:[{v:1,duration:(o.d||1.3)*.5,ease:'power2.in'},{v:0,duration:(o.d||1.3)*.5,ease:'power2.out'}]},t);const d=o.d||1.3,z=o.z||1,")
+rep("const shapes=[['inset(0 100% 0 0)','inset(0 0% 0 0)'],['circle(0% at 72% 55%)','circle(150% at 72% 55%)'],['inset(0 0 0 100%)','inset(0 0 0 0%)'],['inset(100% 0 0 0)','inset(0% 0 0 0)']];",
+    "const shapes=[['circle(0% at 72% 55%)','circle(150% at 72% 55%)'],['circle(0% at 100% 100%)','circle(160% at 100% 100%)'],['circle(0% at 85% 30%)','circle(150% at 85% 30%)']];")
+# v9b: no swoosh on every text chunk; kinetic ending
+rep("if(!first)add('swish',c.t-.08,.22);", "")
+rep("tl.fromTo('#cta',{scale:0},{scale:1,duration:.5,ease:'back.out(2)'},C('book')-.25);", "tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);tl.fromTo('#ctaOv',{scale:1.06},{scale:1,duration:2.2,ease:'expo.out'},C('city#3')-.55);tl.to('#ctaOv',{scale:1.045,duration:Math.max(1,T_END-C('city#3')-1.7),ease:'sine.inOut'},C('city#3')+1.65);")
+rep(".url{font-size:2cqmin;", ".url{font-size:2.5cqmin;")
+rep("tl.from('#url12',{opacity:0,y:20,duration:.5},C('today'));", "tl.from('#url12',{opacity:0,y:20,duration:.5},C('today'));tl.to('#car0',{opacity:0,duration:.25},SA('a11')-.4);")
 open('/home/claude/ta/ta1.html', 'w').write(s)
 print('ok', len(s))

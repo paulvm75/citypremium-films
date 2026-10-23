@@ -1,8 +1,16 @@
   // A1 one flight path into Paris, then the itinerary card settles in
-  {const L=C('paris#1')+.25,t0=.25;
-   tl.to('#fa1,#fa1g',{attr:{'stroke-dashoffset':0},duration:L-t0,ease:'power2.inOut'},t0);
-   tl.set('#jet1',{opacity:0},0);tl.to('#jet1',{opacity:1,duration:.25},t0);
-   tl.to('#jet1',{motionPath:{path:'#fa1',align:'#fa1',alignOrigin:[.5,.5],autoRotate:true},duration:L-t0,ease:'power2.inOut'},t0);
+  {const L=C('paris#1')+.25,t0=.1,FP=document.querySelector('#fa1s'),FL=FP.getTotalLength(),PR={p:0},TR=[...document.querySelectorAll('.ft1')];
+   // one progress value drives the jet, its line, its comet trail and the camera, so nothing can drift out of sync
+   const at=p=>FP.getPointAtLength(FL*Math.max(0,Math.min(1,p)));
+   const drive=()=>{const p=PR.p,a=at(p),b=at(p+.004),c=at(p-.004),ang=Math.atan2(b.y-c.y,b.x-c.x)*180/Math.PI;
+     document.querySelector('#jw1').setAttribute('transform',`translate(${a.x.toFixed(2)} ${a.y.toFixed(2)}) rotate(${ang.toFixed(2)})`);
+     FP.setAttribute('stroke-dashoffset',(1-p).toFixed(4));document.querySelector('#fa1g').setAttribute('stroke-dashoffset',(1-p).toFixed(4));
+     TR.forEach(e=>e.setAttribute('stroke-dashoffset',(+e.dataset.l-p).toFixed(4)));
+     if(p<1){cam.x=a.x-500;cam.y=a.y-500}};
+   tl.set(PR,{p:0},0);window.FLY=drive;
+   tl.to(PR,{p:1,duration:L-t0,ease:'sine.inOut'},t0);
+   tl.set('#jet1',{opacity:0},0);tl.to('#jet1',{opacity:1,duration:.2},.05);
+   tl.to('.ft1',{opacity:0,duration:.5,ease:'power2.out'},L-.05);
    tl.to('#jet1',{scale:.2,opacity:0,transformOrigin:'50% 50%',duration:.35,ease:'power2.in'},L-.15);
    tl.from('#pin1',{scale:0,svgOrigin:'500 150',duration:.5,ease:'back.out(2.4)'},L-.25);
    tl.fromTo('#pin1r',{attr:{r:14},opacity:.9},{attr:{r:64},opacity:0,duration:1.1,repeat:1,ease:'power1.out'},L);
