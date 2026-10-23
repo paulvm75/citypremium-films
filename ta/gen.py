@@ -521,6 +521,11 @@ rep("if(!first)add('swish',c.t-.08,.22);", "")
 rep("tl.fromTo('#cta',{scale:0},{scale:1,duration:.5,ease:'back.out(2)'},C('book')-.25);", "tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);tl.fromTo('#ctaOv',{scale:1.06},{scale:1,duration:2.2,ease:'expo.out'},C('city#3')-.55);tl.to('#ctaOv',{scale:1.045,duration:Math.max(1,T_END-C('city#3')-1.7),ease:'sine.inOut'},C('city#3')+1.65);")
 rep(".url{font-size:2cqmin;", ".url{font-size:2.5cqmin;")
 rep("tl.from('#url12',{opacity:0,y:20,duration:.5},C('today'));", "tl.from('#url12',{opacity:0,y:20,duration:.5},C('today'));")
+# side-view fleet cars (a7): proper saloon profiles, headlight at the nose, tail lamp at the rear.
+# Paris drives in from the left (nose right); London drives in from the right, so it is mirrored (nose left).
+import re as _re, sys as _sys; _sys.path.insert(0,__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)),'side')); from side import side as _side
+s=_re.sub(r'<symbol id="carK".*?</symbol>', lambda m:_side('carK','pK'), s, count=1, flags=_re.S)
+s=_re.sub(r'<symbol id="carS".*?</symbol>', lambda m:_side('carS','pS',True,False), s, count=1, flags=_re.S)
 # a better car: a top-down luxury saloon with glass, mirrors, headlight beams and a soft shadow
 _a=s.index('<symbol id="carT"');_b=s.index('</symbol>',_a)+9
 s=s[:_a]+CAR+s[_b:]

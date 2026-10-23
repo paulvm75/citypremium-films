@@ -87,3 +87,6 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - **Update:** the procedural airliner was rejected ("doesn't look like a plane"). The scene now uses a real A320neo model (FlightGear, GPL v2), converted to GLB. See `tools/a320/README.md`. Never hand-model an aircraft again; find a real model.
 - Keep the engines clear of the ground: on the procedural model the nacelles sat below the wheel line and went through the tarmac.
 - The split-flap scramble alphabet has no vowels, so random frames can't spell words.
+- **Fleet side cars (a7, about 0:35):** these come from `ta/side/side.py`. The old v18 profile read as nose-left with the headlight on the right, so the client saw the lights as reversed.
+  - Each car has a long hood at the nose, a white headlight at the nose and a red tail lamp at the rear.
+  - The Paris car drives in from the left with its nose to the right. The London car comes in from the right, so it's mirrored and drives nose first.
