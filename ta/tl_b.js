@@ -62,7 +62,7 @@
   tl.fromTo(MZ,{a:0},{a:1,duration:1.8,ease:'power2.inOut'},C('airports')+.1);
   $$('#rad8 circle').forEach((c,i)=>tl.fromTo(c,{attr:{r:20},opacity:.7},{attr:{r:560},opacity:0,duration:1.6,ease:'power2.out'},C('airports')+.1+i*.4));
   // A8b a 3D airliner lands and stops; our chauffeur is waiting at the door; then the arrival story, with fast track
-  {const S8=SA('a8b'),DP=window.PLANE3D?(PLANE3D.render({x:0,door:0}),PLANE3D.project(5.55,-.15,1.25)).map((v,i)=>i?-20+v*650/900:-60+v*1300/1800):[588,330];
+  {const S8=SA('a8b'),DP=window.PLANE3D?(PLANE3D.render({x:0,door:0}),PLANE3D.project(...(PLANE3D.doorAnchor?PLANE3D.doorAnchor():[5.55,-.15,1.25]))).map((v,i)=>i?-20+v*650/900:-60+v*1300/1800):[588,330];
    tl.set(PL,{x:-175,door:0,cx:14},0);
    tl.to(PL,{x:0,duration:2.55,ease:'power3.out'},S8-.3);tl.to(PL,{cx:0,duration:3.2,ease:'power2.out'},S8-.3);
    tl.to(PL,{door:1,duration:.8,ease:'power2.inOut'},C('airside')-.5);
@@ -165,7 +165,7 @@
    tl.fromTo('.lb9x',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:'expo.out',stagger:.13,immediateRender:false},C('made')-.2);
    tl.fromTo('#seal9x',{opacity:0,scale:2.4,rotation:-30,transformOrigin:'50% 50%'},{opacity:1,scale:1,rotation:0,duration:.3,ease:'power4.in',immediateRender:false},C('measure')-.3);
    tl.fromTo('#seal9x',{rotation:0},{rotation:6,duration:2.5,ease:'sine.out',immediateRender:false},C('measure'))}
-  tl.to('#car0,#road,#roadC',{opacity:0,duration:.4,ease:'power2.inOut'},SA('a8')-.3);tl.to('#car0,#road,#roadC',{opacity:1,duration:.4,ease:'power2.inOut'},SA('a8b')+.35);
+  tl.to('#car0,#road,#roadC',{opacity:0,duration:.5,ease:'power2.inOut'},SA('a8')+1.05);tl.to('#car0,#road,#roadC',{opacity:1,duration:.35,ease:'power2.inOut'},SA('a8b')-.5);
   // A10 white label: the confirmation flips from our brand to the agency's name
   tl.fromTo('#flip10',{y:80,opacity:0,filter:'blur(10px)'},{y:0,opacity:1,filter:'blur(0px)',duration:1,ease:'expo.out'},SA('a10')+.15);
   {const F=C('white')-.1;tl.to('#flip10',{scaleX:0,svgOrigin:'500 440',duration:.35,ease:'power2.in'},F);tl.set('#back10',{opacity:0},F+.35);tl.set('#front10',{opacity:1},F+.35);
@@ -174,4 +174,4 @@
   tl.to('#ul10',{attr:{'stroke-dashoffset':0},duration:.5,ease:'power2.out'},C('name')-.35);
   tl.to('#flip10',{scale:1.04,svgOrigin:'500 440',duration:.3,yoyo:true,repeat:1,ease:'sine.inOut'},C('name')-.1);
   // A11 trust
-  [['#tr1','maisons'],['#tr2','embassies'],['#tr3','vic']].forEach(([id,w])=>{tl.fromTo(id,{x:140,autoAlpha:0},{x:0,autoAlpha:1,duration:.75,ease:'expo.out'},C(w)-.4);tl.from(id+' .ic2',{scale:.4,opacity:0,transformOrigin:'50% 50%',duration:.6,ease:'back.out(2.2)'},C(w)-.2)});
+  [['#tr1','maisons'],['#tr2','agencies'],['#tr3','vic']].forEach(([id,w])=>{tl.fromTo(id,{x:140,autoAlpha:0},{x:0,autoAlpha:1,duration:.75,ease:'expo.out'},C(w)-.4);tl.from(id+' .ic2',{scale:.4,opacity:0,transformOrigin:'50% 50%',duration:.6,ease:'back.out(2.2)'},C(w)-.2)});

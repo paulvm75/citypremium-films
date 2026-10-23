@@ -70,3 +70,17 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - `filter: blur` on SVG groups at opacity 0 can draw dark bars in Chrome. Use opacity and transforms instead.
 - Check new SVG ids for duplicates. A second `mfade2` silently disabled the map feather.
 - Review densely before shipping: shoot every 0.25 to 0.35 s of the changed span in both formats, look at contact sheets, then run `tools/flash.py` on the MP4s.
+
+## Agencies v9, later rounds
+- **The car drives the film.** A detailed top-down saloon (`carT` symbol in gen.py) drives between every scene, with a car pass SFX on every transition. It's hidden during the map hold.
+- **Closing voice-over:** "Every experience is made to measure. And everything is white label, so your client only ever sees your name. Since 2010, luxury maisons, travel agencies and VIC clients have trusted us." The "And" belongs before "everything is white label", never before "Since 2010". Say "travel agencies", not "embassies", in this film. The current raw take is `ta/v9/vo_take4_raw.mp3` (a splice of take 2 and `line2_A.mp3`).
+- **"On commercial flights" (about 0:53) must show a commercial airliner,** never the business jet. `mz/three/air3d.js` is a procedural 737-800-style airliner with the same `PLANE3D` API plus `doorAnchor()`. It has:
+  - a tall swept fin and winglets
+  - underwing engines
+  - a cabin window row
+  - a cockpit windscreen defined by absolute height on the nose (so the posts read vertical)
+  - an L1 plug door and airstair
+
+  Bundle it to `cp/plane.bundle.js`. `cp/plane_jet.bundle.js` is the Challenger backup.
+- **3D canvas in SVG:** feather the `foreignObject` canvas on both axes. The mask `fm8` nests a vertical mask `fm8v`, otherwise the tarmac shows a hard bottom edge.
+- `wait_for_function` never resolves on these pages (the engine controls rAF). Use a fixed `wait_for_timeout`. The portrait mode name is `render-portrait`.
