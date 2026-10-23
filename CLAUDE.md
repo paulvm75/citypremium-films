@@ -84,3 +84,6 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
   Bundle it to `cp/plane.bundle.js`. `cp/plane_jet.bundle.js` is the Challenger backup.
 - **3D canvas in SVG:** feather the `foreignObject` canvas on both axes. The mask `fm8` nests a vertical mask `fm8v`, otherwise the tarmac shows a hard bottom edge.
 - `wait_for_function` never resolves on these pages (the engine controls rAF). Use a fixed `wait_for_timeout`. The portrait mode name is `render-portrait`.
+- **Update:** the procedural airliner was rejected ("doesn't look like a plane"). The scene now uses a real A320neo model (FlightGear, GPL v2), converted to GLB. See `tools/a320/README.md`. Never hand-model an aircraft again; find a real model.
+- Keep the engines clear of the ground: on the procedural model the nacelles sat below the wheel line and went through the tarmac.
+- The split-flap scramble alphabet has no vowels, so random frames can't spell words.

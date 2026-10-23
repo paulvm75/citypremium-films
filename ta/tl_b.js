@@ -65,10 +65,10 @@
   {const S8=SA('a8b'),DP=window.PLANE3D?(PLANE3D.render({x:0,door:0}),PLANE3D.project(...(PLANE3D.doorAnchor?PLANE3D.doorAnchor():[5.55,-.15,1.25]))).map((v,i)=>i?-20+v*650/900:-60+v*1300/1800):[588,330];
    tl.set(PL,{x:-175,door:0,cx:14},0);
    tl.to(PL,{x:0,duration:2.55,ease:'power3.out'},S8-.3);tl.to(PL,{cx:0,duration:3.2,ease:'power2.out'},S8-.3);
-   tl.to(PL,{door:1,duration:.8,ease:'power2.inOut'},C('airside')-.5);
+   tl.to(PL,{door:1,duration:1.6,ease:'none'},C('airside')-.85);
    tl.set(TK,{x:DP[0]+70,y:DP[1]+20,s:0,o:0},0);tl.set('#tkU',{opacity:0,scale:0,transformOrigin:'50% 50%'},0);
-   tl.to(TK,{s:1,o:1,duration:.55,ease:'back.out(2)'},C('airside')-.2);
-   tl.to('#tkU',{opacity:1,scale:1,duration:.5,ease:'back.out(2.4)'},C('airside')+.3);
+   tl.to(TK,{s:1,o:1,duration:.55,ease:'back.out(2)'},C('airside')+.15);
+   tl.to('#tkU',{opacity:1,scale:1,duration:.5,ease:'back.out(2.4)'},C('airside')+.6);
    tl.fromTo('.fb8',{opacity:0,y:-24},{opacity:1,y:0,duration:.6,ease:'expo.out',stagger:C('charles')-C('heathrow')},C('heathrow')-.3);
    tl.to('#pl8g,.fb8',{opacity:portrait?0:.4,duration:.8,ease:'power2.inOut'},C('fast')-.55);
    tl.set('.s8 .sl',{scale:0,transformOrigin:'50% 50%'},0);tl.set('#pl8',{scaleX:0,svgOrigin:'150 960'},0);tl.set(FC,{m:75},0);tl.set('#ft8n',{fill:'#EEF0F6'},0);

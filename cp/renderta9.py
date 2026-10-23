@@ -5,6 +5,9 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':W,'height':H})
     await pg.goto('file:///home/claude/cp/cp-ta9-render.html#'+mode,wait_until='domcontentloaded',timeout=90000); await pg.wait_for_timeout(2500)
+    for _ in range(120):
+      if await pg.evaluate('!!window.PLANE3D_READY'): break
+      await pg.wait_for_timeout(500)
     mix=await pg.evaluate('window.__mix'); json.dump(mix,open(f'ta9mix_{mode}.json','w'))
     n=int(mix['end']*FPS)
     ff=subprocess.Popen(['ffmpeg','-y','-v','error','-f','image2pipe','-framerate',str(FPS),'-c:v','mjpeg','-i','-','-c:v','libx264','-pix_fmt','yuv420p','-crf','18','-preset','medium',f'ta9video_{mode}.mp4'],stdin=subprocess.PIPE)

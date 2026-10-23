@@ -53,4 +53,4 @@ function ftF(t){const on=t>SA('a8b')-1.6&&t<SA('a9')+1.4;
     const k=[x,PL.door,PL.cx].map(v=>v.toFixed(3)).join();if(k!==PLk){PLk=k;PLANE3D.render({x,y,pitch,roll,door:PL.door,camX:PL.cx})}}
   {const e=$('#ft8n'),v=String(Math.round(FC.m));if(e&&e.textContent!==v)e.textContent=v}$('#tok8').setAttribute('transform',`translate(${TK.x.toFixed(1)} ${TK.y.toFixed(1)}) rotate(${TK.r.toFixed(2)}) scale(${TK.s.toFixed(3)})`);$('#tok8').style.opacity=TK.o;
   $$('.ft').forEach(e=>{const k=+e.dataset.k,n=+e.dataset.n,st=C(k?'charles':'heathrow')-.15,se=st+.5+n*.13,tx=e.querySelector('text');
-    let ch=e.dataset.c;if(t<se){const f=Math.floor((t-st)/.05)+n*7;ch='ABCDEFGHIJKLMNOPRSTUVWXZ'[((f*7919)%24+24)%24]}if(tx.textContent!==ch)tx.textContent=ch})}
+    let ch=e.dataset.c;if(t<se){const f=Math.floor((t-st)/.05)+n*7;ch='BCDFGHJKLMNPRSTVWXZ23457'[((f*7919)%24+24)%24]}if(tx.textContent!==ch)tx.textContent=ch})}
