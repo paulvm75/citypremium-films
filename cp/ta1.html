@@ -920,7 +920,7 @@ function pause(){playing=false;syncA(false);$('#pp').textContent='Play'}
 function loop(){if(!playing)return;let t=base+(performance.now()-t0)/1000;
   if(vo&&!vo.paused&&!vo.ended){const vt=vo.currentTime+VO_OFF;if(Math.abs(vt-t)>.05){base=vt;t0=performance.now();t=vt}}
   if(vo&&snd&&vo.paused&&!vo.ended&&prev<VO_OFF&&t>=VO_OFF){vo.currentTime=t-VO_OFF;vo.play().catch(()=>{})}
-  if(mu){const sp=WORDS.some(w=>t>=w.a-.05&&t<w.b+.25);const wz=t>C('sometimes')-.3&&t<C('unusual')+.9,iz=t<C('city')-.4;DUCK+=((wz?.13:sp?(iz?.19:.23):.4)-DUCK)*.12;mu.volume=Math.max(0,DUCK*Math.min(1,(T_END-t)/2.5))}
+  if(mu){const sp=WORDS.some(w=>t>=w.a-.05&&t<w.b+.25);const wz=t>C('sometimes')-.3&&t<C('unusual')+.9,iz=t<C('city')-.4;DUCK+=((wz?.08:sp?(iz?.28:.34):.5)-DUCK)*.12;mu.volume=Math.max(0,DUCK*Math.min(1,(T_END-t)/2.5))}
   if(snd)for(const s of SFX)if(prev<s.t&&t>=s.t&&POOL[s.k]){const a=POOL[s.k][pi++%4];a.volume=Math.min(1,s.v);a.currentTime=0;a.play().catch(()=>{})}
   if(t>=T_END){t=T_END;pause()}
   prev=t;T=t;render(t);$('#time').textContent=fmt(t)+' / '+fmt(T_END);$('#scrub').value=Math.round(t/T_END*1000);requestAnimationFrame(loop)}

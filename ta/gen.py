@@ -496,7 +496,7 @@ i = s.index("  {const sec=Math.max(0,2400"); j = s.index("  $('#text').querySele
 s = s[:i] + s[j:]
 rep("v=o.sc.includes('s11')?", "v=o.sc.includes('a11')?")
 rep("let DUCK=.55,T=C('city#1')+1.2", "let DUCK=.55,T=0")
-rep("DUCK+=((sp?.36:.6)-DUCK)*.12;", "const wz=t>C('sometimes')-.3&&t<C('unusual')+.9,iz=t<C('city')-.4;DUCK+=((wz?.13:sp?(iz?.19:.23):.4)-DUCK)*.12;")
+rep("DUCK+=((sp?.36:.6)-DUCK)*.12;", "const wz=t>C('sometimes')-.3&&t<C('unusual')+.9,iz=t<C('city')-.4;DUCK+=((wz?.08:sp?(iz?.28:.34):.5)-DUCK)*.12;")
 rep("tl.fromTo(cam,{z:1.25},{z:1,duration:2.2,ease:'power2.out'},0);", "{const L=C('paris#1')+.25;tl.fromTo(cam,{x:-560,y:-140,z:portrait?1.5:1.95},{x:-560,y:-140,z:portrait?1.5:1.95,duration:.001,immediateRender:true},0);tl.to(cam,{z:portrait?1.25:1.5,duration:L-.1,ease:'sine.inOut'},.1)}")
 rep("tl.fromTo('#rip',{x:()=>cw()*.62-W*.03,y:()=>chh()*.45-W*.03,scale:.3,opacity:.9},{scale:3,opacity:0,duration:.6},C('book')+1.15);","tl.set('#rip',{opacity:0},0);tl.fromTo('#rip',{x:()=>cw()*.62-W*.03,y:()=>chh()*.45-W*.03,scale:.3,opacity:.9},{scale:3,opacity:0,duration:.6,immediateRender:false},C('book')+1.15);")
 
