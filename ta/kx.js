@@ -30,8 +30,8 @@ function build(W,H,P){
   const svg=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},host);
   const defs=mk('defs',{},svg);
   const M=Math.min(W,H),k={svg,W,H,P};
-  // K0 the opening flight: a real Global 5000 glides across the dawn sky and away towards the Eiffel Tower
-  {const g=mk('g',{},svg),jw=891,jh=313,im=mk('image',{href:window.JETH||'',x:-jw/2,y:-jh/2,width:jw,height:jh},g);k.k0={g,im,jw}}
+  // K0 the opening: the word "lands" comes in on a glide path, flares and touches down on a runway line (type that does what it says)
+  {const box=hx('div','kl',host),gh=[0,1,2,3].map(()=>hx('div','klw',box)),rw=hx('div','klr',box);gh.forEach(e=>e.textContent='lands');k.k0={box,gh,rw}}
   // KD the day on the ground: a 24-hour dial on the right, a real jet travels round it from 07:40 at the aircraft door
   // to 21:30 at the restaurant and 02:00 in the night, while the background goes from morning ivory to dusk to night
   {const bgd=document.getElementById('kxbg');bgd.innerHTML='';const bs=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd);
@@ -114,16 +114,23 @@ function apply(t){
   if(!K||K.W!==W||K.H!==H||K.P!==P){K=build(W,H,P);FLIP=null}
   const vis=(e,v)=>{e.style.visibility=v?'visible':'hidden'};
   // ---------- K0 ----------
-  {const a=K.k0,t0=.18,t1=C('paris#1')+.55;const on=win(t,t0,t1);vis(a.g,on);
-   ['#fa1g','#fa1','#fa1s','#jw1'].forEach(q=>{const e=document.querySelector(q);if(e)e.style.visibility=t<SA('a2')+.5?'hidden':''});
-   document.querySelectorAll('.ft1').forEach(e=>e.style.visibility=t<SA('a2')+.5?'hidden':'');
-   if(on){const u=cl((t-t0)/(t1-t0)),e=u*u*(3-2*u)*.4+u*.6;
-     // a gentle descending curve, from big and close at top left to a speck over the city
-     const A=P?[-.3*W,H*.33]:[-.18*W,H*.16],B=P?[.6*W,H*.36+W*.38]:[.6*W,H*.4],Cc=P?[.25*W,H*.32]:[.3*W,H*.16];
-     const x=(1-e)*(1-e)*A[0]+2*(1-e)*e*Cc[0]+e*e*B[0],y=(1-e)*(1-e)*A[1]+2*(1-e)*e*Cc[1]+e*e*B[1];
-     const w0=P?.5*W:.3*W,w1=P?.07*W:.05*W,sc=Math.exp(Math.log(w0)+(Math.log(w1)-Math.log(w0))*e)/a.jw;
-     const rot=lerp(-6,4,ez(u)),op=cl(u/.04)*(1-ez((u-.84)/.16));
-     a.g.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(4)})`);a.g.setAttribute('opacity',op.toFixed(3))}}
+  ['#fa1g','#fa1','#fa1s','#jw1'].forEach(q=>{const e=document.querySelector(q);if(e)e.style.visibility=t<SA('a2')+.5?'hidden':''});
+  document.querySelectorAll('.ft1').forEach(e=>e.style.visibility=t<SA('a2')+.5?'hidden':'');
+  {const a=K.k0,tT=C('lands')+.02,t0=tT-.6,t1=tT+.14;
+   if(!K.lw&&typeof CHUNKS!=='undefined'){for(const c of CHUNKS)for(const w of c.words)if(w.el.textContent==='lands'&&!K.lw)K.lw=w.el.firstChild}
+   const b=K.lw,on=b&&win(t,t0,t1);a.box.style.display=on?'block':'none';if(b)b.style.visibility=on?'hidden':'';
+   if(on){const fr=document.getElementById('film').getBoundingClientRect(),r=b.getBoundingClientRect(),cs=getComputedStyle(b),gx=+(gsap.getProperty(b,'x'))||0;
+     const X=r.left-fr.left-gx,Y=r.top-fr.top,fs=parseFloat(cs.fontSize);
+     a.gh.forEach(e=>{e.style.font=`${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;e.style.letterSpacing=cs.letterSpacing;e.style.color=cs.color});
+     const pose=tt=>{const p=cl((tt-t0)/(tT-t0)),e=1-Math.pow(1-p,2.6);
+       let dx=W*.4*(1-e),dy=-H*.22*Math.pow(1-e,1.25),rot=-7*(1-e)+3.5*Math.sin(Math.PI*cl((p-.55)/.45)),sc=1.25-.25*e;
+       if(tt>tT){const q=tt-tT;dy+=-fs*.05*Math.sin(q*18)*Math.exp(-q*16);rot+=1.2*Math.sin(q*16)*Math.exp(-q*16)}
+       return `translate(${(X+dx).toFixed(1)}px,${(Y+dy).toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(4)})`};
+     a.gh.forEach((e,i)=>{const tt=t-i*.045,vis=tt>=t0;e.style.transform=pose(tt);const co=+getComputedStyle(b.closest('.ch')).opacity;e.style.opacity=vis?co*(i?[0,.26,.13,.06][i]*(t<tT?1:1-cl((t-tT)/.12)):cl((t-t0)/.12)):0;
+       if(!i){const v=t<tT?(1-cl((t-t0)/(tT-t0))):0;e.style.filter=v>.05?`blur(${(v*5).toFixed(2)}px)`:'none'}});
+     // runway line draws under the word just before touchdown and slides away with it
+     const ru=eo((t-(tT-.25))/.3),rf=1-ez((t-tT)/.22);a.rw.style.left=(X-fs*.3)+'px';a.rw.style.top=(Y+fs*1.06)+'px';a.rw.style.width=(fs*5.2)+'px';
+     a.rw.style.transform=`scaleX(${ru.toFixed(4)})`;a.rw.style.opacity=(ru>0?rf*.85:0).toFixed(3)}}
   // ---------- KD ----------
   {const a=K.kd,t0=C('aircraft')-.34,tR=C('restaurant')-.12,tN=C('two')-.06,tx=C('thats')-.22,t1=C('thats')+.06;
    const on=win(t,t0,t1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
