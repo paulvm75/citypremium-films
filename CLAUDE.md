@@ -138,3 +138,4 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - The world road and car fade out under the end card; a far-off car read as a stray white dot.
 - Cabin window: ivory plastic bezel and reveal on the navy leather wall, a white rim lit by the daylight. No light blob on the push (it read as white dust).
 - Operator beat (K3): "We're an" sits on top of the word as one composition over a 0.9 veil; the letters lift away at operator+0.5 and the City Premium emblem (`#boss`) draws its orbit with a light at its head, a ripple and a glow pulse on `#cpOrbG` when the ring closes. The old "o becomes the ring" morph read as a second circle flying in from the left.
+- End card: after PARIS, LONDON, EUROPE only the logo and the "Book a meeting" button remain (no line of text, no URL); the button rises into the space with the existing sheen and click.

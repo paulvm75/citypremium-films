@@ -74,8 +74,8 @@ svg text{font-family:var(--sans)}
 .hr{position:absolute;inset:-30%;border-radius:50%;border:2px solid var(--acc);opacity:0}
 .wm{position:relative;width:min(70cqw,84cqmin);aspect-ratio:1400/270;background:var(--paper);-webkit-mask:var(--wmask) center/contain no-repeat;mask:var(--wmask) center/contain no-repeat}
 #ctaOv{justify-content:flex-start;padding-top:12cqh;box-sizing:border-box}
-.ctaRow{position:absolute;left:0;right:0;top:74cqh;display:flex;flex-direction:column;align-items:center;gap:2cqmin}
-.portrait .ctaRow{top:84cqh}
+.ctaRow{position:absolute;left:0;right:0;top:60cqh;display:flex;flex-direction:column;align-items:center;gap:2cqmin}
+.portrait .ctaRow{top:64cqh}#url12{display:none}
 .cta{pointer-events:auto;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:1.6cqmin;background:var(--acc);color:var(--ink);text-decoration:none;font-weight:600;font-size:3.4cqmin;padding:2.4cqmin 4.8cqmin;border-radius:999px}
 .cta::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);transform:translateX(calc(var(--sh,-1) * 120%))}
 .cta:focus-visible{outline:3px solid var(--paper);outline-offset:5px}
@@ -783,7 +783,7 @@ function build(){
   tl.fromTo('#glintE',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut'},ct+1.25);
   tl.fromTo('#glint2',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut'},ct+1.4);
   tl.to('#bug',{opacity:0,duration:.3},ct-.2);
-  tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);tl.fromTo('#ctaOv',{scale:1.06},{scale:1,duration:2.2,ease:'expo.out'},C('city#3')-.55);tl.to('#ctaOv',{scale:1.045,duration:Math.max(1,T_END-C('city#3')-1.7),ease:'sine.inOut'},C('city#3')+1.65);
+  tl.fromTo('#cta',{scale:.6,opacity:0,y:60},{scale:1,opacity:1,y:0,duration:.9,ease:'expo.out'},C('book')-.15);tl.fromTo('#ctaOv',{scale:1.06},{scale:1,duration:2.2,ease:'expo.out'},C('city#3')-.55);tl.to('#ctaOv',{scale:1.045,duration:Math.max(1,T_END-C('city#3')-1.7),ease:'sine.inOut'},C('city#3')+1.65);
   tl.fromTo('#cta',{'--sh':-1},{'--sh':1,duration:.8,repeat:2,repeatDelay:.5,ease:'power2.inOut'},C('book')+.4);
   const cw=()=>$('#cta').offsetWidth,chh=()=>$('#cta').offsetHeight;
   tl.fromTo('#cursor',{x:()=>cw()*1.4,y:()=>chh()*2.4,opacity:0},{x:()=>cw()*.62,y:()=>chh()*.45,opacity:1,duration:.9,ease:'power2.inOut'},C('book')+.2);
@@ -1250,7 +1250,8 @@ function apply(t){
   // ---------- K7 ----------
   {const a=K.k7,T=[CA('paris',95)-.05,CA('london',95)-.05,CA('europe',95)-.05],z0=T[2]+.55,z1=z0+.8;const on=win(t,T[0],z1);vis(a.g,on);
    {const hide=win(t,T[0]-.02,z0),co=document.getElementById('ctaOv'),tb=document.querySelector('.tb[data-sc="a12"]'),fv=document.querySelector('#footT .fv');
-    if(co)co.style.visibility=hide?'hidden':'';if(tb)tb.style.visibility=hide?'hidden':'';if(fv)fv.style.opacity=on?(t<z0?.2:.2+.8*cl((t-z0)/(z1-z0))).toFixed(3):'';}
+    if(co)co.style.visibility=hide?'hidden':'';if(tb)tb.style.visibility=t>=T[0]-.02?'hidden':'';   // after the city words only the logo and the button remain
+   if(fv)fv.style.opacity=on?(t<z0?.2:.2+.8*cl((t-z0)/(z1-z0))).toFixed(3):'';}
    if(on)runCover(a,t,T,z0,z1,H)}
   // ---------- K8 ----------
   {const a=K.k8,tD=C('sometimes')+.05,tQ=C('something')-.25,tF=C('truly')-.05,tG=C('unusual')-.05,tO=CA('every',80)-.42,tE=tO+.4;const on=win(t,tD,tE);vis(a.g,on);

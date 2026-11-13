@@ -584,6 +584,10 @@ rep('<g id="mapG"><path','<g id="mapG"><path d="'+_gr+'" fill="none" stroke="rgb
 # v16: SFX take an optional playback rate (pitch), used to vary one swish per animation type
 rep("const SFX=[];const add=(k,t,v)=>SFX.push({k,t,v});","const SFX=[];const add=(k,t,v,r)=>SFX.push({k,t,v,r:r||1});")
 rep("a.volume=Math.min(1,s.v);","a.volume=Math.min(1,s.v);try{a.preservesPitch=false;a.playbackRate=s.r||1}catch(e){}")
+# v15 end card: only the logo and the button, the button rises into the space the text used to take
+rep('.ctaRow{position:absolute;left:0;right:0;top:74cqh;','.ctaRow{position:absolute;left:0;right:0;top:60cqh;')
+rep('.portrait .ctaRow{top:84cqh}','.portrait .ctaRow{top:64cqh}#url12{display:none}')
+rep("tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);","tl.fromTo('#cta',{scale:.6,opacity:0,y:60},{scale:1,opacity:1,y:0,duration:.9,ease:'expo.out'},C('book')-.15);")
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')
