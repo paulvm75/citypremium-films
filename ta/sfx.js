@@ -27,3 +27,5 @@ add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i
 [0,1,2].forEach(i=>add('tick',C('two')+.02+i*.05,.12));
 {const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('only')-.04;for(let i=0;i<12;i++){add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
 for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
+// v13 day dial: soft ticks as the clock turns at the restaurant and at two
+[0,1,2,3].forEach(i=>add('tick',C('restaurant')-.02+i*.05,.09));add('tick',C('two')+.17,.1);

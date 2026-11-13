@@ -73,14 +73,19 @@
    tl.to('#pl8g,.fb8',{opacity:portrait?0:.4,duration:.8,ease:'power2.inOut'},C('fast')-.55);
    tl.set('.s8 .sl',{scale:0,transformOrigin:'50% 50%'},0);tl.set('#pl8',{scaleX:0,svgOrigin:'150 960'},0);tl.set(FC,{m:75},0);tl.set('#ft8n',{fill:'#EEF0F6'},0);
    tl.fromTo('#jp8w',{opacity:0,y:60},{opacity:1,y:0,duration:.9,ease:'expo.out'},C('charles')+.1);
-   const ON=C('fast')-.15;tl.to('#swT',{fill:'#9FB0FF',duration:.25},ON);tl.to('#swK',{attr:{cx:886},fill:'#0F1426',duration:.4,ease:'back.out(2)'},ON);tl.to(FC,{m:15,duration:1.8,ease:'power2.inOut'},ON+.25);tl.to('#ft8n',{fill:'#9FB0FF',duration:.5},ON+.25);
+   const ON=C('fast')-.15;tl.to('#swT',{fill:'#9FB0FF',duration:.25},ON);tl.to('#swK',{attr:{cx:886},fill:'#0F1426',duration:.4,ease:'back.out(2)'},ON);tl.to('#ft8n',{fill:'#9FB0FF',duration:.5},ON+.25);
    tl.fromTo('#swR',{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.9,duration:.8,ease:'power2.out'},ON+.05);
    tl.fromTo('#swR',{opacity:.9,scale:1},{opacity:0,scale:1.9,duration:.8,ease:'power2.out',immediateRender:false},C('want')-.1);
-   const lit=(k,t)=>{tl.to(`#s8${k} .sl`,{scale:1,duration:.4,ease:'expo.out'},t);tl.fromTo(`#s8${k} .sr`,{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.6,duration:.8,ease:'power2.out'},t)};
-   tl.to(TK,{x:150,y:812,duration:1.05,ease:'power3.inOut'},C('fast')-.6);lit(0,C('fast')+.4);
-   [[383,'passport',1],[617,'customs',2],[850,'want',3]].forEach(([x,w,k],i)=>{const st=i?C(['','passport','customs'][i])+.08:C('fast')+.48,en=C(w)-(k===3?.32:.08),d=en-st;
-     tl.to(TK,{x,duration:d,ease:'power3.inOut'},st);tl.to('#pl8',{scaleX:(x-150)/700,svgOrigin:'150 960',duration:d,ease:'power3.inOut'},st);
-     tl.to(TK,{keyframes:[{r:-7,duration:d*.35,ease:'power2.out'},{r:3,duration:d*.45,ease:'power2.inOut'},{r:0,duration:d*.2,ease:'power2.out'}]},st);lit(k,en)});
+   // fast track, kinetic: the chauffeur token bows out, then a light runs the track in quick dashes; each step it reaches
+   // pops and lights, and the door-to-car time drops in steps (75, 58, 41, 26, 15)
+   const NX=[150,383,617,850],MIN=[58,41,26,15];
+   const lit=(k,t)=>{tl.to(`#s8${k} .sl`,{scale:1,duration:.5,ease:'back.out(2.2)'},t);tl.fromTo(`#s8${k} .sr`,{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.8,duration:.7,ease:'power2.out'},t);
+     tl.fromTo(`#s8${k}`,{scale:1},{keyframes:{scale:[1,1.2,1]},svgOrigin:`${NX[k]} 960`,duration:.42,ease:'power2.out'},t);tl.to(FC,{m:MIN[k],duration:.42,ease:'power3.out'},t)};
+   tl.to(TK,{o:0,s:.75,duration:.35,ease:'power2.in'},C('fast')-.5);
+   tl.set('#cm8',{x:150,opacity:0},0);tl.to('#cm8',{opacity:1,duration:.2},C('fast')+.05);lit(0,C('fast')+.2);
+   [[1,'passport'],[2,'customs'],[3,'want']].forEach(([k,w])=>{const en=C(w)-(k===3?.3:.04),d=.44,st=en-d;
+     tl.to('#cm8',{x:NX[k],duration:d,ease:'expo.inOut'},st);tl.to('#pl8',{scaleX:(NX[k]-150)/700,svgOrigin:'150 960',duration:d,ease:'expo.inOut'},st);lit(k,en)});
+   tl.to('#cm8',{opacity:0,duration:.4},C('want')+.2);
    }
   // A9 the concierge layer
   [['#t1','jet'],['#t2','hotel'],['#t3','ad']].forEach(([id,w])=>{tl.fromTo(id,{y:90,scale:.9,opacity:0,filter:'blur(10px)',transformOrigin:'50% 50%'},{y:0,scale:1,opacity:1,filter:'blur(0px)',duration:.95,ease:'expo.out'},C(w)-.4);tl.fromTo(id+' text',{x:40,opacity:0},{x:0,opacity:1,duration:.7,stagger:.09,ease:'expo.out'},C(w)-.25)});

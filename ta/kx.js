@@ -21,6 +21,7 @@ function mk(tag,at,par){const e=document.createElementNS(NS,tag);for(const k in 
 function hx(tag,cls,par){const e=document.createElement(tag);if(cls)e.className=cls;if(par)par.appendChild(e);return e}
 const cv=document.createElement('canvas').getContext('2d');
 function gm(ch,font){cv.font=font;const m=cv.measureText(ch);return{w:m.width,asc:m.actualBoundingBoxAscent,des:m.actualBoundingBoxDescent,l:m.actualBoundingBoxLeft,r:m.actualBoundingBoxRight}}
+const mixc=(c1,c2,u)=>{const h=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)),A=h(c1),B=h(c2);return'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*cl(u))).join(',')+')'};
 const tw=(s,font)=>{cv.font=font;return cv.measureText(s).width};
 function txt(par,s,x,y,size,o={}){const e=mk('text',{x,y,'font-size':size,'font-weight':o.w||600,fill:o.fill||IV,'text-anchor':o.anchor||'middle',style:`font-family:${FONT};letter-spacing:${o.ls||'-.02em'};font-variant-numeric:tabular-nums${o.st?';font-style:'+o.st:''}`},par);e.textContent=s;return e}
 
@@ -31,18 +32,21 @@ function build(W,H,P){
   const M=Math.min(W,H),k={svg,W,H,P};
   // K0 the opening flight: a real Global 5000 glides across the dawn sky and away towards the Eiffel Tower
   {const g=mk('g',{},svg),jw=891,jh=313,im=mk('image',{href:window.JETH||'',x:-jw/2,y:-jh/2,width:jw,height:jh},g);k.k0={g,im,jw}}
-  // K1 two in the morning: a hard cut on "two" to the night, the clock lands and ticks from 1:59 to 2:00
-  {const g=mk('g',{},svg),F=P?W*.36:H*.46,fnt=`600 ${F}px ${FONT}`;
-   const d=tw('0',fnt),cw=tw(':',fnt)*1.05,tot=3*d+cw,x0=W/2-tot/2,cy=P?H*.44:H*.44,yb=cy+.36*F;
-   const gr=mk('radialGradient',{id:'k1g',cx:'50%',cy:'38%',r:'62%'},defs);mk('stop',{offset:0,'stop-color':'#3A4686','stop-opacity':.85},gr);mk('stop',{offset:.55,'stop-color':'#1B2140','stop-opacity':.4},gr);mk('stop',{offset:1,'stop-color':'#0B0F1E','stop-opacity':0},gr);
-   const bg=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV},g);mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'url(#k1g)'},g);
-   const body=mk('g',{},g);const seq=[['1','2'],['5','0'],['9','0']],xs=[x0,x0+d+cw,x0+2*d+cw];
-   const cols=seq.map((q,i)=>q.map(c=>txt(body,c,xs[i]+d/2,yb,F,{fill:IV})));
-   const colon=txt(body,':',x0+d+cw/2,yb-.04*F,F,{fill:PERI});
-   const f2=P?W*.075:H*.085,y2=P?cy+.66*F:H*.84;const words=['in','the','morning.'],ws=words.map(w=>tw(w,`500 ${f2}px ${FONT}`)),sp=f2*.26,tl=ws.reduce((a,b)=>a+b,0)+sp*2;
-   let xx=W/2-tl/2;const wl=words.map((w,i)=>{const e=txt(body,w,xx,y2,f2,{w:500,fill:'#C7CEF0',anchor:'start',ls:'-.01em'});e.dataset.x=xx;xx+=ws[i]+sp;return e});
-   k.k1={g,bg,body,cols,colon,F,wl,f2,cx:W/2,cy}}
-  const k1g=k.k1.g;
+  // KD the day on the ground: a 24-hour dial on the right, a real jet travels round it from 07:40 at the aircraft door
+  // to 21:30 at the restaurant and 02:00 in the night, while the background goes from morning ivory to dusk to night
+  {const bgd=document.getElementById('kxbg');bgd.innerHTML='';const bs=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd);
+   const bd=mk('defs',{},bs),cx=P?W*.5:W*.68,cy=P?H*.645:H*.5,R=P?W*.37:H*.355;
+   const gr=mk('radialGradient',{id:'kdg',gradientUnits:'userSpaceOnUse',cx,cy,r:R*1.9},bd);mk('stop',{offset:0,'stop-color':'#4A58B2','stop-opacity':.55},gr);mk('stop',{offset:.5,'stop-color':'#2B3150','stop-opacity':.25},gr);mk('stop',{offset:1,'stop-color':'#141A33','stop-opacity':0},gr);
+   const c1=mk('circle',{cx,cy,r:0},mk('clipPath',{id:'kdc1'},bd)),c2=mk('circle',{cx,cy,r:0},mk('clipPath',{id:'kdc2'},bd)),RM=Math.hypot(Math.max(cx,W-cx),Math.max(cy,H-cy))*1.02;
+   const b0=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#F4F2ED'},bs),b1=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#262D52','clip-path':'url(#kdc1)'},bs),b2=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#10152B','clip-path':'url(#kdc2)'},bs),bg3=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'url(#kdg)'},bs);
+   const g=mk('g',{},svg),ring=mk('circle',{cx,cy,r:R,fill:'none','stroke-width':Math.max(1.5,R*.006),pathLength:1,'stroke-dasharray':'1 1',transform:`rotate(-90 ${cx} ${cy})`},g);
+   const tk=mk('g',{},g);for(let h=0;h<24;h++){const a=h/24*Math.PI*2,M=h%6===0,r0=R*(M?.9:.94),r1=R*.97;mk('line',{x1:cx+r0*Math.sin(a),y1:cy-r0*Math.cos(a),x2:cx+r1*Math.sin(a),y2:cy-r1*Math.cos(a),'stroke-width':M?R*.012:R*.006,'stroke-linecap':'round'},tk)}
+   const arc=mk('path',{fill:'none',stroke:PERI,'stroke-width':R*.016,'stroke-linecap':'round'},g);
+   const F=P?W*.17:H*.185,fn=`600 ${F}px ${FONT}`,d=tw('0',fn),cw=tw(':',fn)*1.05,tot=4*d+cw,x0=cx-tot/2,yb=cy+.34*F;
+   const V=['07:40','21:30','02:00'],xs=[x0,x0+d,null,x0+2*d+cw,x0+3*d+cw];
+   const dig=[0,1,3,4].map(p=>V.map(v=>txt(g,v[p],xs[p]+d/2,yb,F,{fill:NV})));const colon=txt(g,':',x0+2*d+cw/2,yb-.04*F,F,{fill:PERI});
+   const jw=R*.36,js=mk('image',{href:window.JETS||'',x:-jw/2+jw*.05,y:-jw/2+jw*.09,width:jw,height:jw},g),ji=mk('image',{href:window.JETT||'',x:-jw/2,y:-jw/2,width:jw,height:jw},g);
+   k.kd={c1,c2,RM,g,bs,b1,b2,bg3,ring,tk,arc,dig,colon,js,ji,cx,cy,R,F}}
   // K2 That's where City Premium comes in, word by word, then the camera dives through the o of "comes"
   {const g=mk('g',{},svg);const mask=mk('mask',{id:'k2h',maskUnits:'userSpaceOnUse',x:-W,y:-H,width:3*W,height:3*H},defs);
    mk('rect',{x:-W,y:-H,width:3*W,height:3*H,fill:'#fff'},mask);const hole=mk('ellipse',{cx:0,cy:0,rx:0,ry:0,fill:'#000'},mask);
@@ -89,7 +93,7 @@ function build(W,H,P){
      const mkh=(c)=>{const h=hx('div','kh '+c,t);const s=hx('span','',h);Object.assign(s.style,{height:th+'px',lineHeight:th+'px'});return h};
      const tile={el:t,top:mkh('top'),bot:mkh('bot'),ft:mkh('kft'),fb:mkh('kfb'),st:null};tiles.push(tile)}
    k.k5={b,tiles,bw,tw_}}
-  svg.appendChild(k1g);   // the clock sits above the navy of K2 while it slides away
+  svg.appendChild(k.kd.g);   // the dial fades out over the navy of the next beat
   return k}
 
 // split-flap state machine: each tile has a list of states {t,ch,iv}; a flip from one to the next takes FD seconds
@@ -120,15 +124,33 @@ function apply(t){
      const w0=P?.5*W:.3*W,w1=P?.07*W:.05*W,sc=Math.exp(Math.log(w0)+(Math.log(w1)-Math.log(w0))*e)/a.jw;
      const rot=lerp(-6,4,ez(u)),op=cl(u/.04)*(1-ez((u-.84)/.16));
      a.g.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(4)})`);a.g.setAttribute('opacity',op.toFixed(3))}}
-  // ---------- K1 ----------
-  {const a=K.k1,t0=C('two')-.06,tx=C('thats')-.22,t1=tx+.26;
-   const on=win(t,t0,t1);vis(a.g,on);
-   if(on){const land=eo5((t-t0)/.7),out=ez((t-tx)/(t1-tx)),sc=(1.07-.07*land)*(1-.08*out);
-     a.body.setAttribute('transform',`translate(${a.cx} ${a.cy}) scale(${sc.toFixed(4)}) translate(${-a.cx} ${-a.cy})`);a.body.setAttribute('opacity',(1-out).toFixed(3));
-     a.cols.forEach(([o,n],i)=>{const ti=t0+.2+i*.05,u=cl((t-ti)/.1),v=eo((t-ti-.1)/.3);o.setAttribute('transform',`translate(0 ${(-u*a.F*.08).toFixed(2)})`);o.setAttribute('opacity',(1-u).toFixed(3));
-       const nx=+n.getAttribute('x'),ny=a.cy,k=1.18-.18*v;n.setAttribute('transform',`translate(${nx} ${ny}) scale(${k.toFixed(4)}) translate(${-nx} ${-ny})`);n.setAttribute('opacity',v.toFixed(3))});
-     a.colon.setAttribute('opacity',(t-t0)<.7?1:(.6+.4*Math.cos((t-t0-.7)*Math.PI*2)**2).toFixed(3));
-     [CA('in',C('two')),CA('the',C('two')),C('morning')].forEach((cw,i)=>{const u=eo((t-(cw-.05))/.6);a.wl[i].setAttribute('transform',`translate(${((1-u)*a.f2*.42).toFixed(2)} 0)`);a.wl[i].setAttribute('opacity',u.toFixed(3))})}}
+  // ---------- KD ----------
+  {const a=K.kd,t0=C('aircraft')-.34,tR=C('restaurant')-.12,tN=C('two')-.06,tx=C('thats')-.22,t1=C('thats')+.06;
+   const on=win(t,t0,t1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
+   const tb=document.querySelector('.tb[data-sc="a3"]');
+   if(on){const fin=eo((t-t0)/.45),dusk=ez((t-tR)/.55),night=ez((t-tN)/.4),out=ez((t-tx)/(t1-tx-.02));
+     a.bs.style.opacity=fin.toFixed(3);a.c1.setAttribute('r',(a.RM*eo((t-tR+.04)/.8)).toFixed(1));a.c2.setAttribute('r',(a.RM*eo((t-tN+.03)/.7)).toFixed(1));a.bg3.setAttribute('opacity',(dusk*.8).toFixed(3));
+     const ink=mixc('#141A33','#F4F2ED',dusk),dim=mixc('#141A33','#C7CEF0',dusk);
+     a.ring.setAttribute('stroke',dim);a.ring.setAttribute('stroke-opacity',.28);a.ring.setAttribute('stroke-dashoffset',(1-eo((t-t0)/.9)).toFixed(4));
+     a.tk.setAttribute('stroke',dim);a.tk.setAttribute('opacity',(.45*eo((t-t0-.2)/.6)).toFixed(3));
+     const A0=115,A1=322.5,A2=390,ang=A0-55*(1-eo((t-t0)/.95))+(A1-A0)*exio((t-tR)/.85)+(A2-A1)*exio((t-tN)/.7);
+     const pt=a2=>[a.cx+a.R*Math.sin(a2*Math.PI/180),a.cy-a.R*Math.cos(a2*Math.PI/180)],[jx,jy]=pt(ang);
+     const st0=Math.min(A0,ang),p0=pt(st0);a.arc.setAttribute('d',ang-st0>.5?`M${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${a.R} ${a.R} 0 ${ang-st0>180?1:0} 1 ${jx.toFixed(1)} ${jy.toFixed(1)}`:'');
+     a.arc.setAttribute('opacity',(fin*.9).toFixed(3));
+     [a.js,a.ji].forEach(e=>e.setAttribute('transform',`translate(${jx.toFixed(2)} ${jy.toFixed(2)}) rotate(${ang.toFixed(2)})`));
+     const jo=cl((t-t0)/.25);a.ji.setAttribute('opacity',jo);a.js.setAttribute('opacity',(jo*(1-dusk*.7)).toFixed(3));
+     // digits: the old one lifts away in 0.1 s, the new one settles from slightly larger, column by column
+     a.dig.forEach((vs,i)=>{const TT=[t0+.08+i*.05,tR+i*.05,tN+i*.05],ui=eo5((t-TT[0])/.45),seg=[];
+       vs.forEach((e,k)=>{if(k&&vs[k-1].textContent===e.textContent){seg[seg.length-1].k1=k;e.setAttribute('opacity',0);return}seg.push({e,k0:k,k1:k})});
+       seg.forEach((sg,j)=>{const e=sg.e,tin=TT[sg.k0],tout=sg.k1<2?TT[sg.k1+1]:1e9;let o=0,sc=1,dy=0;
+         if(t>=tin){if(j===0){o=ui;dy=(1-ui)*a.F*.25}else{const v=eo((t-tin-.1)/.3);o=v;sc=1.18-.18*v}
+           if(t>=tout){const u=cl((t-tout)/.1);o*=1-u;dy-=u*a.F*.08}}
+         const x=+e.getAttribute('x');e.setAttribute('fill',ink);e.setAttribute('opacity',o.toFixed(3));
+         e.setAttribute('transform',`translate(${x} ${a.cy}) scale(${sc.toFixed(4)}) translate(${-x} ${-a.cy}) translate(0 ${dy.toFixed(2)})`)})});
+     a.colon.setAttribute('opacity',(fin*(t-t0<1?1:.65+.35*Math.cos((t-t0-1)*Math.PI)**2)).toFixed(3));
+     a.g.setAttribute('opacity',(1-out).toFixed(3));a.g.setAttribute('transform',`translate(${a.cx} ${a.cy}) scale(${(1-.06*out).toFixed(4)}) translate(${-a.cx} ${-a.cy})`);
+     if(tb){tb.style.setProperty('--ink',ink);tb.classList.toggle('kxd',dusk>.5)}}
+   else if(tb&&tb.classList.contains('kxd')){tb.style.removeProperty('--ink');tb.classList.remove('kxd')}}
   // ---------- K2 ----------
   {const a=K.k2,tA=C('thats')-.24,z0=CA('in',C('comes'))+.06,z1=z0+.58;const on=win(t,tA,z1);vis(a.g,on);
    const lo=document.getElementById('logoOv');if(lo)lo.style.visibility=win(t,tA-.1,z1+.1)?'hidden':'';

@@ -205,7 +205,7 @@ a8b = f"""<!-- a8b airside and fast track -->
     <text id="ft8c" x="116" y="776" font-weight="700" font-size="88" fill="#EEF0F6" style="font-variant-numeric:tabular-nums" letter-spacing="-3"><tspan id="ft8n">75</tspan><tspan font-size="36" font-weight="600" dx="12" letter-spacing="0">min</tspan></text>
     <rect x="150" y="955" width="700" height="10" rx="5" fill="rgba(238,240,246,.12)"/>
     <rect id="pl8" x="150" y="955" width="700" height="10" rx="5" fill="url(#fl8)"/>
-    {st}</g></g>
+    {st}<g id="cm8" opacity="0"><circle cx="0" cy="960" r="26" fill="#9FB0FF" opacity=".28"/><circle cx="0" cy="960" r="10" fill="#FFFFFF"/></g></g></g>
     <g id="tok8"><g id="tokI"><rect x="-84" y="-42" width="168" height="84" rx="42" fill="#EEF0F6"/>
       <g id="tkC"><circle cx="-40" cy="0" r="32" fill="#9FB0FF"/><use href="#chf" x="-61" y="-29" width="42" height="58" style="color:#0F1426"/></g>
       <g id="tkU"><circle cx="40" cy="0" r="32" fill="#0F1426"/>{icon('user',40,0,38,'#EEF0F6')}</g>
@@ -551,7 +551,9 @@ import base64 as _b60
 _JH0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_hero_sprite.webp','rb').read()).decode()
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
-rep('.grain{position:absolute;','#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
+rep('<div id="text">','<div id="kxbg"></div><div id="text">')
+rep('.grain{position:absolute;','#kxbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}.tb.lt.kxd .kt .w.em>b,.tb.lt.kxd .kt .w.big>b{color:#9FB0FF}.tb.lt.kxd .kt .w.hl>b{color:#0F1426!important}'
+ '#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
  '.kxb{position:absolute;display:flex;box-sizing:border-box;background:linear-gradient(180deg,#1B2140,#141A33);border-radius:.18em;box-shadow:0 .5em 1.2em rgba(10,14,30,.35),inset 0 0 0 1px rgba(244,242,237,.08);visibility:hidden}'
  '.kxt{position:relative;perspective:5em;flex:none}.kxt::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(10,14,30,.55);z-index:3}'
  '.kh{position:absolute;left:0;right:0;height:50%;overflow:hidden;backface-visibility:hidden;font-family:var(--sans);font-weight:600;text-align:center;border-radius:.08em;will-change:transform}'
@@ -559,7 +561,9 @@ rep('.grain{position:absolute;','#kx{position:absolute;inset:0;pointer-events:no
  '.kh.bot,.kh.kfb{bottom:0;transform-origin:50% 0}.kh.bot span,.kh.kfb span{bottom:0}.kh.kft,.kh.kfb{z-index:2;visibility:hidden}'
  '.grain{position:absolute;')
 _i=s.index('function frameA(t)')
-s=s[:_i]+'window.JETH="'+_JH0+'";\n'+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
+_JT0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_sprite.webp','rb').read()).decode()
+_JS0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_shadow.webp','rb').read()).decode()
+s=s[:_i]+'window.JETH="'+_JH0+'";\n'+'window.JETT="'+_JT0+'";window.JETS="'+_JS0+'";\n'+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
 rep('if(window.FOOT)FOOT(t);','if(window.FOOT)FOOT(t);if(window.KX)KX(t);')
 # hero words track in (wide to tight) instead of popping and shaking the line
 rep("""      if(w.big){tl.fromTo(b,{scale:.35,opacity:0,filter:'blur(6px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(2.4)'},w.t-.02);
