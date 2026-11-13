@@ -53,14 +53,13 @@
   tl.fromTo(MZ,{s:3.7},{s:3.2,duration:C('airports')-.3-SA('a8'),ease:'sine.inOut'},SA('a8'));
   tl.fromTo(MZ,{s:3.2,cx:345,cy:445},{s:.95,cx:520,cy:600,duration:2.5,ease:'power3.inOut',immediateRender:false},C('airports')-.65);
   tl.fromTo('#mapG',{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'},SA('a8')+.05);
-  tl.fromTo('.hub8',{scale:0,transformOrigin:'50% 50%'},{scale:1,duration:.6,stagger:.15,ease:'back.out(2.2)'},SA('a8')+.35);
+  tl.fromTo('.hub8',{scale:0,opacity:0,transformOrigin:'50% 50%'},{scale:1,opacity:1,duration:.6,stagger:.12,ease:'expo.out'},C('airports')+.05);
   tl.set('.c8,.pin8 .pi',{opacity:0},0);
   [['LBG','bourget'],['FAB','farnborough'],['BQH','biggin']].forEach(([k,w])=>{const e=`.pin8[data-k=${k}] .pi`;
     tl.fromTo(e,{opacity:0,scale:0,transformOrigin:'50% 50%'},{opacity:1,scale:1,duration:.6,ease:'expo.out'},C(w)-.25);
-    tl.fromTo(`.c8[data-k=${k}]`,{opacity:0,x:-14},{opacity:1,x:0,duration:.5,ease:'expo.out'},C(w)-.05);tl.to(`.c8[data-k=${k}]`,{opacity:0,duration:.3},C('airports')-.3)});
+    tl.fromTo(`.c8[data-k=${k}]`,{opacity:0,x:-14},{opacity:1,x:0,duration:.6,ease:'expo.out'},C(w)-.1);tl.to(`.c8[data-k=${k}]`,{opacity:0,duration:.3},C('airports')-.3)});
   tl.to('.pin8 .pi',{opacity:0,scale:.6,duration:.4,ease:'power2.in'},C('airports')-.1);
   tl.fromTo(MZ,{a:0},{a:1,duration:1.8,ease:'power2.inOut'},C('airports')+.1);
-  $$('#rad8 circle').forEach((c,i)=>tl.fromTo(c,{attr:{r:20},opacity:.7},{attr:{r:560},opacity:0,duration:1.6,ease:'power2.out'},C('airports')+.1+i*.4));
   // A8b a 3D airliner lands and stops; our chauffeur is waiting at the door; then the arrival story, with fast track
   {const S8=SA('a8b'),DP=window.PLANE3D?(PLANE3D.render({x:0,door:0}),PLANE3D.project(...(PLANE3D.doorAnchor?PLANE3D.doorAnchor():[5.55,-.15,1.25]))).map((v,i)=>i?-20+v*650/900:-60+v*1300/1800):[588,330];
    tl.set(PL,{x:-175,door:0,cx:14},0);
@@ -166,7 +165,7 @@
    tl.fromTo('.lb9x',{opacity:0,y:20},{opacity:1,y:0,duration:.5,ease:'expo.out',stagger:.13,immediateRender:false},C('made')-.2);
    tl.fromTo('#seal9x',{opacity:0,scale:2.4,rotation:-30,transformOrigin:'50% 50%'},{opacity:1,scale:1,rotation:0,duration:.3,ease:'power4.in',immediateRender:false},C('measure')-.3);
    tl.fromTo('#seal9x',{rotation:0},{rotation:6,duration:2.5,ease:'sine.out',immediateRender:false},C('measure'))}
-  tl.to('#car0,#road,#roadC',{opacity:0,duration:.5,ease:'power2.inOut'},SA('a8')+1.05);tl.to('#car0,#road,#roadC',{opacity:1,duration:.35,ease:'power2.inOut'},SA('a8b')-.5);
+  tl.to('#car0,#road,#roadC',{opacity:0,duration:.5,ease:'power2.inOut'},SA('a8')+1.05);tl.to('#car0,#road,#roadC',{opacity:1,duration:.35,ease:'power2.inOut'},SA('a8b')+.15);
   // A10 white label: the confirmation flips from our brand to the agency's name
   tl.fromTo('#flip10',{y:80,opacity:0,filter:'blur(10px)'},{y:0,opacity:1,filter:'blur(0px)',duration:1,ease:'expo.out'},SA('a10')+.15);
   {const F=C('white')-.1;tl.to('#flip10',{scaleX:0,svgOrigin:'500 440',duration:.35,ease:'power2.in'},F);tl.set('#back10',{opacity:0},F+.35);tl.set('#front10',{opacity:1},F+.35);
@@ -179,3 +178,6 @@
   // v14 glints: a sun reflection crosses the logo at its first reveal, and again when the ending opens up
   tl.fromTo('#glintE1',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut'},C('premium#1')+.2);tl.fromTo('#glint1',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut'},C('premium#1')+.3);
   tl.fromTo('#glintE',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.2);tl.fromTo('#glint2',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.3);
+
+  // the world road and car fade out under the end card (a far-off car read as a stray white dot)
+  tl.to('#car0,#road,#roadC',{opacity:0,duration:.6,ease:'power2.inOut'},SA('a12')-.2);

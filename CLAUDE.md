@@ -134,3 +134,5 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - "Something truly unusual" (K8) is a hairline question mark that draws, fills like frosted glass and gets one reflection.
 - "Made to measure" stays the tape measure with three photos and the seal (in `tl_b.js`), and white label stays the split-flap name board (K5). A corner-mark frame and a wall of blinds were tried and the client preferred the originals.
 - `C('every')` is the first "every" at 1:06; use `CA(word, afterTime)` in kx.js when a word repeats.
+- Map (a8): no halos, no radar rings, no plane icons. Private terminals are one ring marker each with a code-and-name tag on a leader line, placed so tags never meet the text column or the frame edge. The pull-out shows eight destinations (Nice, Geneva, Munich, Rome, Madrid, Lisbon, Athens, Copenhagen) as a dot and a plain label. Paris and London rings only appear on the pull-out. The road returns only after the map has gone.
+- The world road and car fade out under the end card; a far-off car read as a stray white dot.
