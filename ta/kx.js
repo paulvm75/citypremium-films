@@ -30,23 +30,47 @@ function build(W,H,P){
   const svg=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},host);
   const defs=mk('defs',{},svg);
   const M=Math.min(W,H),k={svg,W,H,P};
-  // K0 the opening: the word "lands" comes in on a glide path, flares and touches down on a runway line (type that does what it says)
-  {const box=hx('div','kl',host),gh=[0,1,2,3].map(()=>hx('div','klw',box)),rw=hx('div','klr',box);gh.forEach(e=>e.textContent='lands');k.k0={box,gh,rw}}
   // KD the day on the ground: a 24-hour dial on the right, a real jet travels round it from 07:40 at the aircraft door
   // to 21:30 at the restaurant and 02:00 in the night, while the background goes from morning ivory to dusk to night
   {const bgd=document.getElementById('kxbg');bgd.innerHTML='';const bs=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd);
-   const bd=mk('defs',{},bs),cx=P?W*.5:W*.68,cy=P?H*.645:H*.5,R=P?W*.37:H*.355;
+   const bd=mk('defs',{},bs),cx=P?W*.5:W*.68,cy=P?H*.6:H*.43,R=P?W*.34:H*.315;
    const gr=mk('radialGradient',{id:'kdg',gradientUnits:'userSpaceOnUse',cx,cy,r:R*1.9},bd);mk('stop',{offset:0,'stop-color':'#4A58B2','stop-opacity':.55},gr);mk('stop',{offset:.5,'stop-color':'#2B3150','stop-opacity':.25},gr);mk('stop',{offset:1,'stop-color':'#141A33','stop-opacity':0},gr);
    const c1=mk('circle',{cx,cy,r:0},mk('clipPath',{id:'kdc1'},bd)),c2=mk('circle',{cx,cy,r:0},mk('clipPath',{id:'kdc2'},bd)),RM=Math.hypot(Math.max(cx,W-cx),Math.max(cy,H-cy))*1.02;
    const b0=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#F4F2ED'},bs),b1=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#262D52','clip-path':'url(#kdc1)'},bs),b2=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'#10152B','clip-path':'url(#kdc2)'},bs),bg3=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'url(#kdg)'},bs);
    const g=mk('g',{},svg),ring=mk('circle',{cx,cy,r:R,fill:'none','stroke-width':Math.max(1.5,R*.006),pathLength:1,'stroke-dasharray':'1 1',transform:`rotate(-90 ${cx} ${cy})`},g);
    const tk=mk('g',{},g);for(let h=0;h<24;h++){const a=h/24*Math.PI*2,M=h%6===0,r0=R*(M?.9:.94),r1=R*.97;mk('line',{x1:cx+r0*Math.sin(a),y1:cy-r0*Math.cos(a),x2:cx+r1*Math.sin(a),y2:cy-r1*Math.cos(a),'stroke-width':M?R*.012:R*.006,'stroke-linecap':'round'},tk)}
+   // the photo window inside the dial: the aircraft door at dawn, the maitre d' at the restaurant, the concierge at two in the morning
+   const Rp=R*.86,pc=mk('circle',{cx,cy,r:0},mk('clipPath',{id:'kdp'},defs)),pg=mk('g',{'clip-path':'url(#kdp)'},g),IS=Rp*2*1.14;
+   const ims=(window.DIAL||[]).map((u,i)=>{let par=pg;if(i){const m=mk('mask',{id:'kdm'+i,maskUnits:'userSpaceOnUse',x:cx-IS,y:cy-IS,width:2*IS,height:2*IS},defs);const w=mk('path',{fill:'#fff',d:''},m);par=mk('g',{mask:`url(#kdm${i})`},pg);par.__w=w}
+     const im=mk('image',{href:u,x:cx-IS/2,y:cy-IS/2,width:IS,height:IS,preserveAspectRatio:'xMidYMid slice'},par);im.__w=par.__w;return im});
+   const pr=mk('circle',{cx,cy,r:Rp,fill:'none',stroke:'rgba(10,14,30,.35)','stroke-width':R*.012},g);
+   const hand=mk('line',{x1:cx,y1:cy,x2:cx,y2:cy-Rp,stroke:IV,'stroke-width':Math.max(2,R*.01),'stroke-linecap':'round',opacity:0},g);
    const arc=mk('path',{fill:'none',stroke:PERI,'stroke-width':R*.016,'stroke-linecap':'round'},g);
-   const F=P?W*.17:H*.185,fn=`600 ${F}px ${FONT}`,d=tw('0',fn),cw=tw(':',fn)*1.05,tot=4*d+cw,x0=cx-tot/2,yb=cy+.34*F;
+   const dot=mk('circle',{cx,cy,r:R*.035,fill:PERI},g);
+   const F=P?W*.1:H*.095,fn=`600 ${F}px ${FONT}`,d=tw('0',fn),cw=tw(':',fn)*1.05,tot=4*d+cw,x0=cx-tot/2,yb=cy+R+(P?W*.16:H*.155);
    const V=['07:40','21:30','02:00'],xs=[x0,x0+d,null,x0+2*d+cw,x0+3*d+cw];
    const dig=[0,1,3,4].map(p=>V.map(v=>txt(g,v[p],xs[p]+d/2,yb,F,{fill:NV})));const colon=txt(g,':',x0+2*d+cw/2,yb-.04*F,F,{fill:PERI});
-   const jw=R*.36,js=mk('image',{href:window.JETS||'',x:-jw/2+jw*.05,y:-jw/2+jw*.09,width:jw,height:jw},g),ji=mk('image',{href:window.JETT||'',x:-jw/2,y:-jw/2,width:jw,height:jw},g);
-   k.kd={c1,c2,RM,g,bs,b1,b2,bg3,ring,tk,arc,dig,colon,js,ji,cx,cy,R,F}}
+   k.kd={c1,c2,RM,g,bs,b1,b2,bg3,ring,tk,arc,dig,colon,dot,pc,Rp,ims,hand,IS,yb,cx,cy,R,F}}
+  // K0 the opening: we are in the cabin. A window shade lifts on Paris at dawn, then the camera pushes through the window into the city
+  {const bgd=document.getElementById('kxbg'),ws=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd),d0=mk('defs',{},ws);
+   const wx=P?W*.5:W*.64,wy=P?H*.62:H*.5,wh=P?H*.42:H*.68,ww=wh/1.45,rr=ww*.47;
+   const rp=(w,h,r)=>`M${wx-w/2+r} ${wy-h/2}H${wx+w/2-r}A${r} ${r} 0 0 1 ${wx+w/2} ${wy-h/2+r}V${wy+h/2-r}A${r} ${r} 0 0 1 ${wx+w/2-r} ${wy+h/2}H${wx-w/2+r}A${r} ${r} 0 0 1 ${wx-w/2} ${wy+h/2-r}V${wy-h/2+r}A${r} ${r} 0 0 1 ${wx-w/2+r} ${wy-h/2}Z`;
+   const lw=mk('linearGradient',{id:'k0w',x1:0,y1:0,x2:1,y2:1},d0);[['0','#262D52'],['.55','#1B2140'],['1','#10152B']].forEach(([o,c])=>mk('stop',{offset:o,'stop-color':c},lw));
+   const gl=mk('radialGradient',{id:'k0l',gradientUnits:'userSpaceOnUse',cx:wx,cy:wy,r:wh*.95},d0);mk('stop',{offset:0,'stop-color':'#C7CEF0','stop-opacity':.22},gl);mk('stop',{offset:1,'stop-color':'#C7CEF0','stop-opacity':0},gl);
+   const lb=mk('linearGradient',{id:'k0b',x1:0,y1:0,x2:0,y2:1},d0);[['0','#3A4270'],['1','#1B2140']].forEach(([o,c])=>mk('stop',{offset:o,'stop-color':c},lb));
+   const ls=mk('linearGradient',{id:'k0s',x1:0,y1:0,x2:0,y2:1},d0);[['0','#E9E7E1'],['.92','#D6D4CE'],['1','#BDBBB5']].forEach(([o,c])=>mk('stop',{offset:o,'stop-color':c},ls));
+   const m=mk('mask',{id:'k0m',maskUnits:'userSpaceOnUse',x:-4*W,y:-4*H,width:9*W,height:9*H},d0);mk('rect',{x:-4*W,y:-4*H,width:9*W,height:9*H,fill:'#fff'},m);mk('path',{d:rp(ww,wh,rr),fill:'#000'},m);
+   const cp=mk('clipPath',{id:'k0c'},d0);mk('path',{d:rp(ww,wh,rr)},cp);
+   const zg=mk('g',{},ws),wall=mk('g',{mask:'url(#k0m)'},zg);
+   mk('rect',{x:-4*W,y:-4*H,width:9*W,height:9*H,fill:'url(#k0w)'},wall);mk('rect',{x:-4*W,y:-4*H,width:9*W,height:9*H,fill:'url(#k0l)'},wall);
+   mk('path',{d:rp(ww*1.2,wh*1.13,rr*1.22),fill:'url(#k0b)'},wall);mk('path',{d:rp(ww*1.2,wh*1.13,rr*1.22),fill:'none',stroke:'rgba(244,242,237,.14)','stroke-width':Math.max(1.5,ww*.006)},wall);
+   const inner=mk('g',{'clip-path':'url(#k0c)'},zg);
+   const shade=mk('g',{},inner);mk('rect',{x:wx-ww/2-4,y:wy-wh/2-4,width:ww+8,height:wh+8,fill:'url(#k0s)'},shade);
+   for(let i=1;i<7;i++)mk('line',{x1:wx-ww/2,x2:wx+ww/2,y1:wy-wh/2+wh*i/7,y2:wy-wh/2+wh*i/7,stroke:'rgba(20,26,51,.06)','stroke-width':2},shade);
+   mk('rect',{x:wx-ww*.14,y:wy+wh/2-wh*.045,width:ww*.28,height:wh*.02,rx:wh*.01,fill:'#9A988F'},shade);
+   const glass=mk('path',{d:`M${wx-ww/2} ${wy-wh*.1}L${wx+ww*.1} ${wy-wh/2}L${wx+ww*.3} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.18}Z`,fill:'#fff',opacity:.06},inner);
+   mk('path',{d:rp(ww,wh,rr),fill:'none',stroke:'rgba(5,8,18,.55)','stroke-width':ww*.05},zg);
+   k.k0={ws,zg,shade,glass,wx,wy,ww,wh}}
   // K2 That's where City Premium comes in, word by word, then the camera dives through the o of "comes"
   {const g=mk('g',{},svg);const mask=mk('mask',{id:'k2h',maskUnits:'userSpaceOnUse',x:-W,y:-H,width:3*W,height:3*H},defs);
    mk('rect',{x:-W,y:-H,width:3*W,height:3*H,fill:'#fff'},mask);const hole=mk('ellipse',{cx:0,cy:0,rx:0,ry:0,fill:'#000'},mask);
@@ -116,21 +140,13 @@ function apply(t){
   // ---------- K0 ----------
   ['#fa1g','#fa1','#fa1s','#jw1'].forEach(q=>{const e=document.querySelector(q);if(e)e.style.visibility=t<SA('a2')+.5?'hidden':''});
   document.querySelectorAll('.ft1').forEach(e=>e.style.visibility=t<SA('a2')+.5?'hidden':'');
-  {const a=K.k0,tT=C('lands')+.02,t0=tT-.6,t1=tT+.14;
-   if(!K.lw&&typeof CHUNKS!=='undefined'){for(const c of CHUNKS)for(const w of c.words)if(w.el.textContent==='lands'&&!K.lw)K.lw=w.el.firstChild}
-   const b=K.lw,on=b&&win(t,t0,t1);a.box.style.display=on?'block':'none';if(b)b.style.visibility=on?'hidden':'';
-   if(on){const fr=document.getElementById('film').getBoundingClientRect(),r=b.getBoundingClientRect(),cs=getComputedStyle(b),gx=+(gsap.getProperty(b,'x'))||0;
-     const X=r.left-fr.left-gx,Y=r.top-fr.top,fs=parseFloat(cs.fontSize);
-     a.gh.forEach(e=>{e.style.font=`${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;e.style.letterSpacing=cs.letterSpacing;e.style.color=cs.color});
-     const pose=tt=>{const p=cl((tt-t0)/(tT-t0)),e=1-Math.pow(1-p,2.6);
-       let dx=W*.4*(1-e),dy=-H*.22*Math.pow(1-e,1.25),rot=-7*(1-e)+3.5*Math.sin(Math.PI*cl((p-.55)/.45)),sc=1.25-.25*e;
-       if(tt>tT){const q=tt-tT;dy+=-fs*.05*Math.sin(q*18)*Math.exp(-q*16);rot+=1.2*Math.sin(q*16)*Math.exp(-q*16)}
-       return `translate(${(X+dx).toFixed(1)}px,${(Y+dy).toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(4)})`};
-     a.gh.forEach((e,i)=>{const tt=t-i*.045,vis=tt>=t0;e.style.transform=pose(tt);const co=+getComputedStyle(b.closest('.ch')).opacity;e.style.opacity=vis?co*(i?[0,.26,.13,.06][i]*(t<tT?1:1-cl((t-tT)/.12)):cl((t-t0)/.12)):0;
-       if(!i){const v=t<tT?(1-cl((t-t0)/(tT-t0))):0;e.style.filter=v>.05?`blur(${(v*5).toFixed(2)}px)`:'none'}});
-     // runway line draws under the word just before touchdown and slides away with it
-     const ru=eo((t-(tT-.25))/.3),rf=1-ez((t-tT)/.22);a.rw.style.left=(X-fs*.3)+'px';a.rw.style.top=(Y+fs*1.06)+'px';a.rw.style.width=(fs*5.2)+'px';
-     a.rw.style.transform=`scaleX(${ru.toFixed(4)})`;a.rw.style.opacity=(ru>0?rf*.85:0).toFixed(3)}}
+  {const a=K.k0,tS=.2,tP=C('lands')-.08,tE=tP+.8;const on=t<tE;a.ws.style.visibility=on?'visible':'hidden';
+   const pin=document.getElementById('pin1');if(pin)pin.style.visibility=t<SA('a2')+.5?'hidden':'';
+   if(on){const up=eo((t-tS)/.85);a.shade.setAttribute('transform',`translate(0 ${(-up*a.wh*1.04).toFixed(2)})`);
+     const u=cl((t-tP)/(tE-tP)),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2,S=Math.max(W/a.ww,H/a.wh)*3.4,sc=Math.pow(S,Math.pow(e,1.15)),m=ez(u);
+     const cx=a.wx+(W/2-a.wx)*m,cy=a.wy+(H/2-a.wy)*m;
+     a.zg.setAttribute('transform',`translate(${cx.toFixed(2)} ${cy.toFixed(2)}) scale(${sc.toFixed(4)}) translate(${-a.wx} ${-a.wy})`);
+     a.glass.setAttribute('opacity',(.06*(1-u)).toFixed(3))}}
   // ---------- KD ----------
   {const a=K.kd,t0=C('aircraft')-.34,tR=C('restaurant')-.12,tN=C('two')-.06,tx=C('thats')-.22,t1=C('thats')+.06;
    const on=win(t,t0,t1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
@@ -142,10 +158,18 @@ function apply(t){
      a.tk.setAttribute('stroke',dim);a.tk.setAttribute('opacity',(.45*eo((t-t0-.2)/.6)).toFixed(3));
      const A0=115,A1=322.5,A2=390,ang=A0-55*(1-eo((t-t0)/.95))+(A1-A0)*exio((t-tR)/.85)+(A2-A1)*exio((t-tN)/.7);
      const pt=a2=>[a.cx+a.R*Math.sin(a2*Math.PI/180),a.cy-a.R*Math.cos(a2*Math.PI/180)],[jx,jy]=pt(ang);
-     const st0=Math.min(A0,ang),p0=pt(st0);a.arc.setAttribute('d',ang-st0>.5?`M${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${a.R} ${a.R} 0 ${ang-st0>180?1:0} 1 ${jx.toFixed(1)} ${jy.toFixed(1)}`:'');
+     const st0=Math.min(A0,ang),p0=pt(st0);   // progress arc from 07:40 to nowa.arc.setAttribute('d',ang-st0>.5?`M${p0[0].toFixed(1)} ${p0[1].toFixed(1)} A${a.R} ${a.R} 0 ${ang-st0>180?1:0} 1 ${jx.toFixed(1)} ${jy.toFixed(1)}`:'');
      a.arc.setAttribute('opacity',(fin*.9).toFixed(3));
-     [a.js,a.ji].forEach(e=>e.setAttribute('transform',`translate(${jx.toFixed(2)} ${jy.toFixed(2)}) rotate(${ang.toFixed(2)})`));
-     const jo=cl((t-t0)/.25);a.ji.setAttribute('opacity',jo);a.js.setAttribute('opacity',(jo*(1-dusk*.7)).toFixed(3));
+     a.dot.setAttribute('cx',jx.toFixed(2));a.dot.setAttribute('cy',jy.toFixed(2));a.dot.setAttribute('opacity',fin.toFixed(3));
+     // photo window: opens from the centre, then a clock hand sweeps each next moment in
+     a.pc.setAttribute('r',(a.Rp*eo((t-t0-.05)/.6)).toFixed(1));
+     const sw=[0,exio((t-tR+.06)/.8),exio((t-tN+.04)/.7)];let hv=0,ha=0;
+     a.ims.forEach((im,i)=>{const ti=[t0,tR,tN][i],k=1.1-.1*eo((t-ti)/3.2),x=a.cx-a.IS*k/2,y=a.cy-a.IS*k/2;im.setAttribute('x',x.toFixed(1));im.setAttribute('y',y.toFixed(1));im.setAttribute('width',(a.IS*k).toFixed(1));im.setAttribute('height',(a.IS*k).toFixed(1));
+       if(i&&im.__w){const th=sw[i]*360;if(th>0&&th<1){}
+         if(th<=.01)im.__w.setAttribute('d','');else if(th>=359.9)im.__w.setAttribute('d',`M${a.cx-a.IS} ${a.cy-a.IS}h${2*a.IS}v${2*a.IS}h${-2*a.IS}z`);
+         else{const r2=a.IS,e2=(th-90)*Math.PI/180,ex=a.cx+r2*Math.cos(e2),ey=a.cy+r2*Math.sin(e2);im.__w.setAttribute('d',`M${a.cx} ${a.cy}L${a.cx} ${a.cy-r2}A${r2} ${r2} 0 ${th>180?1:0} 1 ${ex.toFixed(1)} ${ey.toFixed(1)}Z`)}
+         if(sw[i]>0&&sw[i]<1){hv=Math.sin(Math.PI*sw[i]);ha=th}}});
+     a.hand.setAttribute('opacity',hv.toFixed(3));a.hand.setAttribute('transform',`rotate(${ha.toFixed(2)} ${a.cx} ${a.cy})`);
      // digits: the old one lifts away in 0.1 s, the new one settles from slightly larger, column by column
      a.dig.forEach((vs,i)=>{const TT=[t0+.08+i*.05,tR+i*.05,tN+i*.05],ui=eo5((t-TT[0])/.45),seg=[];
        vs.forEach((e,k)=>{if(k&&vs[k-1].textContent===e.textContent){seg[seg.length-1].k1=k;e.setAttribute('opacity',0);return}seg.push({e,k0:k,k1:k})});
@@ -153,7 +177,7 @@ function apply(t){
          if(t>=tin){if(j===0){o=ui;dy=(1-ui)*a.F*.25}else{const v=eo((t-tin-.1)/.3);o=v;sc=1.18-.18*v}
            if(t>=tout){const u=cl((t-tout)/.1);o*=1-u;dy-=u*a.F*.08}}
          const x=+e.getAttribute('x');e.setAttribute('fill',ink);e.setAttribute('opacity',o.toFixed(3));
-         e.setAttribute('transform',`translate(${x} ${a.cy}) scale(${sc.toFixed(4)}) translate(${-x} ${-a.cy}) translate(0 ${dy.toFixed(2)})`)})});
+         e.setAttribute('transform',`translate(${x} ${a.yb}) scale(${sc.toFixed(4)}) translate(${-x} ${-a.yb}) translate(0 ${dy.toFixed(2)})`)})});
      a.colon.setAttribute('opacity',(fin*(t-t0<1?1:.65+.35*Math.cos((t-t0-1)*Math.PI)**2)).toFixed(3));
      a.g.setAttribute('opacity',(1-out).toFixed(3));a.g.setAttribute('transform',`translate(${a.cx} ${a.cy}) scale(${(1-.06*out).toFixed(4)}) translate(${-a.cx} ${-a.cy})`);
      if(tb){tb.style.setProperty('--ink',ink);tb.classList.toggle('kxd',dusk>.5)}}

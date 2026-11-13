@@ -27,7 +27,7 @@ function moments(t){
   const out=[];
   // o1 hook: a letterbox aperture opens on Paris at dawn from the first frame; the light panel of the next scene pushes it out to the left
   {const t0=0,tw=SA('a2')-.3,t2=tw+.95;
-   if(t<t2){const ap=exio((t-t0+.08)/.85),wp=exio((t-tw)/.95);
+   if(t<t2){const ap=1,wp=exio((t-tw)/.95);
      out.push({L:'B',k:'dawn',ct:t*.9+.2,op:1,aper:ap,wipe:wp,scale:1.1-.08*eo(t/4.2),veil:'hook'})}}
   // o2 the fleet: a full-bleed wipe from the right with the car pass, out to the left on "chauffeurs"
   {const a0=SA('a7')-.2,a1=a0+.6,b0=C('chauffeurs')-.42,b1=b0+.55;

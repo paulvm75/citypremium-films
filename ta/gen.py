@@ -564,7 +564,7 @@ rep('.grain{position:absolute;','#kxbg{position:absolute;inset:0;pointer-events:
 _i=s.index('function frameA(t)')
 _JT0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_sprite.webp','rb').read()).decode()
 _JS0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_shadow.webp','rb').read()).decode()
-s=s[:_i]+'window.JETH="'+_JH0+'";\n'+'window.JETT="'+_JT0+'";window.JETS="'+_JS0+'";\n'+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
+s=s[:_i]+'window.JETH="'+_JH0+'";\n'+'window.DIAL='+__import__('json').dumps(['data:image/jpeg;base64,'+_b60.b64encode(open(f'/home/claude/cp/dial/d{i}.jpg','rb').read()).decode() for i in (0,1,3)])+';\n'+'window.JETT="'+_JT0+'";window.JETS="'+_JS0+'";\n'+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
 rep('if(window.FOOT)FOOT(t);','if(window.FOOT)FOOT(t);if(window.KX)KX(t);')
 # hero words track in (wide to tight) instead of popping and shaking the line
 rep("""      if(w.big){tl.fromTo(b,{scale:.35,opacity:0,filter:'blur(6px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(2.4)'},w.t-.02);
