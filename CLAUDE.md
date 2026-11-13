@@ -90,3 +90,25 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - **Fleet side cars (a7, about 0:35):** these come from `ta/side/side.py`. The old v18 profile read as nose-left with the headlight on the right, so the client saw the lights as reversed.
   - Each car has a long hood at the nose, a white headlight at the nose and a red tail lamp at the rear.
   - The Paris car drives in from the left with its nose to the right. The London car comes in from the right, so it's mirrored and drives nose first.
+
+## Agencies v10: Katana cinematic inserts (Higgsfield)
+- The user invoked `/katana` to upgrade the visuals. The Higgsfield workflow generated people-free photoreal footage:
+  - Soul Cinema location plates. Every plate is checked for people; Soul Cinema copies walkers from an evidence photo, so text-only plates were safer.
+  - Seedance 2.5 shots at 1080p (16 credits per second on 2026-11-13).
+  - Ledger, state and QA live in the Higgsfield sandbox workspace `katana-cp-agv10`.
+- The source clips are in `cp/foot/src/`. `cp/foot/extract.py` grades them and writes:
+  - render sequences `foot/r/<k>/f%04d.jpg` (30 fps, blended from 24, not in git; re-run `extract.py` to rebuild)
+  - page videos `foot/v/<k>.mp4` and `.webm`
+  - 15 fps letter sequences `foot/p/<k>/`
+  - `clips.json`
+- `ta/foot.js` drives everything from film time:
+  - `#footB` sits behind the world SVG (a backdrop that the graphics sit on). `#footT` sits above `#dim`, so the camera dim can't darken it.
+  - Moments:
+    - o1: an iris from `#pin1` onto Paris at dawn.
+    - o2: a full-bleed wipe with a light edge onto the saloon, from SA('a7') to C('chauffeurs').
+    - o3 and o4: footage inside the CHAMPAGNE and COTSWOLDS letters, by swapping the hrefs of `#pc9x` and `#pt9x`.
+    - o5: Paris at night behind the end card, at 0.8x speed.
+  - Portrait shows the footage in a feathered full-width square band at 36% height, never as an upscaled centre crop.
+- Renders must `await VSEEK(t)` after `renderAt(t)` (`renderta9.py` and `shotta9.py` do this), otherwise frames are captured before the JPEG decodes.
+- The published artifact is multi-file: the page plus `foot/v/*` and `foot/p/*`, published with the Artifact tool's `files` (root `cp/`).
+- `cp/run9.sh` is the full pipeline (both renders in parallel, mix, compress to `send9/CityPremium_agencies_v10_*.mp4`).

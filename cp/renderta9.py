@@ -13,7 +13,7 @@ async def main():
     ff=subprocess.Popen(['ffmpeg','-y','-v','error','-f','image2pipe','-framerate',str(FPS),'-c:v','mjpeg','-i','-','-c:v','libx264','-pix_fmt','yuv420p','-crf','18','-preset','medium',f'ta9video_{mode}.mp4'],stdin=subprocess.PIPE)
     el=await pg.query_selector('#film')
     for i in range(n):
-      await pg.evaluate(f'renderAt({i/FPS})')
+      await pg.evaluate(f'(renderAt({i/FPS}),window.VSEEK?VSEEK({i/FPS}):0)')
       ff.stdin.write(await el.screenshot(type='jpeg',quality=92))
       if i%300==0: print(mode,i,'/',n,flush=True)
     ff.stdin.close(); ff.wait(); await b.close()

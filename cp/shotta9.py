@@ -10,6 +10,6 @@ async def main():
       if await pg.evaluate('!!window.PLANE3D_READY'): break
       await pg.wait_for_timeout(500)
     for t in sys.argv[2].split(','):
-      await pg.evaluate(f'renderAt({t})');await pg.screenshot(path=f'shots/ta9_{sys.argv[1]}_{t}.png')
+      await pg.evaluate(f'(renderAt({t}),window.VSEEK?VSEEK({t}):0)');await pg.screenshot(path=f'shots/ta9_{sys.argv[1]}_{t}.png')
     print(errs[:8]);await b.close()
 asyncio.run(main())

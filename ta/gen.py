@@ -530,5 +530,17 @@ s=_re.sub(r'<symbol id="carS".*?</symbol>', lambda m:_side('carS','pS',True,Fals
 _a=s.index('<symbol id="carT"');_b=s.index('</symbol>',_a)+9
 s=s[:_a]+CAR+s[_b:]
 s=s.replace('<use id="car0" href="#carT" x="-60" y="-26" width="120" height="52"/>','<use id="car0" href="#carT" x="-84" y="-36.4" width="168" height="72.8"/>')
+
+# ---- Katana cinematic inserts (foot.js): footage layers, CSS and the clip table ----
+_FC=open('/home/claude/cp/foot/clips.json').read()
+_FL='<div class="fw"><img alt=""><video muted playsinline preload="auto"></video></div><div class="fv"></div>'
+rep('<div id="glow"><i></i><i></i><i></i></div>','<div id="glow"><i></i><i></i><i></i></div><div id="footB" class="foot">'+_FL+'</div>')
+rep('<div class="dim" id="dim"></div>','<div class="dim" id="dim"></div><div id="footT" class="foot">'+_FL+'<div class="fe"></div></div>')
+rep('.grain{position:absolute;','.foot{position:absolute;inset:0;pointer-events:none;visibility:hidden;overflow:hidden}.foot .fw{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;background:#0F1426}.foot .fw img,.foot .fw video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;display:none}.foot .fw.band{-webkit-mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%)}.foot .fv{position:absolute;left:0;top:0;width:100%;height:100%}.foot .fe{position:absolute;top:0;width:2px;margin-left:-1px;background:linear-gradient(180deg,rgba(244,242,237,0),rgba(244,242,237,.95) 30%,rgba(244,242,237,.95) 70%,rgba(244,242,237,0));box-shadow:0 0 22px 4px rgba(199,206,240,.55);opacity:0}\n.grain{position:absolute;')
+_i=s.index('function frameA(t)')
+s=s[:_i]+'window.FOOTCL='+_FC+';\n'+open('/home/claude/ta/foot.js').read()+'\n'+s[_i:]
+_k=s.index('frameA(t);',s.index('function render('))
+_a=s.index('applyCam();',_k)+len('applyCam();')
+s=s[:_a]+'if(window.FOOT)FOOT(t);'+s[_a:]
 open('/home/claude/ta/ta1.html', 'w').write(s)
 print('ok', len(s))
