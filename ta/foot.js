@@ -7,6 +7,7 @@ const RENDER=location.hash.startsWith('#render');
 const FPS=RENDER?30:15;
 const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const ez=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};       // cubic in-out
+const exio=x=>{x=cl(x);return x<=0?0:x>=1?1:x<.5?Math.pow(2,20*x-10)/2:(2-Math.pow(2,-20*x+10))/2};
 const eo=x=>{x=cl(x);return 1-Math.pow(1-x,4)};                         // quart out
 // clip table: n = frames in the render sequence (30 fps), dur = seconds of footage after retime
 const CL=window.FOOTCL||{};
@@ -24,10 +25,10 @@ function pinXY(){const p=document.querySelector('#pin1 circle'),f=film();if(!p||
 // state per moment -> {layer,k,ct,op,clip,veil,edge,scale}
 function moments(t){
   const out=[];
-  // o1 hook: an iris opens from the Paris pin onto Paris at dawn, the itinerary card floats over it
-  {const t0=C('paris#1')-.18,t1=SA('a2')-.5,t2=SA('a2')-.06;
-   if(t>t0-.05&&t<t2){const r=eo((t-t0)/1.05),o=1-ez((t-t1)/(t2-t1));
-     out.push({L:'B',k:'dawn',ct:t-(t0-.25),op:o,iris:r,scale:1.08-.08*eo((t-t0)/3.2)+.03*ez((t-t1)/(t2-t1)),veil:'hook'})}}
+  // o1 hook: a letterbox aperture opens on Paris at dawn from the first frame; the light panel of the next scene pushes it out to the left
+  {const t0=0,tw=SA('a2')-.3,t2=tw+.95;
+   if(t<t2){const ap=exio((t-t0+.08)/.85),wp=exio((t-tw)/.95);
+     out.push({L:'B',k:'dawn',ct:t*.9+.2,op:1,aper:ap,wipe:wp,scale:1.1-.08*eo(t/4.2),veil:'hook'})}}
   // o2 the fleet: a full-bleed wipe from the right with the car pass, out to the left on "chauffeurs"
   {const a0=SA('a7')-.2,a1=a0+.6,b0=C('chauffeurs')-.42,b1=b0+.55;
    if(t>a0&&t<b1){const wi=ez((t-a0)/(a1-a0)),wo=ez((t-b0)/(b1-b0));
@@ -61,9 +62,10 @@ function apply(t){
     media.style.transform=`scale(${m.scale.toFixed(4)})`;
     // reveal
     let cp='none';
-    if(m.iris!==undefined){let[x,y]=pinXY();y-=wy;const R=Math.hypot(Math.max(x,W-x),Math.max(y,wh-y))*1.02;cp=`circle(${(Math.max(.0001,m.iris)*R).toFixed(1)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px)`}
+    if(m.aper!==undefined){const v=(1-m.aper)*50;cp=`inset(${v.toFixed(3)}% ${(100*m.wipe).toFixed(3)}% ${v.toFixed(3)}% 0)`}
+    else if(m.iris!==undefined){let[x,y]=pinXY();y-=wy;const R=Math.hypot(Math.max(x,W-x),Math.max(y,wh-y))*1.02;cp=`circle(${(Math.max(.0001,m.iris)*R).toFixed(1)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px)`}
     else if(m.inset){cp=`inset(0 ${m.inset[1].toFixed(3)}% 0 ${m.inset[0].toFixed(3)}%)`}
-    l.win.style.clipPath=cp;
+    l.win.style.clipPath=cp;l.veil.style.clipPath=m.aper!==undefined?cp:'none';
     if(l.edge){const e=m.edge||0;l.edge.style.opacity=(e>0&&e<1?Math.sin(Math.PI*e):0).toFixed(3);
       const ex=m.inset?(m.inset[0]>0?m.inset[0]:100-m.inset[1]):0;l.edge.style.left=ex.toFixed(3)+'%';l.edge.style.top=wy+'px';l.edge.style.height=wh+'px'}
     l.veil.style.background=(P?VEILP:VEIL)[m.veil];l.veil.style.top=wy+'px';l.veil.style.height=wh+'px';
@@ -77,6 +79,7 @@ function apply(t){
   for(const [id,k,t0] of [['pc9x','champ',C('champagne')-.55],['pt9x','cots',C('weekend')-.45]]){
     const el=document.getElementById(id);if(!el||!CL[k])continue;const s=SRC(k,fidx(k,t-t0));
     if(el.__s!==s){el.__s=s;if(RENDER)el.__p=new Promise(r=>{el.addEventListener('load',r,{once:true});el.addEventListener('error',r,{once:true});setTimeout(r,4000)});el.setAttribute('href',s)}}
+  {const wm=document.getElementById('wmk'),fv=['B','T'].some(k=>L[k]&&L[k].d.style.visibility==='visible'&&+L[k].d.style.opacity>.05);if(wm)wm.style.visibility=fv?'hidden':''}   // no watermark over footage
   lastT=t}
 window.FOOT=apply;
 // renders: wait until every image whose source changed has decoded, then two frames for compositing

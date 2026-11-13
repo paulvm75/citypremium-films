@@ -503,19 +503,19 @@ rep("tl.fromTo('#rip',{x:()=>cw()*.62-W*.03,y:()=>chh()*.45-W*.03,scale:.3,opaci
 # richer colour: layered gradients on every background panel, plus slow drifting light blobs
 rep(":TONE[id];document.querySelector('#panels').appendChild(d);", ":GB(id);document.querySelector('#panels').appendChild(d);")
 rep("const LIGHT={a2:1,a3:1,a6:1,a9:1,a10:1};", """const LIGHT={a2:1,a3:1,a6:1,a9:1,a10:1};
-const GBM={'#0F1426':'radial-gradient(75% 65% at 85% 12%,rgba(112,96,232,.34),rgba(112,96,232,0) 62%),radial-gradient(60% 60% at 6% 96%,rgba(56,132,214,.24),rgba(56,132,214,0) 60%),linear-gradient(160deg,#151B36,#0B0F1E)',
- '#EEF0F6':'radial-gradient(60% 58% at 88% 8%,rgba(196,186,255,.6),rgba(196,186,255,0) 62%),radial-gradient(55% 55% at 4% 100%,rgba(176,212,255,.55),rgba(176,212,255,0) 62%),#EEF0F6',
- '#5A6690':'radial-gradient(70% 60% at 72% 0%,rgba(206,190,255,.5),rgba(206,190,255,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(36,54,132,.6),rgba(36,54,132,0) 62%),linear-gradient(180deg,#6672A6,#47517E)',
- '#2B3561':'radial-gradient(70% 55% at 72% 6%,rgba(166,146,255,.38),rgba(166,146,255,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(48,120,200,.25),rgba(48,120,200,0) 60%),linear-gradient(180deg,#303A6C,#1D2448)',
- '#C7CEF0':'radial-gradient(60% 60% at 90% 0%,rgba(255,255,255,.65),rgba(255,255,255,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(150,128,240,.38),rgba(150,128,240,0) 62%),#C7CEF0'};
+const GBM={'#0F1426':'radial-gradient(80% 70% at 82% 0%,rgba(74,88,178,.42),rgba(74,88,178,0) 62%),radial-gradient(70% 60% at 0% 100%,rgba(43,49,80,.75),rgba(43,49,80,0) 60%),linear-gradient(165deg,#1B2140,#0B0F1E)',
+ '#EEF0F6':'radial-gradient(70% 60% at 88% 0%,rgba(178,188,232,.38),rgba(178,188,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(206,208,216,.55),rgba(206,208,216,0) 62%),linear-gradient(180deg,#F7F5F0,#EFEDE7)',
+ '#5A6690':'radial-gradient(70% 60% at 72% 0%,rgba(150,164,232,.45),rgba(150,164,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(20,26,51,.6),rgba(20,26,51,0) 62%),linear-gradient(180deg,#2E3560,#1B2140)',
+ '#2B3561':'radial-gradient(70% 55% at 72% 0%,rgba(122,136,216,.36),rgba(122,136,216,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(11,15,30,.55),rgba(11,15,30,0) 60%),linear-gradient(180deg,#252C52,#141A33)',
+ '#C7CEF0':'radial-gradient(60% 60% at 90% 0%,rgba(178,188,232,.4),rgba(178,188,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(196,198,208,.6),rgba(196,198,208,0) 62%),linear-gradient(180deg,#EFEDE7,#E6E4DE)'};
 const GB=id=>GBM[TONE[id]]||TONE[id];
 const MB={v:0};""")
 rep('<div id="panels"></div>', '<div id="panels"></div><div id="glow"><i></i><i></i><i></i></div>')
-rep('#panels{position:absolute;inset:0}', '#glow{position:absolute;inset:0;pointer-events:none;opacity:.3}#glow i{position:absolute;width:80cqmax;height:80cqmax;left:0;top:0;will-change:transform}#glow i:nth-child(1){background:radial-gradient(closest-side,rgba(142,124,240,.9),rgba(142,124,240,0))}#glow i:nth-child(2){background:radial-gradient(closest-side,rgba(79,163,224,.8),rgba(79,163,224,0))}#glow i:nth-child(3){background:radial-gradient(closest-side,rgba(199,206,240,.8),rgba(199,206,240,0))}#panels{position:absolute;inset:0}')
+rep('#panels{position:absolute;inset:0}', '#glow{position:absolute;inset:0;pointer-events:none;opacity:.3}#glow i{position:absolute;width:80cqmax;height:80cqmax;left:0;top:0;will-change:transform}#glow i:nth-child(1){background:radial-gradient(closest-side,rgba(96,110,214,.85),rgba(96,110,214,0))}#glow i:nth-child(2){background:radial-gradient(closest-side,rgba(150,160,205,.6),rgba(150,160,205,0))}#glow i:nth-child(3){background:radial-gradient(closest-side,rgba(214,216,226,.7),rgba(214,216,226,0))}#panels{position:absolute;inset:0}')
 rep('<svg id="world" xmlns="http://www.w3.org/2000/svg">', '<svg id="world" xmlns="http://www.w3.org/2000/svg"><defs><filter id="mb" x="-4%" y="-4%" width="108%" height="108%" color-interpolation-filters="sRGB"><feGaussianBlur id="mbB" stdDeviation="0 0"/></filter></defs>')
 rep("const go=(id,t,o={})=>{const d=o.d||1.3,z=o.z||1,", "const go=(id,t,o={})=>{if(o.dip!==1)tl.to(MB,{keyframes:[{v:1,duration:(o.d||1.3)*.5,ease:'power2.in'},{v:0,duration:(o.d||1.3)*.5,ease:'power2.out'}]},t);const d=o.d||1.3,z=o.z||1,")
 rep("const shapes=[['inset(0 100% 0 0)','inset(0 0% 0 0)'],['circle(0% at 72% 55%)','circle(150% at 72% 55%)'],['inset(0 0 0 100%)','inset(0 0 0 0%)'],['inset(100% 0 0 0)','inset(0% 0 0 0)']];",
-    "const shapes=[['circle(0% at 72% 55%)','circle(150% at 72% 55%)'],['circle(0% at 100% 100%)','circle(160% at 100% 100%)'],['circle(0% at 85% 30%)','circle(150% at 85% 30%)']];")
+    "const shapes=[['inset(0 0 0 100%)','inset(0 0 0 0%)']];")
 # v9b: no swoosh on every text chunk; kinetic ending
 rep("if(!first)add('swish',c.t-.08,.22);", "")
 rep("tl.fromTo('#cta',{scale:0},{scale:1,duration:.5,ease:'back.out(2)'},C('book')-.25);", "tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);tl.fromTo('#ctaOv',{scale:1.06},{scale:1,duration:2.2,ease:'expo.out'},C('city#3')-.55);tl.to('#ctaOv',{scale:1.045,duration:Math.max(1,T_END-C('city#3')-1.7),ease:'sine.inOut'},C('city#3')+1.65);")
@@ -543,6 +543,12 @@ _k=s.index('frameA(t);',s.index('function render('))
 _a=s.index('applyCam();',_k)+len('applyCam();')
 s=s[:_a]+'if(window.FOOT)FOOT(t);'+s[_a:]
 
+# v12 text grammar: no clipping masks on words
+rep('.kt .w{display:inline-block;overflow:hidden;','.kt .w{display:inline-block;overflow:visible;')
+rep("      else tl.fromTo(b,{yPercent:100,opacity:0},{yPercent:0,opacity:1,duration:.6,ease:'expo.out'},w.t-.04);",
+    "      else tl.fromTo(b,{x:'.42em',opacity:0,filter:'blur(7px)'},{x:0,opacity:1,filter:'blur(0px)',duration:.62,ease:'expo.out'},w.t-.05);")
+import base64 as _b60
+_JH0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_hero_sprite.webp','rb').read()).decode()
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('.grain{position:absolute;','#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
@@ -553,16 +559,16 @@ rep('.grain{position:absolute;','#kx{position:absolute;inset:0;pointer-events:no
  '.kh.bot,.kh.kfb{bottom:0;transform-origin:50% 0}.kh.bot span,.kh.kfb span{bottom:0}.kh.kft,.kh.kfb{z-index:2;visibility:hidden}'
  '.grain{position:absolute;')
 _i=s.index('function frameA(t)')
-s=s[:_i]+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
+s=s[:_i]+'window.JETH="'+_JH0+'";\n'+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
 rep('if(window.FOOT)FOOT(t);','if(window.FOOT)FOOT(t);if(window.KX)KX(t);')
 # hero words track in (wide to tight) instead of popping and shaking the line
 rep("""      if(w.big){tl.fromTo(b,{scale:.35,opacity:0,filter:'blur(6px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(2.4)'},w.t-.02);
         tl.fromTo(c.el,{x:0},{keyframes:{x:[0,-5,4,-2,0]},duration:.22,ease:'none'},w.t+.06)}""",
-"""      if(w.big){tl.fromTo(b,{yPercent:38,opacity:0,scaleX:1.16,letterSpacing:'.14em'},{yPercent:0,opacity:1,scaleX:1,letterSpacing:'0em',duration:.62,ease:'expo.out'},w.t-.04)}""")
+"""      if(w.big){tl.fromTo(b,{x:'.3em',opacity:0,scaleX:1.14,letterSpacing:'.16em',filter:'blur(9px)'},{x:0,opacity:1,scaleX:1,letterSpacing:'0em',filter:'blur(0px)',duration:.7,ease:'expo.out'},w.t-.05)}""")
 # lines leave by rolling up out of their own mask, word by word, rather than blurring away
 rep("""    tl.to(c.el,{opacity:0,y:-18,filter:'blur(4px)',duration:.32,ease:'power2.in'},end-.34);""",
-"""    c.words.forEach((w,j)=>tl.fromTo(w.el.firstChild,{yPercent:0},{yPercent:-108,duration:.3,ease:'power3.in',immediateRender:false},end-.36+j*.014));
-    tl.to(c.el,{opacity:0,duration:.1,ease:'none'},end-.1);""")
+"""    c.words.forEach((w,j)=>tl.fromTo(w.el.firstChild,{x:0,filter:'blur(0px)'},{x:'-.3em',filter:'blur(6px)',duration:.3,ease:'power2.in',immediateRender:false},end-.34+j*.012));
+    tl.to(c.el,{opacity:0,duration:.3,ease:'power2.in'},end-.32);""")
 # a real business jet: Bombardier Global 5000 (FlightGear AI model, GPL v2), rendered top-down and three-quarter in three.js
 import base64 as _b6
 _JT='data:image/webp;base64,'+_b6.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_sprite.webp','rb').read()).decode()

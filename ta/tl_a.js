@@ -15,8 +15,8 @@
    tl.from('#pin1',{scale:0,svgOrigin:'500 150',duration:.5,ease:'back.out(2.4)'},L-.25);
    tl.fromTo('#pin1r',{attr:{r:14},opacity:.9},{attr:{r:64},opacity:0,duration:1.1,repeat:1,ease:'power1.out'},L);
    tl.to('#fa1g',{opacity:0,duration:.8},L+.3)}
-  tl.fromTo('#card1',{y:80,opacity:0,filter:'blur(12px)',scale:.95,svgOrigin:'500 570'},{y:0,opacity:1,filter:'blur(0px)',scale:1,svgOrigin:'500 570',duration:1.1,ease:'expo.out'},C('itinerary')-.6);
-  tl.from('.row1',{y:18,opacity:0,duration:.7,stagger:.13,ease:'expo.out'},C('itinerary')-.3);
+  tl.fromTo('#card1',{y:70,x:60,opacity:0,scale:.9,rotation:-3,svgOrigin:'500 570'},{y:0,x:0,opacity:1,scale:1,rotation:0,svgOrigin:'500 570',duration:.95,ease:'expo.out'},C('itinerary')-.55);
+  tl.from('.row1',{x:40,opacity:0,duration:.6,stagger:.1,ease:'expo.out'},C('itinerary')-.3);
   tl.from('.ck1',{scale:0,transformOrigin:'50% 50%',duration:.45,stagger:.12,ease:'back.out(3)'},C('perfect')-.2);
   tl.from('#conf1',{scale:.6,opacity:0,svgOrigin:'700 364',duration:.5,ease:'back.out(2.2)'},C('perfect')+.15);
   // A2 your agency, then its partners orbiting it

@@ -25,5 +25,5 @@ add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i
 
 // v11 kinetic type: the clock rolls to two, the name board flips, the odometer runs to 2010 (soft mechanical ticks only)
 [0,1,2].forEach(i=>add('tick',C('two')+.02+i*.05,.12));
-{const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('only')-.04;for(let i=0;i<12;i++){add('tick',E+i*.035+.05,.05);add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
+{const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('only')-.04;for(let i=0;i<12;i++){add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
 for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);

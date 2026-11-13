@@ -29,18 +29,19 @@ function build(W,H,P){
   const svg=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},host);
   const defs=mk('defs',{},svg);
   const M=Math.min(W,H),k={svg,W,H,P};
-  // K1 two in the morning: an ivory shutter snaps open on a clock that rolls from 1:59 to 2:00
-  {const g=mk('g',{},svg),F=P?W*.4:H*.5,fnt=`600 ${F}px ${FONT}`;
-   const d=tw('0',`600 ${F}px ${FONT}`),cw=tw(':',fnt)*1.05,tot=3*d+cw,x0=W/2-tot/2,cy=P?H*.42:H*.43,yb=cy+.36*F;
-   const bg=mk('rect',{x:0,y:0,width:W,height:H,fill:IV},g);const body=mk('g',{},g);
-   const cols=[];const seq=[['1','2'],['5','0'],['9','0']];const xs=[x0,x0+d+cw,x0+2*d+cw];
-   seq.forEach((s,i)=>{const cid='k1c'+i;const cp=mk('clipPath',{id:cid},defs);mk('rect',{x:xs[i]-.05*d,y:yb-.84*F,width:d*1.1,height:.98*F},cp);
-     const cg=mk('g',{'clip-path':`url(#${cid})`},body),strip=mk('g',{},cg);s.forEach((c,j)=>txt(strip,c,xs[i]+d/2,yb+j*F*1.02,F,{fill:NV}));cols.push(strip)});
-   const colon=txt(body,':',x0+d+cw/2,yb-.04*F,F,{fill:NV});
-   const f2=P?W*.075:H*.085,y2=P?cy+.62*F:H*.83;const words=['in','the','morning.'],ws=words.map(w=>tw(w,`500 ${f2}px ${FONT}`)),sp=f2*.26,tl=ws.reduce((a,b)=>a+b,0)+sp*2;
-   const cp2=mk('clipPath',{id:'k1m'},defs);mk('rect',{x:0,y:y2-f2*1.05,width:W,height:f2*1.35},cp2);const lg=mk('g',{'clip-path':'url(#k1m)'},body);
-   let xx=W/2-tl/2;const wl=words.map((w,i)=>{const e=txt(lg,w,xx,y2,f2,{w:500,fill:N3,anchor:'start',ls:'-.01em'});xx+=ws[i]+sp;return e});
-   k.k1={g,bg,body,cols,colon,F,wl,f2}}
+  // K0 the opening flight: a real Global 5000 glides across the dawn sky and away towards the Eiffel Tower
+  {const g=mk('g',{},svg),jw=891,jh=313,im=mk('image',{href:window.JETH||'',x:-jw/2,y:-jh/2,width:jw,height:jh},g);k.k0={g,im,jw}}
+  // K1 two in the morning: a hard cut on "two" to the night, the clock lands and ticks from 1:59 to 2:00
+  {const g=mk('g',{},svg),F=P?W*.36:H*.46,fnt=`600 ${F}px ${FONT}`;
+   const d=tw('0',fnt),cw=tw(':',fnt)*1.05,tot=3*d+cw,x0=W/2-tot/2,cy=P?H*.44:H*.44,yb=cy+.36*F;
+   const gr=mk('radialGradient',{id:'k1g',cx:'50%',cy:'38%',r:'62%'},defs);mk('stop',{offset:0,'stop-color':'#3A4686','stop-opacity':.85},gr);mk('stop',{offset:.55,'stop-color':'#1B2140','stop-opacity':.4},gr);mk('stop',{offset:1,'stop-color':'#0B0F1E','stop-opacity':0},gr);
+   const bg=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV},g);mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:'url(#k1g)'},g);
+   const body=mk('g',{},g);const seq=[['1','2'],['5','0'],['9','0']],xs=[x0,x0+d+cw,x0+2*d+cw];
+   const cols=seq.map((q,i)=>q.map(c=>txt(body,c,xs[i]+d/2,yb,F,{fill:IV})));
+   const colon=txt(body,':',x0+d+cw/2,yb-.04*F,F,{fill:PERI});
+   const f2=P?W*.075:H*.085,y2=P?cy+.66*F:H*.84;const words=['in','the','morning.'],ws=words.map(w=>tw(w,`500 ${f2}px ${FONT}`)),sp=f2*.26,tl=ws.reduce((a,b)=>a+b,0)+sp*2;
+   let xx=W/2-tl/2;const wl=words.map((w,i)=>{const e=txt(body,w,xx,y2,f2,{w:500,fill:'#C7CEF0',anchor:'start',ls:'-.01em'});e.dataset.x=xx;xx+=ws[i]+sp;return e});
+   k.k1={g,bg,body,cols,colon,F,wl,f2,cx:W/2,cy}}
   const k1g=k.k1.g;
   // K2 That's where City Premium comes in, word by word, then the camera dives through the o of "comes"
   {const g=mk('g',{},svg);const mask=mk('mask',{id:'k2h',maskUnits:'userSpaceOnUse',x:-W,y:-H,width:3*W,height:3*H},defs);
@@ -73,11 +74,12 @@ function build(W,H,P){
    k.k3={g,veil,small,letters,xs,F,yb,oc,orad,ost,ring}}
   // K6 since 2010: an odometer rolls to the year
   {const g=mk('g',{},svg);const F=P?W*.3:H*.36,fn=`600 ${F}px ${FONT}`,d=tw('0',fn)*1.02,cy=P?H*.5:H*.52,yb=cy+.36*F,x0=W/2-2*d;
-   const f0=P?W*.07:H*.075,y0=cy-.62*F;const cpl=mk('clipPath',{id:'k6l'},defs);mk('rect',{x:0,y:y0-f0*1.05,width:W,height:f0*1.35},cpl);
+   const f0=P?W*.07:H*.075,y0=cy-.86*F;const cpl=mk('clipPath',{id:'k6l'},defs);mk('rect',{x:0,y:y0-f0*1.05,width:W,height:f0*1.35},cpl);
    const lab=txt(mk('g',{'clip-path':'url(#k6l)'},g),'Since',W/2,y0,f0,{w:500,fill:'#C7CEF0',ls:'-.01em'});
    const tgt=[2,0,1,0],roll=[2,10,21,30],strips=[];
-   tgt.forEach((v,i)=>{const id='k6c'+i,cp=mk('clipPath',{id},defs);mk('rect',{x:x0+i*d,y:yb-.84*F,width:d,height:.98*F},cp);
-     const s=mk('g',{},mk('g',{'clip-path':`url(#${id})`},g));for(let j=0;j<=roll[i];j++)txt(s,String((v-roll[i]+j+100)%10),x0+i*d+d/2,yb+(j-roll[i])*F*1.02,F);strips.push(s)});
+   const lg=mk('linearGradient',{id:'k6f',x1:0,y1:0,x2:0,y2:1},defs);[[0,0],[.14,1],[.86,1],[1,0]].forEach(([o,v])=>mk('stop',{offset:o,'stop-color':'#fff','stop-opacity':v},lg));
+   tgt.forEach((v,i)=>{const id='k6c'+i,cp=mk('mask',{id,maskUnits:'userSpaceOnUse',x:x0+i*d,y:yb-1.0*F,width:d,height:1.25*F},defs);mk('rect',{x:x0+i*d,y:yb-1.0*F,width:d,height:1.25*F,fill:'url(#k6f)'},cp);
+     const s=mk('g',{},mk('g',{mask:`url(#${id})`},g));for(let j=0;j<=roll[i];j++)txt(s,String((v-roll[i]+j+100)%10),x0+i*d+d/2,yb+(j-roll[i])*F*1.02,F);strips.push(s)});
    const ul=mk('line',{x1:x0,x2:x0+4*d,y1:yb+.16*F,y2:yb+.16*F,stroke:PERI,'stroke-width':Math.max(2,F*.018),'stroke-linecap':'round',pathLength:1,'stroke-dasharray':'1 1'},g);
    k.k6={g,lab,strips,roll,F,ul}}
   // K5 white label: an arrivals name board, City Premium flips to blank white, then to your name
@@ -96,7 +98,7 @@ const hh=n=>{const x=Math.sin(n*91.7+7.3)*43758.5453;return x-Math.floor(x)};
 function plan(){const n=12,A='CITY PREMIUM'.padEnd(n),B='YOUR AGENCY'.padEnd(n),T=Array.from({length:n},()=>[{t:-1,ch:' ',iv:0}]);
   const flipTo=(i,t0,ch,iv,scr)=>{let t=t0;for(let s=0;s<scr;s++){T[i].push({t,ch:SCR[Math.floor(hh(i*7+s*13+t0)*SCR.length)],iv:T[i][T[i].length-1].iv});t+=FD*.95}T[i].push({t,ch,iv})};
   const t1=C('everything#2')-.1,t2=C('white')-.04,t3=C('only')-.04;
-  for(let i=0;i<n;i++){flipTo(i,t1+i*.035,A[i],0,2+Math.floor(hh(i)*3));flipTo(i,t2+i*.03,' ',1,0);flipTo(i,t3+i*.032,B[i],1,B[i]===' '?0:1+Math.floor(hh(i+5)*2))}
+  for(let i=0;i<n;i++){T[i][0].ch=A[i];flipTo(i,t2+i*.03,' ',1,0);flipTo(i,t3+i*.032,B[i],1,B[i]===' '?0:1+Math.floor(hh(i+5)*2))}
   return T}
 let FLIP=null;
 function tileAt(T,t){let k=0;while(k+1<T.length&&T[k+1].t<=t)k++;const cur=T[k],prv=T[k-1]||cur;const u=k>0?cl((t-cur.t)/FD):1;return{prv,cur,u}}
@@ -107,15 +109,26 @@ function apply(t){
   if(!document.fonts||!document.fonts.check(`600 100px "Instrument Sans"`))return;
   if(!K||K.W!==W||K.H!==H||K.P!==P){K=build(W,H,P);FLIP=null}
   const vis=(e,v)=>{e.style.visibility=v?'visible':'hidden'};
+  // ---------- K0 ----------
+  {const a=K.k0,t0=.18,t1=C('paris#1')+.55;const on=win(t,t0,t1);vis(a.g,on);
+   ['#fa1g','#fa1','#fa1s','#jw1'].forEach(q=>{const e=document.querySelector(q);if(e)e.style.visibility=t<SA('a2')+.5?'hidden':''});
+   document.querySelectorAll('.ft1').forEach(e=>e.style.visibility=t<SA('a2')+.5?'hidden':'');
+   if(on){const u=cl((t-t0)/(t1-t0)),e=u*u*(3-2*u)*.4+u*.6;
+     // a gentle descending curve, from big and close at top left to a speck over the city
+     const A=P?[-.3*W,H*.33]:[-.18*W,H*.16],B=P?[.6*W,H*.36+W*.38]:[.6*W,H*.4],Cc=P?[.25*W,H*.32]:[.3*W,H*.16];
+     const x=(1-e)*(1-e)*A[0]+2*(1-e)*e*Cc[0]+e*e*B[0],y=(1-e)*(1-e)*A[1]+2*(1-e)*e*Cc[1]+e*e*B[1];
+     const w0=P?.5*W:.3*W,w1=P?.07*W:.05*W,sc=Math.exp(Math.log(w0)+(Math.log(w1)-Math.log(w0))*e)/a.jw;
+     const rot=lerp(-6,4,ez(u)),op=cl(u/.04)*(1-ez((u-.84)/.16));
+     a.g.setAttribute('transform',`translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(4)})`);a.g.setAttribute('opacity',op.toFixed(3))}}
   // ---------- K1 ----------
-  {const a=K.k1,t0=C('two')-.12,tx=C('thats')-.24,t1=tx+.34;
+  {const a=K.k1,t0=C('two')-.06,tx=C('thats')-.22,t1=tx+.26;
    const on=win(t,t0,t1);vis(a.g,on);
-   if(on){const o=eo((t-t0)/.2),hgt=H*o;a.bg.setAttribute('y',H/2-hgt/2);a.bg.setAttribute('height',hgt);
-     const up=exio((t-tx)/(t1-tx));a.g.setAttribute('transform',`translate(0 ${(-up*H).toFixed(2)})`);
-     a.body.setAttribute('opacity',cl((t-t0-.06)/.12));
-     a.cols.forEach((c,i)=>{const u=ez((t-(t0+.1+i*.05))/.42);c.setAttribute('transform',`translate(0 ${(-u*a.F*1.02).toFixed(2)})`)});
-     a.colon.setAttribute('opacity',(t-t0)<.55?1:.55+.45*Math.cos((t-t0-.55)*Math.PI*2.2)**2);
-     [CA('in',C('two')),CA('the',C('two')),C('morning')].forEach((cw,i)=>{const u=eo((t-(cw-.06))/.45);a.wl[i].setAttribute('transform',`translate(0 ${((1-u)*a.f2*1.1).toFixed(2)})`);a.wl[i].setAttribute('opacity',u>0?1:0)})}}
+   if(on){const land=eo5((t-t0)/.7),out=ez((t-tx)/(t1-tx)),sc=(1.07-.07*land)*(1-.08*out);
+     a.body.setAttribute('transform',`translate(${a.cx} ${a.cy}) scale(${sc.toFixed(4)}) translate(${-a.cx} ${-a.cy})`);a.body.setAttribute('opacity',(1-out).toFixed(3));
+     a.cols.forEach(([o,n],i)=>{const ti=t0+.2+i*.05,u=cl((t-ti)/.1),v=eo((t-ti-.1)/.3);o.setAttribute('transform',`translate(0 ${(-u*a.F*.08).toFixed(2)})`);o.setAttribute('opacity',(1-u).toFixed(3));
+       const nx=+n.getAttribute('x'),ny=a.cy,k=1.18-.18*v;n.setAttribute('transform',`translate(${nx} ${ny}) scale(${k.toFixed(4)}) translate(${-nx} ${-ny})`);n.setAttribute('opacity',v.toFixed(3))});
+     a.colon.setAttribute('opacity',(t-t0)<.7?1:(.6+.4*Math.cos((t-t0-.7)*Math.PI*2)**2).toFixed(3));
+     [CA('in',C('two')),CA('the',C('two')),C('morning')].forEach((cw,i)=>{const u=eo((t-(cw-.05))/.6);a.wl[i].setAttribute('transform',`translate(${((1-u)*a.f2*.42).toFixed(2)} 0)`);a.wl[i].setAttribute('opacity',u.toFixed(3))})}}
   // ---------- K2 ----------
   {const a=K.k2,tA=C('thats')-.24,z0=CA('in',C('comes'))+.06,z1=z0+.58;const on=win(t,tA,z1);vis(a.g,on);
    const lo=document.getElementById('logoOv');if(lo)lo.style.visibility=win(t,tA-.1,z1+.1)?'hidden':'';
@@ -148,7 +161,7 @@ function apply(t){
        a.ring.setAttribute('stroke-width',lerp(a.ost,Math.max(2,H*.004),eo(u)));a.ring.setAttribute('opacity',(1-ez((t-tE-.02)/.28)).toFixed(3))}
      else a.ring.setAttribute('opacity',0)}}
   // ---------- K5 ----------
-  {const a=K.k5,tA=C('everything#2')-.25,tE=SA('a11')-.12;const on=win(t,tA,tE+.42);a.b.style.visibility=on?'visible':'hidden';a.b.style.display=on?'flex':'none';
+  {const a=K.k5,tA=C('everything#2')+.12,tE=SA('a11')-.12;const on=win(t,tA,tE+.42);a.b.style.visibility=on?'visible':'hidden';a.b.style.display=on?'flex':'none';
    const st=document.querySelector('.st[data-st="a10"]');if(st)st.style.visibility=win(t,SA('a10')-.2,SA('a11')+1.4)?'hidden':'';
    if(on){if(!FLIP)FLIP=plan();const ui=eo((t-tA)/.5),uo=ez((t-tE)/.42);
      a.b.style.opacity=(ui*(1-uo)).toFixed(3);a.b.style.transform=`translate(${(-uo*W*.35).toFixed(1)}px,${((1-ui)*H*.04).toFixed(1)}px)`;
