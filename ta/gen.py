@@ -589,7 +589,6 @@ rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">'
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')
 rep('.grain{position:absolute;','#kxbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}.tb.lt.kxd .kt .w.em>b,.tb.lt.kxd .kt .w.big>b{color:#9FB0FF}.tb.lt.kxd .kt .w.hl>b{color:#0F1426!important}'
  '#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
- '.kw{position:absolute;inset:0;display:none}.kwt{position:absolute;opacity:0;will-change:transform}'
  '.kl{position:absolute;inset:0;display:none}.klw{position:absolute;left:0;top:0;transform-origin:0 100%;white-space:nowrap;line-height:1.04;padding:0 .03em .12em;will-change:transform}.klr{position:absolute;height:2px;transform-origin:0 50%;background:linear-gradient(90deg,rgba(244,242,237,0),rgba(244,242,237,.9) 25%,rgba(159,176,255,.9) 70%,rgba(159,176,255,0))}'
  '.kxb{position:absolute;display:flex;box-sizing:border-box;background:linear-gradient(180deg,#1B2140,#141A33);border-radius:.18em;box-shadow:0 .5em 1.2em rgba(10,14,30,.35),inset 0 0 0 1px rgba(244,242,237,.08);visibility:hidden}'
  '.kxt{position:relative;perspective:5em;flex:none}.kxt::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(10,14,30,.55);z-index:3}'

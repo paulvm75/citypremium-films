@@ -131,5 +131,6 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - The ending (K7) is built by `mkCover` in `ta/kx.js`: an ivory frame with PARIS, LONDON, EUROPE cut out, footage inside the letters, and it splits open along its centre line onto the logo. The zoom through a letter there looked cheap.
 - a7 towers are real line art of the Eiffel Tower and the Elizabeth Tower, drawn path by path with `pathLength="1"`.
 - Fast track is four segments that fill in turn with a tick each; the minutes drop per segment. No moving dot, and the chauffeur token leaves before the card arrives.
-- "Something truly unusual" (K8) is a hairline question mark that draws, fills like frosted glass and gets one reflection. "Made to measure" (K9) is a frame of corner marks and dimension lines that fits itself to three photos. White label (K5) is a wall of vertical blinds that turns the frame ivory, then navy for "your name.".
+- "Something truly unusual" (K8) is a hairline question mark that draws, fills like frosted glass and gets one reflection.
+- "Made to measure" stays the tape measure with three photos and the seal (in `tl_b.js`), and white label stays the split-flap name board (K5). A corner-mark frame and a wall of blinds were tried and the client preferred the originals.
 - `C('every')` is the first "every" at 1:06; use `CA(word, afterTime)` in kx.js when a word repeats.

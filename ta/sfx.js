@@ -26,6 +26,7 @@ add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i
 // v11 kinetic type: the clock rolls to two, the name board flips, the odometer runs to 2010 (soft mechanical ticks only)
 [0,1,2].forEach(i=>add('tick',C('two')+.02+i*.05,.12));
 for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
+{const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('only')-.04;for(let i=0;i<12;i++){add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
 // v13 day dial: soft ticks as the clock turns at the restaurant and at two
 [0,1,2,3].forEach(i=>add('tick',C('restaurant')-.02+i*.05,.09));add('tick',C('two')+.17,.1);
 // v14 ending: a soft click on each city word
@@ -51,9 +52,9 @@ for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
  add('swish',C('airports')-.6,.16,.58);
  // fast track: a tick as each segment lands, rising in pitch
  [C('fast')+.5,C('passport')+.4,C('customs')+.35,C('want')-.05].forEach((t,k)=>add('tick',t-.05,.2,1+.12*k));
- // question mark draws; made-to-measure frame resizes twice
- add('swish',C('something')-.25,.12,.5);{const t0=CAf('every',80)-.12;add('swish',t0,.12,1.2);add('popl',t0+.62,.14,1.3);add('popl',t0+1.2,.14,1.45)}
- // white label blinds: three turns, each a run of soft ticks under a low swish
- [[C('white')-.52,.8],[CAf('your',90.5)-.15,.7],[SA('a11')-.15,.9]].forEach(([t,r])=>{add('swish',t,.16,r);for(let i=0;i<10;i++)add('tick',t+.04+i*.028,.05,.8+.03*i)});
+ // question mark draws
+ add('swish',C('something')-.25,.12,.5);
+ // white label board: slides in, flips to white, flips to your name
+ add('swish',C('everything#2')+.12,.12,1.15);
  // ending: the frame splits open
  add('swish',CAf('europe',95)+.5,.32,.62);}

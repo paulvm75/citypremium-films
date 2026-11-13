@@ -21,7 +21,6 @@ function mk(id){const d=document.getElementById(id);if(!d)return null;
   const o={d,win:d.querySelector('.fw'),img:d.querySelector('img'),vid:d.querySelector('video'),veil:d.querySelector('.fv'),edge:d.querySelector('.fe'),k:null,src:''};return o}
 function init(){if(L.B)return;L.B=mk('footB');L.T=mk('footT');}
 const film=()=>document.getElementById('film');
-function pinXY(){const p=document.querySelector('#pin1 circle'),f=film();if(!p||!f)return[0,0];const a=p.getBoundingClientRect(),b=f.getBoundingClientRect();return[a.left+a.width/2-b.left,a.top+a.height/2-b.top]}
 // state per moment -> {layer,k,ct,op,clip,veil,edge,scale}
 function moments(t){
   const out=[];
@@ -63,7 +62,6 @@ function apply(t){
     // reveal
     let cp='none';
     if(m.aper!==undefined){const v=(1-m.aper)*50;cp=`inset(${v.toFixed(3)}% ${(100*m.wipe).toFixed(3)}% ${v.toFixed(3)}% 0)`}
-    else if(m.iris!==undefined){let[x,y]=pinXY();y-=wy;const R=Math.hypot(Math.max(x,W-x),Math.max(y,wh-y))*1.02;cp=`circle(${(Math.max(.0001,m.iris)*R).toFixed(1)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px)`}
     else if(m.inset){cp=`inset(0 ${m.inset[1].toFixed(3)}% 0 ${m.inset[0].toFixed(3)}%)`}
     l.win.style.clipPath=cp;l.veil.style.clipPath=cp;
     if(l.edge){const e=m.edge||0;l.edge.style.opacity=(e>0&&e<1?Math.sin(Math.PI*e):0).toFixed(3);
