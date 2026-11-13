@@ -6,3 +6,11 @@ mzvideo_*.mp4
 *-render.html
 mz1.html
 cp/foot/r/
+cp/cp-ta9-pub.html
+cp/*.log
+cp/ta9mix_*.json
+cp/ta9video_*.mp4
+cp/ta9audio_*.m4a
+cp/CityPremium_agencies_v9_*.mp4
+cp/send9/
+__pycache__/
