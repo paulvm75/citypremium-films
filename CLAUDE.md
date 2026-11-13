@@ -127,7 +127,8 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - Jets are stills of a real Bombardier Global 5000 model (`tools/g5000/`).
 
 ## Agencies v15
-- Opening hook (K0) and ending (K7) are bookends built by `mkCover` in `ta/kx.js`: an ivory frame with words cut out (YOUR CLIENT, LANDS, IN PARIS at the start; PARIS, LONDON, EUROPE at the end), footage inside the letters, and the frame splits open along its centre line. The client found the cabin window and the zoom through a letter cheap.
+- The opening (K0) is the cabin window, and the client likes it: navy leather sidewall, deep window reveal, the shade lifts on Paris at dawn with light spilling onto the wall, then a banked push through the window with a soft burst of light. A cut-out-words opening was tried and rejected; keep the window.
+- The ending (K7) is built by `mkCover` in `ta/kx.js`: an ivory frame with PARIS, LONDON, EUROPE cut out, footage inside the letters, and it splits open along its centre line onto the logo. The zoom through a letter there looked cheap.
 - a7 towers are real line art of the Eiffel Tower and the Elizabeth Tower, drawn path by path with `pathLength="1"`.
 - Fast track is four segments that fill in turn with a tick each; the minutes drop per segment. No moving dot, and the chauffeur token leaves before the card arrives.
 - "Something truly unusual" (K8) is a hairline question mark that draws, fills like frosted glass and gets one reflection. "Made to measure" (K9) is a frame of corner marks and dimension lines that fits itself to three photos. White label (K5) is a wall of vertical blinds that turns the frame ivory, then navy for "your name.".

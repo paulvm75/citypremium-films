@@ -33,8 +33,8 @@ for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
 // ---- v16: sound for the kinetic set pieces. One swish sample, pitched per animation type (r = playback rate):
 // slow and low for big frame moves, mid for sweeps, fast and light for text.
 {const CAf=(w,after)=>{for(const x of WORDS)if(x.n===w&&x.a>=after-.01)return x.a;return 0};
- // opening: a breath of air on the slit, a click per cut-out word, a low swish as the frame splits open
- add('swish',.05,.16,.55);[['your#1',.82],['lands',.92],['in#1',1.02]].forEach(([w,r])=>add('popl',C(w)-.06,.3,r));add('swish',C('tomorrow')-.14,.32,.62);
+ // opening: the shade slides up and clicks home, then a low swish as the camera pushes through the window
+ add('swish',.15,.12,1.25);add('tick',1.05,.08,.7);add('swish',C('lands')-.1,.3,.55);
  // text: scene-opening lines get a soft swish, big words a quicker one, every other line a faint flick
  let last='';VIS.forEach((c,i)=>{if(c.t<2.2||c.sc==='a12')return;const first=c.sc!==last;last=c.sc;
    if(first)add('swish',c.t-.1,.1,1.1+.15*hash(i));else if(i%2===0)add('swish',c.t-.08,.045,1.65+.3*hash(i+3));

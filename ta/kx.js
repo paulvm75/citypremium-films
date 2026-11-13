@@ -64,8 +64,36 @@ function build(W,H,P){
    const V=['07:40','21:30','02:00'],xs=[x0,x0+d,null,x0+2*d+cw,x0+3*d+cw];
    const dig=[0,1,3,4].map(p=>V.map(v=>txt(g,v[p],xs[p]+d/2,yb,F,{fill:NV})));const colon=txt(g,':',x0+2*d+cw/2,yb-.04*F,F,{fill:PERI});
    k.kd={c1,c2,RM,g,bs,b1,b2,bg3,ring,tk,arc,dig,colon,dot,pc,Rp,ims,hand,IS,yb,cx,cy,R,F}}
-  // K0 the opening hook: an ivory frame, a slit of dawn light, then YOUR CLIENT / LANDS / IN PARIS cut out of it with Paris at dawn inside the letters; it splits open on "tomorrow"
-  {const Z=P?{cx:W*.5,cy:H*.36+W/2}:{cx:W/2,cy:H/2};k.k0=mkCover(svg,defs,'k0m',['YOUR CLIENT','LANDS','IN PARIS'],Z.cx,Z.cy,W,H,P,IV)}
+  // K0 the opening: we are in the cabin. A navy leather sidewall, a deep window reveal, a shade that lifts on Paris at dawn
+  // while light spills onto the wall; then the camera banks and pushes through the window, with a soft burst of light as it passes the frame
+  {const bgd=document.getElementById('kxbg'),ws=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd),d0=mk('defs',{},ws);
+   const wx=P?W*.5:W*.64,wy=P?H*.62:H*.5,wh=P?H*.42:H*.68,ww=wh/1.45,rr=ww*.47;
+   const rp=(w,h,r,dy=0)=>{const y=wy+dy;return `M${wx-w/2+r} ${y-h/2}H${wx+w/2-r}A${r} ${r} 0 0 1 ${wx+w/2} ${y-h/2+r}V${y+h/2-r}A${r} ${r} 0 0 1 ${wx+w/2-r} ${y+h/2}H${wx-w/2+r}A${r} ${r} 0 0 1 ${wx-w/2} ${y+h/2-r}V${y-h/2+r}A${r} ${r} 0 0 1 ${wx-w/2+r} ${y-h/2}Z`};
+   const lg=(id,stops,o={x1:0,y1:0,x2:0,y2:1})=>{const g=mk('linearGradient',{id,...o},d0);stops.forEach(([of,c,op])=>mk('stop',{offset:of,'stop-color':c,'stop-opacity':op===undefined?1:op},g));return g};
+   const rg=(id,stops,o)=>{const g=mk('radialGradient',{id,gradientUnits:'userSpaceOnUse',...o},d0);stops.forEach(([of,c,op])=>mk('stop',{offset:of,'stop-color':c,'stop-opacity':op===undefined?1:op},g));return g};
+   lg('k0w',[[0,'#252C52'],[.5,'#1A2041'],[1,'#0E1229']]);lg('k0t',[[0,'#3B4377'],[.5,'#283063'],[1,'#151A38']]);lg('k0r',[[0,'#0B0F22'],[.5,'#1B2140'],[1,'#2E3668']],{x1:0,y1:0,x2:1,y2:1});
+   lg('k0s',[[0,'#EDEBE5'],[.85,'#D9D7D1'],[1,'#BEBCB6']]);lg('k0g',[[0,'#fff',0],[.5,'#fff',.55],[1,'#fff',0]],{x1:0,y1:0,x2:1,y2:0});
+   rg('k0l',[[0,'#DCE0F4',.42],[.45,'#9FB0FF',.12],[1,'#9FB0FF',0]],{cx:wx,cy:wy,r:wh*1.25});rg('k0v',[[.55,'#000',0],[1,'#05081A',.65]],{cx:W/2,cy:H/2,r:Math.hypot(W,H)*.62});
+   rg('k0f',[[0,'#F4F2ED',.95],[.35,'#DCE0F4',.45],[1,'#9FB0FF',0]],{cx:wx,cy:wy,r:wh*.9});
+   const m=mk('mask',{id:'k0m',maskUnits:'userSpaceOnUse',x:-6*W,y:-6*H,width:13*W,height:13*H},d0);mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'#fff'},m);mk('path',{d:rp(ww,wh,rr),fill:'#000'},m);
+   const cp=mk('clipPath',{id:'k0c'},d0);mk('path',{d:rp(ww,wh,rr)},cp);
+   const zg=mk('g',{},ws),wall=mk('g',{mask:'url(#k0m)'},zg);
+   mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'url(#k0w)'},wall);
+   for(let i=-6;i<=6;i++)mk('line',{x1:-6*W,x2:7*W,y1:wy+i*wh*.42,y2:wy+i*wh*.42,stroke:'rgba(244,242,237,.035)','stroke-width':1.5,'stroke-dasharray':'6 7'},wall);
+   const spill=mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'url(#k0l)',opacity:0},wall);
+   mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'url(#k0t)'},wall);mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'none',stroke:'rgba(244,242,237,.16)','stroke-width':Math.max(1.5,ww*.005)},wall);
+   mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'url(#k0r)'},wall);mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'none',stroke:'rgba(5,8,18,.5)','stroke-width':ww*.012},wall);
+   const rim=mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'none',stroke:'#DCE0F4','stroke-width':ww*.008,opacity:0},wall);
+   const inner=mk('g',{'clip-path':'url(#k0c)'},zg);
+   const shade=mk('g',{},inner);mk('rect',{x:wx-ww/2-4,y:wy-wh/2-4,width:ww+8,height:wh+8,fill:'url(#k0s)'},shade);
+   for(let i=1;i<9;i++)mk('line',{x1:wx-ww/2,x2:wx+ww/2,y1:wy-wh/2+wh*i/9,y2:wy-wh/2+wh*i/9,stroke:'rgba(20,26,51,.05)','stroke-width':2},shade);
+   mk('rect',{x:wx-ww/2-4,y:wy+wh/2-wh*.03,width:ww+8,height:wh*.03,fill:'#C4C2BC'},shade);mk('rect',{x:wx-ww*.15,y:wy+wh/2-wh*.065,width:ww*.3,height:wh*.022,rx:wh*.011,fill:'#8F8D86'},shade);
+   const glass=mk('g',{},inner);mk('path',{d:`M${wx-ww/2} ${wy-wh*.08}L${wx+ww*.08} ${wy-wh/2}L${wx+ww*.26} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.2}Z`,fill:'#fff',opacity:.07},glass);
+   mk('path',{d:`M${wx-ww/2} ${wy+wh*.28}L${wx+ww*.36} ${wy-wh/2}L${wx+ww*.42} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.36}Z`,fill:'#fff',opacity:.045},glass);
+   mk('circle',{cx:wx,cy:wy+wh*.42,r:Math.max(1.5,ww*.007),fill:'rgba(244,242,237,.5)'},glass);
+   mk('path',{d:rp(ww,wh,rr),fill:'none',stroke:'rgba(5,8,18,.6)','stroke-width':ww*.045},zg);
+   const flare=mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#k0f)',opacity:0},ws);const vig=mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#k0v)'},ws);
+   k.k0={ws,zg,shade,glass,spill,rim,flare,vig,wx,wy,ww,wh}}
   // K8 something truly unusual: a point of light, a hairline question mark draws itself, fills like frosted glass, and a reflection crosses it
   {const Z=P?{cx:W*.5,cy:H*.66,s:W*.8}:{cx:W*.72,cy:H*.5,s:H*.62},g=mk('g',{},svg),F=Z.s*1.05,yb=Z.cy+.36*F;
    const hg=mk('radialGradient',{id:'k8h'},defs);mk('stop',{offset:0,'stop-color':'#9FB0FF','stop-opacity':.5},hg);mk('stop',{offset:1,'stop-color':'#9FB0FF','stop-opacity':0},hg);
@@ -144,12 +172,18 @@ function apply(t){
   // ---------- K0 ----------
   ['#fa1g','#fa1','#fa1s','#jw1'].forEach(q=>{const e=document.querySelector(q);if(e)e.style.visibility=t<SA('a2')+.5?'hidden':''});
   document.querySelectorAll('.ft1').forEach(e=>e.style.visibility=t<SA('a2')+.5?'hidden':'');
-  {const a=K.k0,T=[C('your#1')-.06,C('lands')-.05,C('in#1')-.05],z0=C('tomorrow')-.12,z1=z0+.75,on=t<z1;vis(a.g,on);
+  {const a=K.k0,tS=.15,tP=C('lands')-.12,tE=tP+.85;const on=t<tE;a.ws.style.visibility=on?'visible':'hidden';
    const pin=document.getElementById('pin1');if(pin)pin.style.visibility=t<SA('a2')+.5?'hidden':'';
-   const fv=document.querySelector('#footB .fv'),tb1=document.querySelector('.tb[data-sc="a1"]');if(tb1)tb1.style.opacity=t<z0?0:'';
-   if(on){const h=t<T[0]?H*(.012+.03*eo(t/.55)):0;a.slit.setAttribute('y',a.cy-h/2);a.slit.setAttribute('height',h);
-     const e=runCover(a,t,T,z0,z1,H);if(fv)fv.style.opacity=(.1+.9*e).toFixed(3)}
-   else if(fv&&fv.style.opacity!=='')fv.style.opacity=''}
+   if(on){const up=ez((t-tS)/.95),lift=up+.015*Math.sin(Math.PI*cl((t-tS-.85)/.3));   // the shade lifts and settles
+     a.shade.setAttribute('transform',`translate(0 ${(-lift*a.wh*1.06).toFixed(2)})`);
+     a.spill.setAttribute('opacity',(up*.9).toFixed(3));a.rim.setAttribute('opacity',(up*.35).toFixed(3));
+     // push: an ease-in dolly with a gentle bank, the window centre drifting to frame centre
+     const u=cl((t-tP)/(tE-tP)),e=u*u*u*(u*(6*u-15)+10),S=Math.max(W/a.ww,H/a.wh)*4,sc=Math.pow(S,Math.pow(e,1.35)),m=ez(u),rot=-4*Math.sin(Math.PI*u)*(1-u*.3);
+     const cx=a.wx+(W/2-a.wx)*m,cy=a.wy+(H/2-a.wy)*m;
+     a.zg.setAttribute('transform',`translate(${cx.toFixed(2)} ${cy.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(4)}) translate(${-a.wx} ${-a.wy})`);
+     a.glass.setAttribute('opacity',(1-cl(u*2.5)).toFixed(3));a.vig.setAttribute('opacity',(1-e).toFixed(3));
+     const fl=Math.sin(Math.PI*cl((u-.45)/.55));a.flare.setAttribute('opacity',(.55*fl*fl).toFixed(3));
+     a.flare.setAttribute('transform',`translate(${(W/2-a.wx)*m} ${(H/2-a.wy)*m})`)}}
   // ---------- KD ----------
   {const a=K.kd,t0=C('aircraft')-.34,tR=C('restaurant')-.12,tN=C('two')-.06,tx=C('thats')-.22,t1=C('thats')+.06;
    const on=win(t,t0,t1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
