@@ -30,17 +30,17 @@ function moments(t){
    if(t<t2){const ap=1,wp=exio((t-tw)/.95);
      out.push({L:'B',k:'dawn',ct:t*.9+.2,op:1,aper:ap,wipe:wp,scale:1.1-.08*eo(t/4.2),veil:'hook'})}}
   // o2 the fleet: a full-bleed wipe from the right with the car pass, out to the left on "chauffeurs"
-  {const a0=SA('a7')-.2,a1=a0+.6,b0=C('chauffeurs')-.42,b1=b0+.55;
-   if(t>a0&&t<b1){const wi=ez((t-a0)/(a1-a0)),wo=ez((t-b0)/(b1-b0));
-     out.push({L:'T',k:'saloon',ct:1.15+(t-a0),op:1,inset:[100*(1-wi),100*wo],scale:1.04-.04*eo((t-a0)/3),veil:'fleet',edge:(t<a1?(1-wi):0)+(t>b0?wo:0)})}}
+  {const a0=SA('a7')-.3,a1=a0+.95,b0=C('chauffeurs')-.5,b1=b0+.8;
+   if(t>a0&&t<b1){const wi=exio((t-a0)/(a1-a0)),wo=exio((t-b0)/(b1-b0));
+     out.push({L:'T',k:'saloon',ct:1.15+(t-a0),op:1,inset:[100*(1-wi),100*wo],scale:1.04-.04*eo((t-a0)/3),veil:'fleet',edge:0})}}
   // o5 sign-off: Paris at night behind the end card, slowed and dimmed, fading to the clean call to action
-  {const t0=SA('a12')-.25,t1=t0+.9,t2=C('book')+.2,t3=t2+1.3;
+  {const t0=SA('a12')-.25,t1=t0+.9,t2=C('book')+.9,t3=t2+1.3;
    if(t>t0&&t<t3){const o=ez((t-t0)/(t1-t0))*(1-ez((t-t2)/(t3-t2)));
      out.push({L:'T',k:'night',ct:(t-t0),op:o,scale:1.07-.07*cl((t-t0)/9),veil:'end'})}}
   return out}
 const VEIL={
   hook:'radial-gradient(120% 90% at 78% 30%,rgba(15,20,38,0) 0%,rgba(15,20,38,.18) 60%,rgba(15,20,38,.55) 100%),linear-gradient(90deg,rgba(15,20,38,.72) 0%,rgba(15,20,38,.35) 34%,rgba(15,20,38,0) 58%)',
-  fleet:'linear-gradient(90deg,rgba(15,20,38,.78) 0%,rgba(15,20,38,.42) 32%,rgba(15,20,38,0) 55%),linear-gradient(0deg,rgba(15,20,38,.35) 0%,rgba(15,20,38,0) 30%)',
+  fleet:'linear-gradient(90deg,rgba(15,20,38,.94) 0%,rgba(15,20,38,.82) 34%,rgba(15,20,38,0) 64%),linear-gradient(0deg,rgba(15,20,38,.35) 0%,rgba(15,20,38,0) 30%)',
   end:'radial-gradient(75% 70% at 50% 50%,rgba(15,20,38,.34) 0%,rgba(15,20,38,.4) 55%,rgba(15,20,38,.66) 100%)'};
 const VEILP={
   hook:'linear-gradient(180deg,rgba(15,20,38,.55) 0%,rgba(15,20,38,.1) 40%,rgba(15,20,38,.25) 100%)',
@@ -65,7 +65,7 @@ function apply(t){
     if(m.aper!==undefined){const v=(1-m.aper)*50;cp=`inset(${v.toFixed(3)}% ${(100*m.wipe).toFixed(3)}% ${v.toFixed(3)}% 0)`}
     else if(m.iris!==undefined){let[x,y]=pinXY();y-=wy;const R=Math.hypot(Math.max(x,W-x),Math.max(y,wh-y))*1.02;cp=`circle(${(Math.max(.0001,m.iris)*R).toFixed(1)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px)`}
     else if(m.inset){cp=`inset(0 ${m.inset[1].toFixed(3)}% 0 ${m.inset[0].toFixed(3)}%)`}
-    l.win.style.clipPath=cp;l.veil.style.clipPath=m.aper!==undefined?cp:'none';
+    l.win.style.clipPath=cp;l.veil.style.clipPath=cp;
     if(l.edge){const e=m.edge||0;l.edge.style.opacity=(e>0&&e<1?Math.sin(Math.PI*e):0).toFixed(3);
       const ex=m.inset?(m.inset[0]>0?m.inset[0]:100-m.inset[1]):0;l.edge.style.left=ex.toFixed(3)+'%';l.edge.style.top=wy+'px';l.edge.style.height=wh+'px'}
     l.veil.style.background=(P?VEILP:VEIL)[m.veil];l.veil.style.top=wy+'px';l.veil.style.height=wh+'px';

@@ -71,23 +71,19 @@ function build(W,H,P){
    const glass=mk('path',{d:`M${wx-ww/2} ${wy-wh*.1}L${wx+ww*.1} ${wy-wh/2}L${wx+ww*.3} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.18}Z`,fill:'#fff',opacity:.06},inner);
    mk('path',{d:rp(ww,wh,rr),fill:'none',stroke:'rgba(5,8,18,.55)','stroke-width':ww*.05},zg);
    k.k0={ws,zg,shade,glass,wx,wy,ww,wh}}
-  // K2 That's where City Premium comes in, word by word, then the camera dives through the o of "comes"
-  {const g=mk('g',{},svg);const mask=mk('mask',{id:'k2h',maskUnits:'userSpaceOnUse',x:-W,y:-H,width:3*W,height:3*H},defs);
+  // K2 That's where City Premium comes in: two words punch in with outline echoes, the real logo reveals with a glint,
+  // "comes in." is underlined, then the camera dives through the o of "comes"
+  {const bgd=document.getElementById('kxbg'),bs=mk('svg',{width:W,height:H,viewBox:`0 0 ${W} ${H}`,style:'position:absolute;inset:0;overflow:visible'},bgd),d2=mk('defs',{},bs);
+   const mask=mk('mask',{id:'k2h',maskUnits:'userSpaceOnUse',x:-W,y:-H,width:3*W,height:3*H},d2);
    mk('rect',{x:-W,y:-H,width:3*W,height:3*H,fill:'#fff'},mask);const hole=mk('ellipse',{cx:0,cy:0,rx:0,ry:0,fill:'#000'},mask);
-   const bg=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV,mask:'url(#k2h)'},g);
-   const zg=mk('g',{},g);const F1=P?W*.15:H*.15,F3=P?W*.13:H*.165,F4=F3*.56;
-   const cy=H*(P?.46:.47);
-   const cpA=mk('clipPath',{id:'k2a'},defs);mk('rect',{x:0,y:cy-F1*.95,width:W,height:F1*1.25},cpA);
-   const sg=mk('g',{'clip-path':'url(#k2a)'},zg);const single=['That’s','where'].map(s=>txt(sg,s,W/2,cy+.35*F1,F1));
-   const yA=cy+.1*F3,f3=`600 ${F3}px ${FONT}`,wc=tw('City',f3),wp=tw('Premium',f3),sp=F3*.24,L=wc+sp+wp;
-   const cpB=mk('clipPath',{id:'k2b'},defs);mk('rect',{x:0,y:yA-F3*.95,width:W,height:F3*1.2},cpB);const bgp=mk('g',{'clip-path':'url(#k2b)'},zg);
-   const city=txt(bgp,'City',W/2-L/2,yA,F3,{anchor:'start',ls:'-.03em'}),prem=txt(bgp,'Premium',W/2-L/2+wc+sp,yA,F3,{anchor:'start',ls:'-.03em'});
-   const yC=yA+F4*1.25,f4=`500 ${F4}px ${FONT}`,wco=tw('comes',f4),wi=tw('in.',f4),sp4=F4*.26,L4=wco+sp4+wi,xc=W/2-L4/2;
-   const cpC=mk('clipPath',{id:'k2c'},defs);mk('rect',{x:-W*40,y:yC-F4*1.1,width:W*80,height:F4*1.45},cpC);const cg=mk('g',{'clip-path':'url(#k2c)'},zg);
-   const comes=txt(cg,'comes',xc,yC,F4,{w:500,fill:PERI,anchor:'start',ls:'0em'}),inn=txt(cg,'in.',xc+wco+sp4,yC,F4,{w:500,fill:PERI,anchor:'start',ls:'0em'});
-   // the o: second glyph of "comes"; its counter is the window into the next scene
+   mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV,mask:'url(#k2h)'},bs);
+   const g=mk('g',{},svg),zg=mk('g',{},g),F1=P?W*.2:H*.24,F4=P?W*.085:H*.085,cy=H*(P?.44:.46);
+   const single=['That’s','where'].map(s=>{const ec=[0,1].map(()=>{const e=txt(g,s,W/2,cy+.35*F1,F1,{fill:'none'});e.setAttribute('stroke',PERI);e.setAttribute('stroke-width',Math.max(1.5,F1*.012));return e});return{e:txt(g,s,W/2,cy+.35*F1,F1),ec}});
+   const wm=document.getElementById('wm1'),yC=(wm?wm.offsetTop+wm.offsetHeight:H*.68)+F4*1.25,f4=`500 ${F4}px ${FONT}`,wco=tw('comes',f4),wi=tw('in.',f4),sp4=F4*.26,L4=wco+sp4+wi,xc=W/2-L4/2;
+   const comes=txt(zg,'comes',xc,yC,F4,{w:500,fill:PERI,anchor:'start',ls:'0em'}),inn=txt(zg,'in.',xc+wco+sp4,yC,F4,{w:500,fill:PERI,anchor:'start',ls:'0em'});
+   const ul=mk('line',{x1:xc,x2:xc+L4,y1:yC+F4*.22,y2:yC+F4*.22,stroke:IV,'stroke-width':Math.max(2,F4*.045),'stroke-linecap':'round',pathLength:1,'stroke-dasharray':'1 1','stroke-dashoffset':1},zg);
    const om=gm('o',f4),oc=[xc+tw('c',f4)+(om.r-om.l)/2,yC-om.asc/2],r0=Math.min(om.r+om.l,om.asc)/2*.52;
-   k.k2={g,bg,hole,zg,single,city,prem,comes,inn,oc,r0,F1,F3,F4,yA}}
+   k.k2={g,bs,hole,zg,single,comes,inn,ul,oc,r0,F1,F4,cy}}
   // K3 operator: the word takes the frame, letters track in, then its o becomes the orbit
   {const g=mk('g',{},svg);const veil=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV},g);
    const f0=P?W*.07:H*.07,y0=P?H*.37:H*.33;const a=['We’re','an'],aw=a.map(s=>tw(s,`500 ${f0}px ${FONT}`)),sp0=f0*.26,La=aw[0]+sp0+aw[1];
@@ -117,6 +113,17 @@ function build(W,H,P){
      const mkh=(c)=>{const h=hx('div','kh '+c,t);const s=hx('span','',h);Object.assign(s.style,{height:th+'px',lineHeight:th+'px'});return h};
      const tile={el:t,top:mkh('top'),bot:mkh('bot'),ft:mkh('kft'),fb:mkh('kfb'),st:null};tiles.push(tile)}
    k.k5={b,tiles,bw,tw_}}
+  // K7 the ending: an ivory frame with PARIS, LONDON, EUROPE cut out of it, the night city showing through the letters; then the camera dives through the P of EUROPE
+  {const g=mk('g',{},svg),m=mk('mask',{id:'k7m',maskUnits:'userSpaceOnUse',x:0,y:0,width:W,height:H},defs);mk('rect',{x:0,y:0,width:W,height:H,fill:'#fff'},m);
+   const cx=W/2,cy=P?H*.36+W/2:H/2,zg=mk('g',{},m);
+   const ws=['PARIS','LONDON','EUROPE'].map(s=>{const w100=tw(s,`700 100px ${FONT}`),F=Math.min(W*.88/w100*100,P?W*.6:H*.66),e=txt(zg,s,cx,cy+.355*F,F,{w:700,fill:'#000',ls:'0em'});return{e,F,w:w100*F/100}});
+   // find the stem of the P in EUROPE by scanning a rendered glyph
+   const E=ws[2],fn=`700 ${E.F}px ${FONT}`,xP=cx-E.w/2+tw('EURO',fn);let stem=xP+E.F*.14;
+   try{const c=document.createElement('canvas'),S=200;c.width=S;c.height=S;const x=c.getContext('2d');x.font=`700 ${S}px ${FONT}`;x.textBaseline='alphabetic';x.fillText('P',0,S*.85);
+     const row=x.getImageData(0,Math.round(S*.85-S*.2),S,1).data;let a0=-1,a1=-1;for(let i=0;i<S;i++){const on=row[i*4+3]>128;if(on&&a0<0)a0=i;if(!on&&a0>=0){a1=i;break}}
+     if(a0>=0&&a1>a0)stem=xP+(a0+a1)/2*E.F/S}catch(e){}
+   mk('rect',{x:0,y:0,width:W,height:H,fill:IV,mask:'url(#k7m)'},g);
+   k.k7={g,zg,ws,cx,cy,zp:[stem,cy+.355*E.F-.2*E.F]}}
   svg.appendChild(k.kd.g);   // the dial fades out over the navy of the next beat
   return k}
 
@@ -183,14 +190,13 @@ function apply(t){
      if(tb){tb.style.setProperty('--ink',ink);tb.classList.toggle('kxd',dusk>.5)}}
    else if(tb&&tb.classList.contains('kxd')){tb.style.removeProperty('--ink');tb.classList.remove('kxd')}}
   // ---------- K2 ----------
-  {const a=K.k2,tA=C('thats')-.24,z0=CA('in',C('comes'))+.06,z1=z0+.58;const on=win(t,tA,z1);vis(a.g,on);
-   const lo=document.getElementById('logoOv');if(lo)lo.style.visibility=win(t,tA-.1,z1+.1)?'hidden':'';
-   if(on){const rise=(e,ti,dur,F)=>{const u=eo5((t-ti)/dur);e.setAttribute('transform',`translate(0 ${((1-u)*F*1.05).toFixed(2)})`);e.setAttribute('opacity',t>=ti?1:0)};
-     const leave=(e,ti)=>{if(t>=ti)e.setAttribute('opacity',0)};   // hard cut between single words, as in the reference
-     const tw1=C('thats')-.04,tw2=C('where')-.04,tc=CA('city',C('where'))-.04,tp=CA('premium',C('where'))-.04,tco=C('comes')-.04,ti=CA('in',C('comes'))-.04;
-     rise(a.single[0],tw1,.3,a.F1);leave(a.single[0],tw2);
-     rise(a.single[1],tw2,.24,a.F1);leave(a.single[1],tc);
-     rise(a.city,tc,.4,a.F3);rise(a.prem,tp,.4,a.F3);rise(a.comes,tco,.36,a.F4);rise(a.inn,ti,.3,a.F4);
+  {const a=K.k2,tA=C('thats')-.24,z0=CA('in',C('comes'))+.06,z1=z0+.58;const on=win(t,tA,z1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
+   if(on){const tw1=C('thats')-.04,tw2=C('where')-.04,tc=CA('city',C('where'))-.04,tco=C('comes')-.04,ti=CA('in',C('comes'))-.04,T=[tw1,tw2,tc];
+     a.single.forEach((w,i)=>{const ti0=T[i],live=t>=ti0&&t<T[i+1],u=eo5((t-ti0)/.4),sc=1.3-.3*u,xf=k=>`translate(${W/2} ${a.cy}) scale(${k.toFixed(4)}) translate(${-W/2} ${-a.cy})`;
+       w.e.setAttribute('opacity',live?cl((t-ti0)/.06):0);w.e.setAttribute('transform',xf(sc));
+       w.ec.forEach((e,j)=>{const v=eo((t-ti0)/(.55+j*.2));e.setAttribute('opacity',live?(.5*(1-v)).toFixed(3):0);e.setAttribute('transform',xf(1.0+(.22+j*.2)*v))})});
+     const glide=(e,t0,F)=>{const u=eo5((t-t0)/.5);e.setAttribute('transform',`translate(${((1-u)*F*.5).toFixed(2)} 0)`);e.setAttribute('opacity',u.toFixed(3))};
+     glide(a.comes,tco,a.F4);glide(a.inn,ti,a.F4);a.ul.setAttribute('stroke-dashoffset',(1-eo((t-tco-.1)/.55)).toFixed(4));a.ul.setAttribute('opacity',t>tco+.1?.9:0);
      // zoom through the counter of the o
      const u=cl((t-z0)/(z1-z0)),s=Math.pow(110,u*u*(3-2*u)*.25+u*u*.75),m=ez(u);
      const [ox,oy]=a.oc,cx=ox+(W/2-ox)*m,cy=oy+(H/2-oy)*m;
@@ -229,6 +235,14 @@ function apply(t){
      const u=eo5((t-tA)/.4);a.lab.setAttribute('transform',`translate(0 ${((1-u)*a.F*.25).toFixed(2)})`);a.lab.setAttribute('opacity',t>=tA?1:0);
      a.strips.forEach((s,i)=>{const t0=tA+.06,d=.5+i*.08,v=ez((t-t0)/d)*.15+eo((t-t0)/d)*.85;s.setAttribute('transform',`translate(0 ${((1-v)*a.roll[i]*a.F*1.02).toFixed(2)})`)});
      const w=eo((t-(tA+.55))/.3);a.ul.setAttribute('stroke-dashoffset',(1-w).toFixed(4));a.ul.setAttribute('opacity',w>0?1:0)}}
+  // ---------- K7 ----------
+  {const a=K.k7,T=[CA('paris',95)-.05,CA('london',95)-.05,CA('europe',95)-.05],z0=T[2]+.5,z1=z0+.75;const on=win(t,T[0],z1);vis(a.g,on);
+   {const hide=win(t,T[0]-.02,z0),co=document.getElementById('ctaOv'),tb=document.querySelector('.tb[data-sc="a12"]'),fv=document.querySelector('#footT .fv');
+    if(co)co.style.visibility=hide?'hidden':'';if(tb)tb.style.visibility=hide?'hidden':'';if(fv)fv.style.opacity=on?(t<z0?.2:.2+.8*cl((t-z0)/(z1-z0))).toFixed(3):'';}
+   if(on){a.ws.forEach((w,i)=>{const live=t>=T[i]&&(i===2||t<T[i+1]);w.e.setAttribute('opacity',live?1:0);
+       const k=1.1-.1*eo5((t-T[i])/.6);w.e.setAttribute('transform',`translate(${a.cx} ${a.cy}) scale(${k.toFixed(4)}) translate(${-a.cx} ${-a.cy})`)});
+     const u=cl((t-z0)/(z1-z0)),sc=Math.pow(90,u*u*(3-2*u)*.3+u*u*.7),m=ez(u),[px,py]=a.zp,qx=px+(W/2-px)*m,qy=py+(H/2-py)*m;
+     a.zg.setAttribute('transform',u>0?`translate(${qx.toFixed(2)} ${qy.toFixed(2)}) scale(${sc.toFixed(4)}) translate(${-px} ${-py})`:'')}}
   // hide the plain text chunks these set pieces replace
   if(typeof CHUNKS!=='undefined'){if(!K.hid){K.hid={op:CHUNKS.filter(c=>c.sc==='a5'),yr:CHUNKS.filter(c=>c.words.some(w=>w.el.textContent.startsWith('2010')))}}
     const h3=win(t,CA('were',C('partners'))-.25,C('orbit')-.16);K.hid.op.forEach(c=>c.el.style.visibility=h3?'hidden':'');

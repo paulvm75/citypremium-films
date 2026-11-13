@@ -180,3 +180,6 @@
   tl.to('#flip10',{scale:1.04,svgOrigin:'500 440',duration:.3,yoyo:true,repeat:1,ease:'sine.inOut'},C('name')-.1);
   // A11 trust
   [['#tr1','maisons'],['#tr2','agencies'],['#tr3','vic']].forEach(([id,w])=>{tl.fromTo(id,{x:140,autoAlpha:0},{x:0,autoAlpha:1,duration:.75,ease:'expo.out'},C(w)-.4);tl.from(id+' .ic2',{scale:.4,opacity:0,transformOrigin:'50% 50%',duration:.6,ease:'back.out(2.2)'},C(w)-.2)});
+  // v14 glints: a sun reflection crosses the logo at its first reveal, and again when the ending opens up
+  tl.fromTo('#glintE1',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut'},C('premium#1')+.2);tl.fromTo('#glint1',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut'},C('premium#1')+.3);
+  tl.fromTo('#glintE',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.2);tl.fromTo('#glint2',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.3);

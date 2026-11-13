@@ -381,7 +381,7 @@ TXT = {
  'a2': "You already work|with a ^DMC,|and maybe you're part|of *Virtuoso too.",
  'a3': "But on the ground,|someone still has to|make it all happen,|at the aircraft ^door,|at the ^restaurant,|and at !two in the morning.",
  'a5': "We're not a broker,|and we don't replace|your partners.|We're an !operator.|We *orbit around your DMC|and your network,|and we fill the ^gaps|in real time.",
- 'a6': "Everything is|*à *la !carte.|You take exactly|what you ^need,|and nothing you don't.",
+ 'a6': "Everything is|!à !la !carte.|You take exactly|what you ^need,|and nothing you don't.",
  'a7': "At the heart of it|are our own !fleet|and our own ^chauffeurs,|*directly *employed|in *Paris and *London.|They're trained|for ^VIP clients|and know the city by heart,|whether it's a single transfer|or a ^driver for the whole day.",
  'a8': "We greet your clients|at private terminals|like *Le *Bourget,|*Farnborough and *Biggin *Hill,|and at airports|across ^Europe.",
  'a8b': "On commercial flights,|we can even meet them|!airside|at *Heathrow and *Charles de *Gaulle,|with ^fast ^track|through passport control|and customs,|if you want it.",
@@ -546,9 +546,14 @@ s=s[:_a]+'if(window.FOOT)FOOT(t);'+s[_a:]
 # v12 text grammar: no clipping masks on words
 rep('.kt .w{display:inline-block;overflow:hidden;','.kt .w{display:inline-block;overflow:visible;')
 rep("      else tl.fromTo(b,{yPercent:100,opacity:0},{yPercent:0,opacity:1,duration:.6,ease:'expo.out'},w.t-.04);",
-    "      else tl.fromTo(b,{x:'.42em',opacity:0,filter:'blur(7px)'},{x:0,opacity:1,filter:'blur(0px)',duration:.62,ease:'expo.out'},w.t-.05);")
+    "      else tl.fromTo(b,{yPercent:55,opacity:0,rotation:5,transformOrigin:'0% 100%'},{yPercent:0,opacity:1,rotation:0,duration:.55,ease:'expo.out'},w.t-.05);")
 import base64 as _b60
 _JH0='data:image/webp;base64,'+_b60.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_hero_sprite.webp','rb').read()).decode()
+# v14: text leaves before a scene wipe, the logo reveal waits for "City", flies on the zoom, and gets a glint
+rep("end=Math.min(end,nextScene.a+.25)","end=Math.min(end,nextScene.a-.08)")
+rep("const lt=C('city#1')-.3;","const lt=C('city#1')-.04;")
+rep("{const fly=SA('a5')-.45;","{const fly=C('in#3')+.06;")
+rep('<div class="emb" id="emb1"><i></i></div><div class="wm" id="wm1"></div>','<div class="emb" id="emb1"><i></i><span class="glintE" id="glintE1"></span></div><div class="wm" id="wm1"><span class="glint" id="glint1"></span></div>')
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')
@@ -569,11 +574,10 @@ rep('if(window.FOOT)FOOT(t);','if(window.FOOT)FOOT(t);if(window.KX)KX(t);')
 # hero words track in (wide to tight) instead of popping and shaking the line
 rep("""      if(w.big){tl.fromTo(b,{scale:.35,opacity:0,filter:'blur(6px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(2.4)'},w.t-.02);
         tl.fromTo(c.el,{x:0},{keyframes:{x:[0,-5,4,-2,0]},duration:.22,ease:'none'},w.t+.06)}""",
-"""      if(w.big){tl.fromTo(b,{x:'.3em',opacity:0,scaleX:1.14,letterSpacing:'.16em',filter:'blur(9px)'},{x:0,opacity:1,scaleX:1,letterSpacing:'0em',filter:'blur(0px)',duration:.7,ease:'expo.out'},w.t-.05)}""")
+"""      if(w.big){tl.fromTo(b,{yPercent:25,opacity:0,scale:1.35,transformOrigin:'0% 80%'},{yPercent:0,opacity:1,scale:1,duration:.65,ease:'expo.out'},w.t-.05)}""")
 # lines leave by rolling up out of their own mask, word by word, rather than blurring away
 rep("""    tl.to(c.el,{opacity:0,y:-18,filter:'blur(4px)',duration:.32,ease:'power2.in'},end-.34);""",
-"""    c.words.forEach((w,j)=>tl.fromTo(w.el.firstChild,{x:0,filter:'blur(0px)'},{x:'-.3em',filter:'blur(6px)',duration:.3,ease:'power2.in',immediateRender:false},end-.34+j*.012));
-    tl.to(c.el,{opacity:0,duration:.3,ease:'power2.in'},end-.32);""")
+"""    tl.to(c.el,{opacity:0,y:'-.22em',duration:.22,ease:'power2.in'},end-.24);""")
 # a real business jet: Bombardier Global 5000 (FlightGear AI model, GPL v2), rendered top-down and three-quarter in three.js
 import base64 as _b6
 _JT='data:image/webp;base64,'+_b6.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_sprite.webp','rb').read()).decode()

@@ -29,3 +29,5 @@ add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i
 for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
 // v13 day dial: soft ticks as the clock turns at the restaurant and at two
 [0,1,2,3].forEach(i=>add('tick',C('restaurant')-.02+i*.05,.09));add('tick',C('two')+.17,.1);
+// v14 ending: a soft click on each city word
+['paris#3','london#2','europe#2'].forEach(w=>add('popl',C(w)-.05,.3));

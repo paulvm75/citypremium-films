@@ -112,3 +112,16 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - Renders must `await VSEEK(t)` after `renderAt(t)` (`renderta9.py` and `shotta9.py` do this), otherwise frames are captured before the JPEG decodes.
 - The published artifact is multi-file: the page plus `foot/v/*` and `foot/p/*`, published with the Artifact tool's `files` (root `cp/`).
 - `cp/run9.sh` is the full pipeline (both renders in parallel, mix, compress to `send9/CityPremium_agencies_v10_*.mp4`).
+
+## Agencies v11 to v14: kinetic type (`ta/kx.js`) and its lessons
+- `ta/kx.js` holds full-frame type set pieces, each a pure function of film time, called from `render()` as `KX(t)`. Layers: `#kxbg` sits under the text, `#kx` sits above everything.
+  - K0 opening: a cabin window, the shade lifts on Paris at dawn, then a push through the window. No plane sprite, no Paris pin.
+  - KD (0:12 to 0:16): a 24-hour dial as a photo window (jet at the door 07:40, maitre d' 21:30, concierge 02:00, stills in `cp/dial/`), swept in by a clock hand, dusk and night open out from the dial.
+  - K2: "That's / where" punch in with outline echoes, the real logo reveals with a glint, "comes in." is underlined, zoom through the o of "comes".
+  - K3: "operator" fills the frame, its o becomes the orbit ring. K5: split-flap name board for white label. K6: odometer to 2010.
+  - K7 ending: ivory frame with PARIS, LONDON, EUROPE cut out over the night footage, then a zoom through the P of EUROPE onto the logo and CTA.
+- The client rejected: a static plane image sliding across the frame, a plane travelling round the dial, the small orbit icons for door and restaurant, a lone clock cutting in at 0:15, text with clipped letters, blur smears on camera moves, and violet or cyan backgrounds.
+- Text grammar: words rise with a small rotation, no masks and no blur filters (they glitch in the page player). Big words scale in. Never animate letter-spacing on inline words; it reflows the line.
+- A text chunk leaves before a scene wipe starts (`nextScene.a-.08`).
+- Footage wipes use the same start, duration and ease as the panel wipe (`SA-.3`, 0.95 s, expo in-out), so there is one edge.
+- Jets are stills of a real Bombardier Global 5000 model (`tools/g5000/`).
