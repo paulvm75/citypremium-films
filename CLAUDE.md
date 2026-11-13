@@ -143,3 +143,4 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - Fleet transition (0:32): a skewed swoosh with a bright streak on its edge (`swin`/`swout` in `foot.js`), with a push in on the footage; it leaves the same way on "chauffeurs".
 - Scene tones are all different (`TONE` in gen.py): ivory for a2/a3/a6/a9/a10, violet-indigo a5, near-black a7, deep blue a8 (map), slate a8b, plum a9x, indigo a11. Mint `#7BE0C3` is allowed as a second accent for "fast" (fast track switch, bar ends, minutes).
 - Fast track: thin bars that fill periwinkle to mint, labels brighten and lift as reached; no tick marks (they crowded the labels).
+- The question mark (K8): the glyph's own dot is square in Instrument Sans, so it is clipped off and the round point of light that opens the beat stays as the dot.

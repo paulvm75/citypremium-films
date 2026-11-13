@@ -95,10 +95,17 @@ function build(W,H,P){
    const fg=mk('linearGradient',{id:'k8f',x1:0,y1:0,x2:.4,y2:1},defs);mk('stop',{offset:0,'stop-color':'#F4F2ED','stop-opacity':.96},fg);mk('stop',{offset:1,'stop-color':'#9FB0FF','stop-opacity':.7},fg);
    const sg=mk('linearGradient',{id:'k8s',x1:0,y1:0,x2:1,y2:0},defs);[[0,0],[.5,.95],[1,0]].forEach(([o,v])=>mk('stop',{offset:o,'stop-color':'#fff','stop-opacity':v},sg));
    const halo=mk('circle',{cx:Z.cx,cy:Z.cy,r:Z.s*.75,fill:'url(#k8h)'},g),zg=mk('g',{},g);
-   const fill=txt(zg,'?',Z.cx,yb,F,{w:500,fill:'url(#k8f)',ls:'0em'}),line=txt(zg,'?',Z.cx,yb,F,{w:500,fill:'none',ls:'0em'});line.setAttribute('stroke',IV);line.setAttribute('stroke-width',Math.max(1.5,F*.004));
+   // measure the glyph's own dot (square in this font) so it can be replaced by a round one, and clip the hook above it
+   let gap=yb-F*.2,dc=[Z.cx,yb-F*.06],dr=F*.05;
+   try{const S=400,c=document.createElement('canvas');c.width=S;c.height=S;const x=c.getContext('2d');x.font=`500 ${S*.8}px ${FONT}`;x.textAlign='center';x.textBaseline='alphabetic';x.fillText('?',S/2,S*.9);
+     const d=x.getImageData(0,0,S,S).data,row=y=>{let a=-1,b=-1;for(let i=0;i<S;i++)if(d[(y*S+i)*4+3]>100){if(a<0)a=i;b=i}return[a,b]};
+     let y=S-1;while(y>0&&row(y)[0]<0)y--;const yb2=y;while(y>0&&row(y)[0]>=0)y--;const yt=y;let y2=y;while(y2>0&&row(y2)[0]<0)y2--;
+     const [l,r]=row(Math.round((yb2+yt)/2)),k=F/(S*.8);dc=[Z.cx+((l+r)/2-S/2)*k,yb+((yb2+yt)/2-S*.9)*k];dr=Math.max(r-l,yb2-yt)/2*k*1.02;gap=yb+((yt+y2)/2-S*.9)*k}catch(e){}
+   const qc=mk('clipPath',{id:'k8q'},defs);mk('rect',{x:Z.cx-F,y:Z.cy-F*2,width:F*2,height:gap-(Z.cy-F*2)},qc);
+   const qg=mk('g',{'clip-path':'url(#k8q)'},zg),fill=txt(qg,'?',Z.cx,yb,F,{w:500,fill:'url(#k8f)',ls:'0em'}),line=txt(qg,'?',Z.cx,yb,F,{w:500,fill:'none',ls:'0em'});line.setAttribute('stroke',IV);line.setAttribute('stroke-width',Math.max(1.5,F*.004));
    const cp=mk('clipPath',{id:'k8c'},defs);txt(cp,'?',Z.cx,yb,F,{w:500,ls:'0em'});
    const sh=mk('rect',{x:-F*.14,y:Z.cy-F*.7,width:F*.28,height:F*1.4,fill:'url(#k8s)',transform:''},mk('g',{'clip-path':'url(#k8c)'},zg));
-   const dot=mk('circle',{cx:Z.cx-F*.012,cy:yb-F*.045,r:F*.05,fill:IV},g);
+   const dot=mk('circle',{cx:dc[0],cy:dc[1],r:dr,fill:IV},zg);
    k.k8={g,zg,halo,fill,line,sh,dot,Z,F,L:F*3.6}}
   // K2 That's where City Premium comes in: two words punch in with outline echoes, the real logo reveals with a glint,
   // "comes in." is underlined, then the camera dives through the o of "comes"
@@ -264,7 +271,7 @@ function apply(t){
    if(on){const out=ez((t-tO)/(tE-tO)),dr=ez((t-tQ)/1.15),fl=ez((t-tF)/.7),k=(1+.05*cl((t-tQ)/2.4))*(1+.08*out),Z=a.Z;
      a.g.setAttribute('opacity',(1-out).toFixed(3));a.zg.setAttribute('transform',`translate(${Z.cx} ${Z.cy}) scale(${k.toFixed(4)}) translate(${-Z.cx} ${-Z.cy})`);
      a.halo.setAttribute('opacity',(.25*eo((t-tD)/.8)+.45*fl).toFixed(3));
-     a.dot.setAttribute('opacity',(eo((t-tD)/.5)*(1-cl(dr*2.5))*(.75+.25*Math.sin((t-tD)*5))).toFixed(3));a.dot.setAttribute('r',(a.F*.05*(.6+.4*eo((t-tD)/.6))).toFixed(2));
+     a.dot.setAttribute('opacity',eo((t-tD)/.5).toFixed(3));a.dot.setAttribute('transform',`translate(${a.dot.getAttribute('cx')} ${a.dot.getAttribute('cy')}) scale(${(eo5((t-tD)/.6)*(1+.06*Math.sin((t-tD)*4)*(1-fl))).toFixed(4)}) translate(${-a.dot.getAttribute('cx')} ${-a.dot.getAttribute('cy')})`);
      a.line.setAttribute('stroke-dasharray',`${a.L} ${a.L}`);a.line.setAttribute('stroke-dashoffset',(a.L*(1-dr)).toFixed(1));a.line.setAttribute('opacity',t>=tQ?(1-.5*fl).toFixed(3):0);
      a.fill.setAttribute('opacity',fl.toFixed(3));
      const g=cl((t-tG)/.9);a.sh.setAttribute('transform',`translate(${(Z.cx-a.F*.5+a.F*g).toFixed(1)} 0) skewX(-18)`);a.sh.setAttribute('opacity',(g>0&&g<1?1:0))}}
