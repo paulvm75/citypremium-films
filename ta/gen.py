@@ -554,11 +554,39 @@ rep("end=Math.min(end,nextScene.a+.25)","end=Math.min(end,nextScene.a-.08)")
 rep("const lt=C('city#1')-.3;","const lt=C('city#1')-.04;")
 rep("{const fly=SA('a5')-.45;","{const fly=C('in#3')+.06;")
 rep('<div class="emb" id="emb1"><i></i></div><div class="wm" id="wm1"></div>','<div class="emb" id="emb1"><i></i><span class="glintE" id="glintE1"></span></div><div class="wm" id="wm1"><span class="glint" id="glint1"></span></div>')
+# ---- v15: real tower line art, a segmented fast track, a finer map ----
+_pl=lambda d:f'<path d="{d}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>'
+_eif=''.join(_pl(d) for d in [
+ 'M197 560 Q222 532 226 503 L226 497 Q238 472 241 445 L241 440 Q251 370 255 284 L255 276 L257 276 L260 235 L263 276 L265 276 L265 284 Q269 370 279 440 L279 445 Q282 472 294 497 L294 503 Q298 532 323 560',
+ 'M197 560 H222 Q260 498 298 560 H323','M222 503 H298 M224 497 H296 M239 445 H281 M240 440 H280 M253 284 H267',
+ 'M228 497 L279 446 M292 497 L241 446 M242 440 L268 362 M278 440 L252 362 M250 362 H270 M252 362 L264 290 M268 362 L256 290','M260 235 V216'])
+_ben=''.join(_pl(d) for d in [
+ 'M824 560 V338 H876 V560','M837 352 V560 M850 352 V560 M863 352 V560','M817 338 V266 H883 V338 Z M812 338 H888 M812 266 H888',
+ 'M875 302 A25 25 0 1 1 825 302 A25 25 0 1 1 875 302 M850 302 V284 M850 302 L863 309',
+ 'M822 266 V240 H878 V266 M834 266 V250 M846 266 V250 M858 266 V250 M870 266 V250','M822 240 L834 205 H866 L878 240 M834 205 V192 H866 V205 M836 192 L850 148 L864 192 M850 148 V134',
+ 'M824 478 H600 V560 M600 478 V452 L608 440 L616 452 V478 M660 478 V456 L668 444 L676 456 V478 M720 478 V440 L730 418 L740 440 V478 M780 478 V456 L788 444 L796 456 V478',
+ 'M632 500 V540 M648 500 V540 M692 500 V540 M704 500 V540 M756 500 V540 M768 500 V540 M808 500 V540'])
+s,_n=re.subn(r'<g class="sky" id="sky0".*?</g>','<g class="sky" id="sky0" fill="none" stroke="#EEF0F6" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">'+_eif+'</g>',s,count=1,flags=re.S);assert _n
+s,_n=re.subn(r'<g class="sky" id="sky1".*?</g>','<g class="sky" id="sky1" fill="none" stroke="#EEF0F6" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">'+_ben+'</g>',s,count=1,flags=re.S);assert _n
+# fast track: four segments that fill in turn, each with a label and a tick; no dot, no token on the card
+_i=s.index('<rect x="150" y="955" width="700" height="10" rx="5" fill="rgba(238,240,246,.12)"/>');_j=s.index('<g id="tok8">')
+_sg=''
+for _k,_l in enumerate(['Door','Passport','Customs','Your car']):
+    _x=116+_k*196
+    _sg+=(f'<g class="sg8" id="sg8{_k}"><rect x="{_x}" y="900" width="180" height="14" rx="7" fill="rgba(238,240,246,.14)"/><rect class="sf" x="{_x}" y="900" width="180" height="14" rx="7" fill="url(#fl8)"/>'
+          f'<text class="sn" x="{_x}" y="966" font-weight="600" font-size="34" fill="#8E97C4">{_l}</text>'
+          f'<path class="sk" d="M{_x+146} 944 l9 9 16 -18" fill="none" stroke="#9FB0FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></g>')
+s=s[:_i]+_sg+'</g></g>\n    '+s[_j:]
+rep('id="ft8c" x="116" y="776" font-weight="700" font-size="88"','id="ft8c" x="116" y="812" font-weight="700" font-size="112"')
+# map: a faint graticule under the land
+_gr=''.join(f'M{x} -300V1400' for x in range(-300,1400,70))+''.join(f'M-300 {y}H1400' for y in range(-300,1400,70))
+rep('<g id="mapG"><path','<g id="mapG"><path d="'+_gr+'" fill="none" stroke="rgba(199,206,240,.07)" stroke-width="1" vector-effect="non-scaling-stroke"/><path')
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')
 rep('.grain{position:absolute;','#kxbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}.tb.lt.kxd .kt .w.em>b,.tb.lt.kxd .kt .w.big>b{color:#9FB0FF}.tb.lt.kxd .kt .w.hl>b{color:#0F1426!important}'
  '#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
+ '.kw{position:absolute;inset:0;display:none}.kwt{position:absolute;opacity:0;will-change:transform}'
  '.kl{position:absolute;inset:0;display:none}.klw{position:absolute;left:0;top:0;transform-origin:0 100%;white-space:nowrap;line-height:1.04;padding:0 .03em .12em;will-change:transform}.klr{position:absolute;height:2px;transform-origin:0 50%;background:linear-gradient(90deg,rgba(244,242,237,0),rgba(244,242,237,.9) 25%,rgba(159,176,255,.9) 70%,rgba(159,176,255,0))}'
  '.kxb{position:absolute;display:flex;box-sizing:border-box;background:linear-gradient(180deg,#1B2140,#141A33);border-radius:.18em;box-shadow:0 .5em 1.2em rgba(10,14,30,.35),inset 0 0 0 1px rgba(244,242,237,.08);visibility:hidden}'
  '.kxt{position:relative;perspective:5em;flex:none}.kxt::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(10,14,30,.55);z-index:3}'

@@ -45,18 +45,18 @@
   tl.from('#stamp6',{scale:2.6,rotation:-25,opacity:0,svgOrigin:'500 30',duration:.34,ease:'power4.in'},C('directly')-.15);
   tl.to('#pn0>rect',{stroke:'#9FB0FF',duration:.3},C('paris#2'));tl.to('#pn1>rect',{stroke:'#9FB0FF',duration:.3},C('london#1'));
   tl.fromTo('#vip7',{opacity:0},{opacity:1,duration:.3},C('vip'));tl.from('#vip7 g',{scale:0,transformOrigin:'50% 50%',duration:.45,stagger:.12,ease:'back.out(3)'},C('vip'));
-  tl.to('#sky0',{attr:{'stroke-dashoffset':0},duration:1,ease:'power2.inOut'},C('city#2')-.45);tl.to('#sky1',{attr:{'stroke-dashoffset':0},duration:1,ease:'power2.inOut'},C('city#2')-.2);
+  tl.to('#sky0>*',{attr:{'stroke-dashoffset':0},duration:.9,stagger:.11,ease:'power2.inOut'},C('city#2')-.6);tl.to('#sky1>*',{attr:{'stroke-dashoffset':0},duration:.9,stagger:.08,ease:'power2.inOut'},C('city#2')-.35);
   tl.from('#day7',{opacity:0,y:30,duration:.6,ease:'expo.out'},C('single')-.4);
   tl.fromTo('#dayFill',{scaleX:.02,transformOrigin:'0% 50%'},{scaleX:1,duration:1.3,ease:'power2.inOut'},C('driver')-.1);
   tl.fromTo('#dayKnob',{x:0},{x:760,duration:1.3,ease:'power2.inOut'},C('driver')-.1);
   // A8 private terminals drop in as pins, then the map pulls out across Europe and flights fan out from Paris and London
   tl.fromTo(MZ,{s:3.7},{s:3.2,duration:C('airports')-.3-SA('a8'),ease:'sine.inOut'},SA('a8'));
-  tl.fromTo(MZ,{s:3.2,cx:345,cy:445},{s:.95,cx:520,cy:600,duration:1.9,ease:'expo.inOut',immediateRender:false},C('airports')-.3);
+  tl.fromTo(MZ,{s:3.2,cx:345,cy:445},{s:.95,cx:520,cy:600,duration:2.5,ease:'power3.inOut',immediateRender:false},C('airports')-.65);
   tl.fromTo('#mapG',{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'},SA('a8')+.05);
   tl.fromTo('.hub8',{scale:0,transformOrigin:'50% 50%'},{scale:1,duration:.6,stagger:.15,ease:'back.out(2.2)'},SA('a8')+.35);
   tl.set('.c8,.pin8 .pi',{opacity:0},0);
   [['LBG','bourget'],['FAB','farnborough'],['BQH','biggin']].forEach(([k,w])=>{const e=`.pin8[data-k=${k}] .pi`;
-    tl.fromTo(e,{opacity:0,y:-70,scale:.6,transformOrigin:'50% 100%'},{opacity:1,y:0,scale:1,duration:.55,ease:'back.out(2.2)'},C(w)-.25);
+    tl.fromTo(e,{opacity:0,scale:0,transformOrigin:'50% 50%'},{opacity:1,scale:1,duration:.6,ease:'expo.out'},C(w)-.25);
     tl.fromTo(`.c8[data-k=${k}]`,{opacity:0,x:-14},{opacity:1,x:0,duration:.5,ease:'expo.out'},C(w)-.05);tl.to(`.c8[data-k=${k}]`,{opacity:0,duration:.3},C('airports')-.3)});
   tl.to('.pin8 .pi',{opacity:0,scale:.6,duration:.4,ease:'power2.in'},C('airports')-.1);
   tl.fromTo(MZ,{a:0},{a:1,duration:1.8,ease:'power2.inOut'},C('airports')+.1);
@@ -76,16 +76,12 @@
    const ON=C('fast')-.15;tl.to('#swT',{fill:'#9FB0FF',duration:.25},ON);tl.to('#swK',{attr:{cx:886},fill:'#0F1426',duration:.4,ease:'back.out(2)'},ON);tl.to('#ft8n',{fill:'#9FB0FF',duration:.5},ON+.25);
    tl.fromTo('#swR',{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.9,duration:.8,ease:'power2.out'},ON+.05);
    tl.fromTo('#swR',{opacity:.9,scale:1},{opacity:0,scale:1.9,duration:.8,ease:'power2.out',immediateRender:false},C('want')-.1);
-   // fast track, kinetic: the chauffeur token bows out, then a light runs the track in quick dashes; each step it reaches
-   // pops and lights, and the door-to-car time drops in steps (75, 58, 41, 26, 15)
-   const NX=[150,383,617,850],MIN=[58,41,26,15];
-   const lit=(k,t)=>{tl.to(`#s8${k} .sl`,{scale:1,duration:.5,ease:'back.out(2.2)'},t);tl.fromTo(`#s8${k} .sr`,{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.8,duration:.7,ease:'power2.out'},t);
-     tl.fromTo(`#s8${k}`,{scale:1},{keyframes:{scale:[1,1.2,1]},svgOrigin:`${NX[k]} 960`,duration:.42,ease:'power2.out'},t);tl.to(FC,{m:MIN[k],duration:.42,ease:'power3.out'},t)};
-   tl.to(TK,{o:0,s:.75,duration:.35,ease:'power2.in'},C('fast')-.5);
-   tl.set('#cm8',{x:150,opacity:0},0);tl.to('#cm8',{opacity:1,duration:.2},C('fast')+.05);lit(0,C('fast')+.2);
-   [[1,'passport'],[2,'customs'],[3,'want']].forEach(([k,w])=>{const en=C(w)-(k===3?.3:.04),d=.44,st=en-d;
-     tl.to('#cm8',{x:NX[k],duration:d,ease:'expo.inOut'},st);tl.to('#pl8',{scaleX:(NX[k]-150)/700,svgOrigin:'150 960',duration:d,ease:'expo.inOut'},st);lit(k,en)});
-   tl.to('#cm8',{opacity:0,duration:.4},C('want')+.2);
+   // fast track: the chauffeur token bows out before the card arrives; four segments fill in turn, each ticks, and the door-to-car time drops with them
+   const MIN=[58,41,26,15];tl.set('.sg8 .sf',{scaleX:0,transformOrigin:'0% 50%'},0);
+   tl.to(TK,{o:0,s:.75,duration:.3,ease:'power2.in'},C('charles')-.2);
+   [C('fast')+.5,C('passport')+.4,C('customs')+.35,C('want')-.05].forEach((en,k)=>{
+     tl.to(`#sg8${k} .sf`,{scaleX:1,duration:.55,ease:'expo.inOut'},en-.55);tl.to(`#sg8${k} .sn`,{fill:'#F4F2ED',duration:.3},en-.1);
+     tl.to(`#sg8${k} .sk`,{attr:{'stroke-dashoffset':0},duration:.32,ease:'power2.out'},en-.05);tl.to(FC,{m:MIN[k],duration:.5,ease:'power3.out'},en-.2)});
    }
   // A9 the concierge layer
   [['#t1','jet'],['#t2','hotel'],['#t3','ad']].forEach(([id,w])=>{tl.fromTo(id,{y:90,scale:.9,opacity:0,filter:'blur(10px)',transformOrigin:'50% 50%'},{y:0,scale:1,opacity:1,filter:'blur(0px)',duration:.95,ease:'expo.out'},C(w)-.4);tl.fromTo(id+' text',{x:40,opacity:0},{x:0,opacity:1,duration:.7,stagger:.09,ease:'expo.out'},C(w)-.25)});

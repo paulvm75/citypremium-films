@@ -125,3 +125,10 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - A text chunk leaves before a scene wipe starts (`nextScene.a-.08`).
 - Footage wipes use the same start, duration and ease as the panel wipe (`SA-.3`, 0.95 s, expo in-out), so there is one edge.
 - Jets are stills of a real Bombardier Global 5000 model (`tools/g5000/`).
+
+## Agencies v15
+- Opening hook (K0) and ending (K7) are bookends built by `mkCover` in `ta/kx.js`: an ivory frame with words cut out (YOUR CLIENT, LANDS, IN PARIS at the start; PARIS, LONDON, EUROPE at the end), footage inside the letters, and the frame splits open along its centre line. The client found the cabin window and the zoom through a letter cheap.
+- a7 towers are real line art of the Eiffel Tower and the Elizabeth Tower, drawn path by path with `pathLength="1"`.
+- Fast track is four segments that fill in turn with a tick each; the minutes drop per segment. No moving dot, and the chauffeur token leaves before the card arrives.
+- "Something truly unusual" (K8) is a hairline question mark that draws, fills like frosted glass and gets one reflection. "Made to measure" (K9) is a frame of corner marks and dimension lines that fits itself to three photos. White label (K5) is a wall of vertical blinds that turns the frame ivory, then navy for "your name.".
+- `C('every')` is the first "every" at 1:06; use `CA(word, afterTime)` in kx.js when a word repeats.
