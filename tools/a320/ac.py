@@ -9,6 +9,8 @@ def parse(path):
     objs=[]
     def rd(parent_loc,parent_rot,pname):
         nonlocal i
+        while i<len(L) and not L[i].strip(): i+=1
+        if i>=len(L) or not L[i].startswith('OBJECT'): return   # some files declare more kids than they hold
         o=dict(name='',tex=None,verts=None,surfs=[],loc=np.zeros(3),rot=np.eye(3),crease=None,parent=pname,texrep=(1,1),texoff=(0,0))
         assert L[i].startswith('OBJECT'),L[i]; i+=1
         while True:
@@ -41,7 +43,9 @@ def parse(path):
                 wl=parent_loc+o['loc']
                 if o['verts'] is not None: o['wverts']=o['verts']+wl
                 objs.append(o)
-                for _ in range(nk): rd(wl,R,o['name'])
+                for _ in range(nk):
+                    if i>=len(L) or not L[i].strip().startswith('OBJECT') and not any(L[j].startswith('OBJECT') for j in range(i,min(len(L),i+3))): break
+                    rd(wl,R,o['name'])
                 return
             else: i+=1
     rd(np.zeros(3),np.eye(3),None)

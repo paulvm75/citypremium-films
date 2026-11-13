@@ -542,5 +542,35 @@ s=s[:_i]+'window.FOOTCL='+_FC+';\n'+open('/home/claude/ta/foot.js').read()+'\n'+
 _k=s.index('frameA(t);',s.index('function render('))
 _a=s.index('applyCam();',_k)+len('applyCam();')
 s=s[:_a]+'if(window.FOOT)FOOT(t);'+s[_a:]
+
+# ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
+rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
+rep('.grain{position:absolute;','#kx{position:absolute;inset:0;pointer-events:none;overflow:hidden}'
+ '.kxb{position:absolute;display:flex;box-sizing:border-box;background:linear-gradient(180deg,#1B2140,#141A33);border-radius:.18em;box-shadow:0 .5em 1.2em rgba(10,14,30,.35),inset 0 0 0 1px rgba(244,242,237,.08);visibility:hidden}'
+ '.kxt{position:relative;perspective:5em;flex:none}.kxt::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(10,14,30,.55);z-index:3}'
+ '.kh{position:absolute;left:0;right:0;height:50%;overflow:hidden;backface-visibility:hidden;font-family:var(--sans);font-weight:600;text-align:center;border-radius:.08em;will-change:transform}'
+ '.kh span{position:absolute;left:0;right:0;display:block}.kh.top,.kh.kft{top:0;transform-origin:50% 100%}.kh.top span,.kh.kft span{top:0}'
+ '.kh.bot,.kh.kfb{bottom:0;transform-origin:50% 0}.kh.bot span,.kh.kfb span{bottom:0}.kh.kft,.kh.kfb{z-index:2;visibility:hidden}'
+ '.grain{position:absolute;')
+_i=s.index('function frameA(t)')
+s=s[:_i]+open('/home/claude/ta/kx.js').read()+'\n'+s[_i:]
+rep('if(window.FOOT)FOOT(t);','if(window.FOOT)FOOT(t);if(window.KX)KX(t);')
+# hero words track in (wide to tight) instead of popping and shaking the line
+rep("""      if(w.big){tl.fromTo(b,{scale:.35,opacity:0,filter:'blur(6px)'},{scale:1,opacity:1,filter:'blur(0px)',duration:.5,ease:'back.out(2.4)'},w.t-.02);
+        tl.fromTo(c.el,{x:0},{keyframes:{x:[0,-5,4,-2,0]},duration:.22,ease:'none'},w.t+.06)}""",
+"""      if(w.big){tl.fromTo(b,{yPercent:38,opacity:0,scaleX:1.16,letterSpacing:'.14em'},{yPercent:0,opacity:1,scaleX:1,letterSpacing:'0em',duration:.62,ease:'expo.out'},w.t-.04)}""")
+# lines leave by rolling up out of their own mask, word by word, rather than blurring away
+rep("""    tl.to(c.el,{opacity:0,y:-18,filter:'blur(4px)',duration:.32,ease:'power2.in'},end-.34);""",
+"""    c.words.forEach((w,j)=>tl.fromTo(w.el.firstChild,{yPercent:0},{yPercent:-108,duration:.3,ease:'power3.in',immediateRender:false},end-.36+j*.014));
+    tl.to(c.el,{opacity:0,duration:.1,ease:'none'},end-.1);""")
+# a real business jet: Bombardier Global 5000 (FlightGear AI model, GPL v2), rendered top-down and three-quarter in three.js
+import base64 as _b6
+_JT='data:image/webp;base64,'+_b6.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_top_sprite.webp','rb').read()).decode()
+_JH='data:image/webp;base64,'+_b6.b64encode(open('/home/claude/citypremium-films/tools/g5000/jet_hero_sprite.webp','rb').read()).decode()
+_a=s.index('<symbol id="jetT"');_b=s.index('</symbol>',_a)+9
+s=s[:_a]+f'<symbol id="jetT" viewBox="-60 -60 120 120"><image href="{_JT}" x="-52" y="-46" width="112" height="112" opacity=".35" style="filter:brightness(0) blur(2.5px)"/><image href="{_JT}" x="-60" y="-60" width="120" height="120"/></symbol>'+s[_b:]
+_a=s.index('<circle cx="210" cy="215" r="80" fill="#EEF1FB"/>')
+_g=s.index('id="jet9"',_a);_e=s.index('</g></g>',_g)+8
+s=s[:_a]+f'<circle cx="210" cy="215" r="80" fill="#1B2140"/><g id="jet9"><image href="{_JH}" x="88" y="172" width="250" height="88"/></g>'+s[_e:]
 open('/home/claude/ta/ta1.html', 'w').write(s)
 print('ok', len(s))

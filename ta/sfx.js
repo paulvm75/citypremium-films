@@ -22,3 +22,8 @@ add('pop',C('paris#1')+.05,.3);add('pop',C('perfect')+.15,.28);for(let i=0;i<4;i
 add('shim',C('city#3')-.2,.18);
 
 add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i++){add('tick',C('design')-.1+i*.045,.06);add('tick',C('remember')-.3+i*.045,.06)};['visits','champagne','cotswolds'].forEach(w=>add('popl',C(w)-.2,.16));add('keycard',C('opened')-.1,.2);add('pop',C('sometimes')+.15,.12);add('popl',C('unusual')-.2,.2);for(let i=0;i<6;i++)add('tick',C('experience')-.25+i*.09,.1);[0,1,2].forEach(i=>add('pop',C('made')-.35+i*.13,.16));add('popl',C('measure')-.05,.3);
+
+// v11 kinetic type: the clock rolls to two, the name board flips, the odometer runs to 2010 (soft mechanical ticks only)
+[0,1,2].forEach(i=>add('tick',C('two')+.02+i*.05,.12));
+{const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('only')-.04;for(let i=0;i<12;i++){add('tick',E+i*.035+.05,.05);add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
+for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);

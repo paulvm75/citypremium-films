@@ -81,7 +81,7 @@ def build(files,outp,xf):
     print(outp,len(nodes),'nodes',sum(a['count'] for a in accs if a['type']=='VEC3')//2,'verts',len(buf)//1024,'KB')
 R='/home/claude/dl/a320/Models/'
 rot=lambda v: v*np.array([-1,1,-1])  # nose to +x, keep handedness
-if len(sys.argv)<2: build([(R+'Fuselage/res/A320-216.ac',(0,0,0),{'Fuse-Main.png':'fuse_white.jpg','LandingGears.png':'gear.jpg','Static-Elements.png':'static.jpg','placards.png':'static.jpg'},()),
+if __name__=="__main__" and len(sys.argv)<2: build([(R+'Fuselage/res/A320-216.ac',(0,0,0),{'Fuse-Main.png':'fuse_white.jpg','LandingGears.png':'gear.jpg','Static-Elements.png':'static.jpg','placards.png':'static.jpg'},()),
        (R+'Fuselage/res/CFMLEAP1A.ac',(0,.83109,0),{'engine-leap1a.png':'eng.jpg'},())],'a320.gltf',rot)
-if len(sys.argv)>1 and sys.argv[1]=='stairs':
+if __name__=="__main__" and len(sys.argv)>1 and sys.argv[1]=="stairs":
     build([(R+'Services/Stairs/stairs.ac',(0,0,0),{'truck.png':'truck.jpg','blank.png':'blank.jpg','stairs-metal.png':'metal.jpg'},())],'stairs.gltf',lambda v:v)
