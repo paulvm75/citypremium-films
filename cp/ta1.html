@@ -602,7 +602,7 @@ function build(){
   // our logo, black and white, rises above the plane and twists around the whole system, drawing our orbit as it goes
   tl.to(BS,{o:1,s:1.05,duration:.7,ease:'back.out(1.8)'},C('operator')-.55);
   tl.to(BS,{a:270,tw:720,duration:2.1,ease:'power2.inOut'},C('operator')-.4);tl.to(ORB,{d:1,duration:2.1,ease:'power2.inOut'},C('operator')-.4);
-  tl.fromTo('#cpOrbG',{opacity:0},{keyframes:{opacity:[0,.45,0]},duration:1.4,ease:'none'},C('operator')+1.55);
+  tl.fromTo('#cpOrbG',{opacity:0},{keyframes:{opacity:[0,.9,.25,0]},duration:1.6,ease:'none'},C('operator')+1.55);
   tl.to(BS,{h:0,duration:.75,ease:'power2.inOut'},C('operator')+1.55);tl.to(BS,{a:315,s:.62,tw:1080,duration:1,ease:'power3.inOut'},C('operator')+1.7);
   tl.to(BS,{dr:10,duration:SA('a6')-(C('operator')+2.7),ease:'none'},C('operator')+2.7);
   tl.to(T3,{t:40,duration:1.1,ease:'power2.inOut'},C('operator')-.4);
@@ -842,8 +842,8 @@ for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
  add('swish',C('aircraft')-.36,.14,.85);add('swish',C('restaurant')-.16,.17,1.0);add('swish',C('two')-.1,.17,.9);
  // that's / where, and the dive through the o
  add('popl',C('thats')-.05,.24,1.1);add('popl',C('where')-.05,.24,.95);add('swish',CAf('in',C('comes'))+.04,.3,.6);
- // operator: the o opens into the orbit
- add('swish',C('orbit')-.62,.18,.75);
+ // operator: the letters lift away, the emblem draws our ring, a soft pop as it closes
+ add('swish',C('operator')+.48,.14,1.2);add('popl',C('operator')+1.72,.22,.85);add('swish',C('operator')+1.7,.12,.7);
  // towers draw on with light pencil ticks
  for(let i=0;i<6;i++)add('tick',C('city#2')-.55+i*.12,.05,1.3+.08*i);
  // map pull-out
@@ -1063,29 +1063,27 @@ function build(W,H,P){
    const rp=(w,h,r,dy=0)=>{const y=wy+dy;return `M${wx-w/2+r} ${y-h/2}H${wx+w/2-r}A${r} ${r} 0 0 1 ${wx+w/2} ${y-h/2+r}V${y+h/2-r}A${r} ${r} 0 0 1 ${wx+w/2-r} ${y+h/2}H${wx-w/2+r}A${r} ${r} 0 0 1 ${wx-w/2} ${y+h/2-r}V${y-h/2+r}A${r} ${r} 0 0 1 ${wx-w/2+r} ${y-h/2}Z`};
    const lg=(id,stops,o={x1:0,y1:0,x2:0,y2:1})=>{const g=mk('linearGradient',{id,...o},d0);stops.forEach(([of,c,op])=>mk('stop',{offset:of,'stop-color':c,'stop-opacity':op===undefined?1:op},g));return g};
    const rg=(id,stops,o)=>{const g=mk('radialGradient',{id,gradientUnits:'userSpaceOnUse',...o},d0);stops.forEach(([of,c,op])=>mk('stop',{offset:of,'stop-color':c,'stop-opacity':op===undefined?1:op},g));return g};
-   lg('k0w',[[0,'#252C52'],[.5,'#1A2041'],[1,'#0E1229']]);lg('k0t',[[0,'#3B4377'],[.5,'#283063'],[1,'#151A38']]);lg('k0r',[[0,'#0B0F22'],[.5,'#1B2140'],[1,'#2E3668']],{x1:0,y1:0,x2:1,y2:1});
+   lg('k0w',[[0,'#232A4D'],[.5,'#191F3D'],[1,'#0E1229']]);lg('k0t',[[0,'#F1EFEA'],[.55,'#E2E0DA'],[1,'#C9C7C1']]);lg('k0r',[[0,'#A9A7A1'],[.45,'#D4D2CC'],[1,'#EFEDE8']],{x1:0,y1:0,x2:0,y2:1});
    lg('k0s',[[0,'#EDEBE5'],[.85,'#D9D7D1'],[1,'#BEBCB6']]);lg('k0g',[[0,'#fff',0],[.5,'#fff',.55],[1,'#fff',0]],{x1:0,y1:0,x2:1,y2:0});
    rg('k0l',[[0,'#DCE0F4',.42],[.45,'#9FB0FF',.12],[1,'#9FB0FF',0]],{cx:wx,cy:wy,r:wh*1.25});rg('k0v',[[.55,'#000',0],[1,'#05081A',.65]],{cx:W/2,cy:H/2,r:Math.hypot(W,H)*.62});
-   rg('k0f',[[0,'#F4F2ED',.95],[.35,'#DCE0F4',.45],[1,'#9FB0FF',0]],{cx:wx,cy:wy,r:wh*.9});
    const m=mk('mask',{id:'k0m',maskUnits:'userSpaceOnUse',x:-6*W,y:-6*H,width:13*W,height:13*H},d0);mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'#fff'},m);mk('path',{d:rp(ww,wh,rr),fill:'#000'},m);
    const cp=mk('clipPath',{id:'k0c'},d0);mk('path',{d:rp(ww,wh,rr)},cp);
    const zg=mk('g',{},ws),wall=mk('g',{mask:'url(#k0m)'},zg);
    mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'url(#k0w)'},wall);
    for(let i=-6;i<=6;i++)mk('line',{x1:-6*W,x2:7*W,y1:wy+i*wh*.42,y2:wy+i*wh*.42,stroke:'rgba(244,242,237,.035)','stroke-width':1.5,'stroke-dasharray':'6 7'},wall);
    const spill=mk('rect',{x:-6*W,y:-6*H,width:13*W,height:13*H,fill:'url(#k0l)',opacity:0},wall);
-   mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'url(#k0t)'},wall);mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'none',stroke:'rgba(244,242,237,.16)','stroke-width':Math.max(1.5,ww*.005)},wall);
-   mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'url(#k0r)'},wall);mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'none',stroke:'rgba(5,8,18,.5)','stroke-width':ww*.012},wall);
-   const rim=mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'none',stroke:'#DCE0F4','stroke-width':ww*.008,opacity:0},wall);
+   mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'url(#k0t)'},wall);mk('path',{d:rp(ww*1.34,wh*1.24,rr*1.36),fill:'none',stroke:'rgba(5,8,18,.35)','stroke-width':Math.max(2,ww*.008)},wall);
+   mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'url(#k0r)'},wall);mk('path',{d:rp(ww*1.13,wh*1.09,rr*1.15),fill:'none',stroke:'rgba(20,26,51,.25)','stroke-width':ww*.008},wall);
+   const rim=mk('path',{d:rp(ww*1.04,wh*1.03,rr*1.05),fill:'none',stroke:'#FFFFFF','stroke-width':ww*.01,opacity:0},wall);
    const inner=mk('g',{'clip-path':'url(#k0c)'},zg);
    const shade=mk('g',{},inner);mk('rect',{x:wx-ww/2-4,y:wy-wh/2-4,width:ww+8,height:wh+8,fill:'url(#k0s)'},shade);
    for(let i=1;i<9;i++)mk('line',{x1:wx-ww/2,x2:wx+ww/2,y1:wy-wh/2+wh*i/9,y2:wy-wh/2+wh*i/9,stroke:'rgba(20,26,51,.05)','stroke-width':2},shade);
    mk('rect',{x:wx-ww/2-4,y:wy+wh/2-wh*.03,width:ww+8,height:wh*.03,fill:'#C4C2BC'},shade);mk('rect',{x:wx-ww*.15,y:wy+wh/2-wh*.065,width:ww*.3,height:wh*.022,rx:wh*.011,fill:'#8F8D86'},shade);
    const glass=mk('g',{},inner);mk('path',{d:`M${wx-ww/2} ${wy-wh*.08}L${wx+ww*.08} ${wy-wh/2}L${wx+ww*.26} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.2}Z`,fill:'#fff',opacity:.07},glass);
    mk('path',{d:`M${wx-ww/2} ${wy+wh*.28}L${wx+ww*.36} ${wy-wh/2}L${wx+ww*.42} ${wy-wh/2}L${wx-ww/2} ${wy+wh*.36}Z`,fill:'#fff',opacity:.045},glass);
-   mk('circle',{cx:wx,cy:wy+wh*.42,r:Math.max(1.5,ww*.007),fill:'rgba(244,242,237,.5)'},glass);
-   mk('path',{d:rp(ww,wh,rr),fill:'none',stroke:'rgba(5,8,18,.6)','stroke-width':ww*.045},zg);
-   const flare=mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#k0f)',opacity:0},ws);const vig=mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#k0v)'},ws);
-   k.k0={ws,zg,shade,glass,spill,rim,flare,vig,wx,wy,ww,wh}}
+      mk('path',{d:rp(ww,wh,rr),fill:'none',stroke:'rgba(20,26,51,.35)','stroke-width':ww*.03},zg);
+   const vig=mk('rect',{x:0,y:0,width:W,height:H,fill:'url(#k0v)'},ws);
+   k.k0={ws,zg,shade,glass,spill,rim,vig,wx,wy,ww,wh}}
   // K8 something truly unusual: a point of light, a hairline question mark draws itself, fills like frosted glass, and a reflection crosses it
   {const Z=P?{cx:W*.5,cy:H*.66,s:W*.8}:{cx:W*.72,cy:H*.5,s:H*.62},g=mk('g',{},svg),F=Z.s*1.05,yb=Z.cy+.36*F;
    const hg=mk('radialGradient',{id:'k8h'},defs);mk('stop',{offset:0,'stop-color':'#9FB0FF','stop-opacity':.5},hg);mk('stop',{offset:1,'stop-color':'#9FB0FF','stop-opacity':0},hg);
@@ -1110,19 +1108,18 @@ function build(W,H,P){
    const ul=mk('line',{x1:xc,x2:xc+L4,y1:yC+F4*.22,y2:yC+F4*.22,stroke:IV,'stroke-width':Math.max(2,F4*.045),'stroke-linecap':'round',pathLength:1,'stroke-dasharray':'1 1','stroke-dashoffset':1},zg);
    const om=gm('o',f4),oc=[xc+tw('c',f4)+(om.r-om.l)/2,yC-om.asc/2],r0=Math.min(om.r+om.l,om.asc)/2*.52;
    k.k2={g,bs,hole,zg,single,comes,inn,ul,oc,r0,F1,F4,cy}}
-  // K3 operator: the word takes the frame, letters track in, then its o becomes the orbit
+  // K3 operator: "We're an" sits right on top of the word, the word tracks in letter by letter over a quiet veil,
+  // then the letters lift away and our emblem draws its orbit with a light at its head and a ripple when the ring closes
   {const g=mk('g',{},svg);const veil=mk('rect',{x:-2,y:-2,width:W+4,height:H+4,fill:NV},g);
-   const f0=P?W*.07:H*.07,y0=P?H*.37:H*.33;const a=['We’re','an'],aw=a.map(s=>tw(s,`500 ${f0}px ${FONT}`)),sp0=f0*.26,La=aw[0]+sp0+aw[1];
-   const cpa=mk('clipPath',{id:'k3a'},defs);mk('rect',{x:0,y:y0-f0*1.05,width:W,height:f0*1.35},cpa);const ga=mk('g',{'clip-path':'url(#k3a)'},g);
-   const small=[txt(ga,a[0],W/2-La/2,y0,f0,{w:500,anchor:'start',fill:'#C7CEF0',ls:'-.01em'}),txt(ga,a[1],W/2-La/2+aw[0]+sp0,y0,f0,{w:500,anchor:'start',fill:'#C7CEF0',ls:'-.01em'})];
-   const word='operator',base=100,fb=`600 ${base}px ${FONT}`,wb=tw(word,fb)*(1-.035*0);const F=Math.min(W*.8/wb*base,H*.42),fn=`600 ${F}px ${FONT}`;
-   const lw=[...word].map(c=>tw(c,fn)),track=-.03*F,Lw=lw.reduce((s,v)=>s+v,0)+track*(word.length-1),yb=P?H*.53:H*.66,xs=[];let xx=W/2-Lw/2;lw.forEach(v=>{xs.push(xx);xx+=v+track});
-   const cpo=mk('clipPath',{id:'k3o'},defs);mk('rect',{x:-W,y:yb-F*1.0,width:3*W,height:F*1.32},cpo);const go=mk('g',{'clip-path':'url(#k3o)'},g);
-   const letters=[...word].map((c,i)=>txt(go,c,xs[i],yb,F,{anchor:'start',ls:'0em'}));
-   const om=gm('o',fn),oc=[xs[0]+(om.r-om.l)/2,yb-om.asc/2],orad=(Math.min(om.r+om.l,om.asc))/2,ost=orad*.36;
-   const ring=mk('ellipse',{cx:oc[0],cy:oc[1],rx:orad-ost/2,ry:orad-ost/2,fill:'none',stroke:IV,'stroke-width':ost,opacity:0},g);
-   k.k3={g,veil,small,letters,xs,F,yb,oc,orad,ost,ring}}
-  // K6 since 2010: an odometer rolls to the year
+   const word='operator',fb=`600 100px ${FONT}`,F=Math.min(W*(P?.86:.66)/tw(word,fb)*100,H*.36),fn=`600 ${F}px ${FONT}`;
+   const lw=[...word].map(c=>tw(c,fn)),track=-.03*F,Lw=lw.reduce((s,v)=>s+v,0)+track*(word.length-1),yb=H*(P?.5:.58)+.3*F,xs=[];let xx=W/2-Lw/2;lw.forEach(v=>{xs.push(xx);xx+=v+track});
+   const f0=F*.24,y0=yb-F*.98,a=['We’re','an'],aw=a.map(s=>tw(s,`500 ${f0}px ${FONT}`)),sp0=f0*.26;
+   const small=[txt(g,a[0],xs[0],y0,f0,{w:500,anchor:'start',fill:'#C7CEF0',ls:'-.01em'}),txt(g,a[1],xs[0]+aw[0]+sp0,y0,f0,{w:500,anchor:'start',fill:'#C7CEF0',ls:'-.01em'})];
+   const letters=[...word].map((c,i)=>txt(g,c,xs[i],yb,F,{anchor:'start',ls:'0em'}));
+   const lg=mk('radialGradient',{id:'k3l'},defs);mk('stop',{offset:0,'stop-color':'#FFFFFF','stop-opacity':.95},lg);mk('stop',{offset:.25,'stop-color':'#DCE0F4','stop-opacity':.55},lg);mk('stop',{offset:1,'stop-color':'#9FB0FF','stop-opacity':0},lg);
+   const fx=mk('g',{},svg),head=mk('circle',{r:H*.09,fill:'url(#k3l)',opacity:0},fx),rip=[0,1,2].map(()=>mk('circle',{r:0,fill:'none',stroke:'#DCE0F4','stroke-width':2,opacity:0},fx));
+   k.k3={g,veil,small,letters,xs,F,yb,fx,head,rip}}
+  // K6 since 2010  // K6 since 2010: an odometer rolls to the year
   {const g=mk('g',{},svg);const F=P?W*.3:H*.36,fn=`600 ${F}px ${FONT}`,d=tw('0',fn)*1.02,cy=P?H*.5:H*.52,yb=cy+.36*F,x0=W/2-2*d;
    const f0=P?W*.07:H*.075,y0=cy-.86*F;const cpl=mk('clipPath',{id:'k6l'},defs);mk('rect',{x:0,y:y0-f0*1.05,width:W,height:f0*1.35},cpl);
    const lab=txt(mk('g',{'clip-path':'url(#k6l)'},g),'Since',W/2,y0,f0,{w:500,fill:'#C7CEF0',ls:'-.01em'});
@@ -1168,14 +1165,13 @@ function apply(t){
    const pin=document.getElementById('pin1');if(pin)pin.style.visibility=t<SA('a2')+.5?'hidden':'';
    if(on){const up=ez((t-tS)/.95),lift=up+.015*Math.sin(Math.PI*cl((t-tS-.85)/.3));   // the shade lifts and settles
      a.shade.setAttribute('transform',`translate(0 ${(-lift*a.wh*1.06).toFixed(2)})`);
-     a.spill.setAttribute('opacity',(up*.9).toFixed(3));a.rim.setAttribute('opacity',(up*.35).toFixed(3));
+     a.spill.setAttribute('opacity',(up*.8).toFixed(3));a.rim.setAttribute('opacity',(up*.5).toFixed(3));
      // push: an ease-in dolly with a gentle bank, the window centre drifting to frame centre
      const u=cl((t-tP)/(tE-tP)),e=u*u*u*(u*(6*u-15)+10),S=Math.max(W/a.ww,H/a.wh)*4,sc=Math.pow(S,Math.pow(e,1.35)),m=ez(u),rot=-4*Math.sin(Math.PI*u)*(1-u*.3);
      const cx=a.wx+(W/2-a.wx)*m,cy=a.wy+(H/2-a.wy)*m;
      a.zg.setAttribute('transform',`translate(${cx.toFixed(2)} ${cy.toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(4)}) translate(${-a.wx} ${-a.wy})`);
      a.glass.setAttribute('opacity',(1-cl(u*2.5)).toFixed(3));a.vig.setAttribute('opacity',(1-e).toFixed(3));
-     const fl=Math.sin(Math.PI*cl((u-.45)/.55));a.flare.setAttribute('opacity',(.55*fl*fl).toFixed(3));
-     a.flare.setAttribute('transform',`translate(${(W/2-a.wx)*m} ${(H/2-a.wy)*m})`)}}
+}}
   // ---------- KD ----------
   {const a=K.kd,t0=C('aircraft')-.34,tR=C('restaurant')-.12,tN=C('two')-.06,tx=C('thats')-.22,t1=C('thats')+.06;
    const on=win(t,t0,t1);vis(a.g,on);a.bs.style.visibility=on?'visible':'hidden';
@@ -1225,22 +1221,16 @@ function apply(t){
      a.zg.setAttribute('transform',u>0?`translate(${cx.toFixed(2)} ${cy.toFixed(2)}) scale(${s.toFixed(4)}) translate(${-ox} ${-oy})`:'');
      const r=u>0?a.r0*s:0;a.hole.setAttribute('cx',cx);a.hole.setAttribute('cy',cy);a.hole.setAttribute('rx',r);a.hole.setAttribute('ry',r*1.04)}}
   // ---------- K3 ----------
-  {const a=K.k3,tA=CA('were',C('partners'))-.2,tO=C('operator')-.06,tB=C('orbit')-.62,tE=C('orbit')-.06;const on=win(t,tA,tE+.3);vis(a.g,on);
-   if(on){a.veil.setAttribute('opacity',(.8*eo((t-tA)/.3)*(1-ez((t-tE+.25)/.45))).toFixed(3));
-     [CA('were',C('partners')),CA('an',C('partners'))].forEach((cw,i)=>{const u=eo5((t-(cw-.04))/.36),o=1-ez((t-tB)/.3);a.small[i].setAttribute('transform',`translate(0 ${((1-u)*a.F*.2).toFixed(2)})`);a.small[i].setAttribute('opacity',(t>=cw-.04?o:0).toFixed(3))});
-     const xm=W/2;a.letters.forEach((e,i)=>{const ti=tO+i*.028,u=eo5((t-ti)/.55),tr=ex((t-tO)/.9);
-       const x=lerp(xm+(a.xs[i]-xm)*1.22,a.xs[i],tr);let y=(1-u)*a.F*.95,o=t>=ti?1:0;
-       if(i>0){const v=ez((t-(tB+(7-i)*.022))/.34);y-=v*a.F*.0;o*=1-v;y+=v*a.F*.5}
-       if(i===0&&t>=tB)o=0;
-       e.setAttribute('x',x.toFixed(2));e.setAttribute('transform',`translate(0 ${y.toFixed(2)})`);e.setAttribute('opacity',o)});
-     // the o lifts out of the word and opens into the orbit ring
-     if(t>=tB){let tgt=null;const pb=document.getElementById('cpb'),pf=document.getElementById('cpf'),fr=document.getElementById('film').getBoundingClientRect();
-       if(pb&&pf){const r1=pb.getBoundingClientRect(),r2=pf.getBoundingClientRect();if(r1.width+r2.width>0){const L=Math.min(r1.left,r2.left),T=Math.min(r1.top,r2.top),R=Math.max(r1.right,r2.right),B=Math.max(r1.bottom,r2.bottom);tgt=[(L+R)/2-fr.left,(T+B)/2-fr.top,(R-L)/2,(B-T)/2]}}
-       if(!tgt)tgt=[W*.66,H*.5,H*.3,H*.24];
-       const u=exio((t-tB)/(tE-tB+.1)),r0=a.orad-a.ost/2;
-       a.ring.setAttribute('cx',lerp(a.oc[0],tgt[0],u));a.ring.setAttribute('cy',lerp(a.oc[1],tgt[1],u));a.ring.setAttribute('rx',lerp(r0,tgt[2],u));a.ring.setAttribute('ry',lerp(r0,tgt[3],u));
-       a.ring.setAttribute('stroke-width',lerp(a.ost,Math.max(2,H*.004),eo(u)));a.ring.setAttribute('opacity',(1-ez((t-tE-.02)/.28)).toFixed(3))}
-     else a.ring.setAttribute('opacity',0)}}
+  {const a=K.k3,tA=CA('were',C('partners'))-.08,tO=C('operator')-.06,tB=C('operator')+.5,tE=tB+.5,on=win(t,tA,tE);vis(a.g,on);
+   if(on){a.veil.setAttribute('opacity',(.9*eo((t-tA)/.25)*(1-ez((t-tB-.1)/.4))).toFixed(3));
+     [CA('were',C('partners')),CA('an',C('partners'))].forEach((cw,i)=>{const u=eo5((t-(cw-.04))/.4),o=1-ez((t-tB)/.25);a.small[i].setAttribute('transform',`translate(${((1-u)*a.F*.12).toFixed(2)} 0)`);a.small[i].setAttribute('opacity',(t>=cw-.04?u*o:0).toFixed(3))});
+     a.letters.forEach((e,i)=>{const ti=tO+i*.03,u=eo5((t-ti)/.5),v=ez((t-(tB+i*.025))/.32);
+       e.setAttribute('transform',`translate(0 ${((1-u)*a.F*.35-v*a.F*.45).toFixed(2)})`);e.setAttribute('opacity',(t>=ti?Math.min(u*1.6,1)*(1-v):0).toFixed(3))})}
+   // the orbit moment: a light rides the City Premium emblem while it draws our ring, then ripples out when the ring closes
+   const b=document.getElementById('boss'),tD0=C('operator')-.3,tD1=C('operator')+1.75;const fon=win(t,tD0,tD1+1.1);vis(a.fx,fon);
+   if(fon&&b){const fr=document.getElementById('film').getBoundingClientRect(),r=b.getBoundingClientRect(),bx=r.left+r.width/2-fr.left,by=r.top+r.height/2-fr.top;
+     const hv=cl((t-tB)/.3)*(1-cl((t-tD1)/.35));a.head.setAttribute('cx',bx.toFixed(1));a.head.setAttribute('cy',by.toFixed(1));a.head.setAttribute('opacity',(hv*(.75+.25*Math.sin(t*14))).toFixed(3));
+     a.rip.forEach((c,i)=>{const u=cl((t-tD1-i*.16)/.9);c.setAttribute('cx',bx.toFixed(1));c.setAttribute('cy',by.toFixed(1));c.setAttribute('r',(H*(.03+.22*eo(u))).toFixed(1));c.setAttribute('opacity',(u>0&&u<1?.8*(1-u):0).toFixed(3))})}}
   // ---------- K5 ----------
   {const a=K.k5,tA=C('everything#2')+.12,tE=SA('a11')-.12;const on=win(t,tA,tE+.42);a.b.style.visibility=on?'visible':'hidden';a.b.style.display=on?'flex':'none';
    const st=document.querySelector('.st[data-st="a10"]');if(st)st.style.visibility=win(t,SA('a10')-.2,SA('a11')+1.4)?'hidden':'';
@@ -1274,7 +1264,7 @@ function apply(t){
      const g=cl((t-tG)/.9);a.sh.setAttribute('transform',`translate(${(Z.cx-a.F*.5+a.F*g).toFixed(1)} 0) skewX(-18)`);a.sh.setAttribute('opacity',(g>0&&g<1?1:0))}}
   // hide the plain text chunks these set pieces replace
   if(typeof CHUNKS!=='undefined'){if(!K.hid){K.hid={op:CHUNKS.filter(c=>c.sc==='a5'),yr:CHUNKS.filter(c=>c.words.some(w=>w.el.textContent.startsWith('2010')))}}
-    const h3=win(t,CA('were',C('partners'))-.25,C('orbit')-.16);K.hid.op.forEach(c=>c.el.style.visibility=h3?'hidden':'');
+    const h3=win(t,CA('were',C('partners'))-.08,C('orbit')-.16);K.hid.op.forEach(c=>c.el.style.visibility=h3?'hidden':'');
     const h6=win(t,C('since')-.5,C('luxury')-.08);K.hid.yr.forEach(c=>c.el.style.visibility=h6?'hidden':'')}
 }
 window.KX=apply;

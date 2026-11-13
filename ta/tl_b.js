@@ -10,7 +10,7 @@
   // our logo, black and white, rises above the plane and twists around the whole system, drawing our orbit as it goes
   tl.to(BS,{o:1,s:1.05,duration:.7,ease:'back.out(1.8)'},C('operator')-.55);
   tl.to(BS,{a:270,tw:720,duration:2.1,ease:'power2.inOut'},C('operator')-.4);tl.to(ORB,{d:1,duration:2.1,ease:'power2.inOut'},C('operator')-.4);
-  tl.fromTo('#cpOrbG',{opacity:0},{keyframes:{opacity:[0,.45,0]},duration:1.4,ease:'none'},C('operator')+1.55);
+  tl.fromTo('#cpOrbG',{opacity:0},{keyframes:{opacity:[0,.9,.25,0]},duration:1.6,ease:'none'},C('operator')+1.55);
   tl.to(BS,{h:0,duration:.75,ease:'power2.inOut'},C('operator')+1.55);tl.to(BS,{a:315,s:.62,tw:1080,duration:1,ease:'power3.inOut'},C('operator')+1.7);
   tl.to(BS,{dr:10,duration:SA('a6')-(C('operator')+2.7),ease:'none'},C('operator')+2.7);
   tl.to(T3,{t:40,duration:1.1,ease:'power2.inOut'},C('operator')-.4);

@@ -44,8 +44,8 @@ for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
  add('swish',C('aircraft')-.36,.14,.85);add('swish',C('restaurant')-.16,.17,1.0);add('swish',C('two')-.1,.17,.9);
  // that's / where, and the dive through the o
  add('popl',C('thats')-.05,.24,1.1);add('popl',C('where')-.05,.24,.95);add('swish',CAf('in',C('comes'))+.04,.3,.6);
- // operator: the o opens into the orbit
- add('swish',C('orbit')-.62,.18,.75);
+ // operator: the letters lift away, the emblem draws our ring, a soft pop as it closes
+ add('swish',C('operator')+.48,.14,1.2);add('popl',C('operator')+1.72,.22,.85);add('swish',C('operator')+1.7,.12,.7);
  // towers draw on with light pencil ticks
  for(let i=0;i<6;i++)add('tick',C('city#2')-.55+i*.12,.05,1.3+.08*i);
  // map pull-out
