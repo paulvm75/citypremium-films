@@ -58,3 +58,7 @@ for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
  add('swish',C('everything#2')+.12,.12,1.15);
  // ending: the frame splits open
  add('swish',CAf('europe',95)+.5,.32,.62);}
+
+// v15b: the fleet swoosh in and out, and the logo writing itself on the end card
+add('swish',SA('a7')-.32,.34,.62);add('swish',C('chauffeurs')-.52,.3,.7);
+add('logo',C('europe#2')+1.0,.26);

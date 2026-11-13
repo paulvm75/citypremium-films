@@ -193,7 +193,7 @@ stamp=f'<g id="stamp8" opacity="0"><circle cx="423" cy="756" r="30" fill="#EEF0F
 a8b = f"""<!-- a8b airside and fast track -->
   <g filter="url(#ds)" class="st" data-st="a8b">
     <defs><linearGradient id="jp8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#252E5C"/><stop offset="1" stop-color="#171D40"/></linearGradient>
-      <linearGradient id="fl8" x1="0" x2="1"><stop offset="0" stop-color="#9FB0FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+      <linearGradient id="fl8" x1="0" x2="1"><stop offset="0" stop-color="#9FB0FF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient><linearGradient id="fl8m" x1="0" x2="1"><stop offset="0" stop-color="#9FB0FF"/><stop offset="1" stop-color="#7BE0C3"/></linearGradient>
       <radialGradient id="sky8" cx=".5" cy=".6" r=".5"><stop offset="0" stop-color="rgba(199,206,240,.35)"/><stop offset=".55" stop-color="rgba(142,124,240,.12)"/><stop offset="1" stop-color="rgba(142,124,240,0)"/></radialGradient></defs>
     <linearGradient id="fmg8" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset=".12" stop-color="#000"/><stop offset=".24" stop-color="#555"/><stop offset=".38" stop-color="#fff"/><stop offset=".9" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient><linearGradient id="fmv8" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".62" stop-color="#fff"/><stop offset=".8" stop-color="#666"/><stop offset=".96" stop-color="#000"/></linearGradient><mask id="fm8v" maskUnits="userSpaceOnUse" x="-60" y="-20" width="1300" height="650"><rect x="-60" y="-20" width="1300" height="650" fill="url(#fmv8)"/></mask><mask id="fm8" maskUnits="userSpaceOnUse" x="-60" y="-20" width="1300" height="650"><g mask="url(#fm8v)"><rect x="-60" y="-20" width="1300" height="650" fill="url(#fmg8)"/></g></mask>
     <g id="pl8g" mask="url(#fm8)"><foreignObject id="fo8" x="-60" y="-20" width="1300" height="650"><canvas xmlns="http://www.w3.org/1999/xhtml" id="pl3d" width="1800" height="900" style="width:1300px;height:650px;display:block"></canvas></foreignObject></g>
@@ -420,7 +420,7 @@ rep("const STS=$$('.st').map(el=>({el,sc:{s1:['s1'],s2:['s2'],s3:['s3','s4'],s5:
     "const STS=$$('.st').map(el=>({el,sc:{a1:['a1'],a2:['a2','a3','a4','a5'],a6:['a6'],a7:['a7'],a8:['a8'],a8b:['a8b'],a9:['a9'],a9x:['a9x'],a10:['a10'],a11:['a11']}[el.dataset.st]}));")
 rep("const chN=$$('#chainNodes>g'),chL=$$('#chainLines path');let chT=[];", "")
 rep("const TONE={s1:'#0F1426',s2:'#0F1426',s3:'#EEF0F6',s4:'#0F1426',s5:'#5A6690',s6:'#0F1426',s7a:'#0F1426',s7b:'#2B3561',s8:'#EEF0F6',s9:'#C7CEF0',s10:'#0F1426',s11:'#0F1426',s12:'#0F1426'};",
-    "const TONE={a1:'#0F1426',a2:'#EEF0F6',a3:'#EEF0F6',a4:'#0F1426',a5:'#5A6690',a6:'#EEF0F6',a7:'#0F1426',a8:'#0F1426',a8b:'#2B3561',a9:'#EEF0F6',a9x:'#2B3561',a10:'#C7CEF0',a11:'#0F1426',a12:'#0F1426'};")
+    "const TONE={a1:'#0F1426',a2:'#EEF0F6',a3:'#EEF0F6',a4:'#0F1426',a5:'#5A6690',a6:'#EEF0F6',a7:'#0B0E1F',a8:'#0F2A5C',a8b:'#3A4466',a9:'#EEF0F6',a9x:'#2E1F4A',a10:'#C7CEF0',a11:'#1B2140',a12:'#0F1426'};")
 rep("const LIGHT={s3:1,s8:1,s9:1};", "const LIGHT={a2:1,a3:1,a6:1,a9:1,a10:1};")
 rep("let prev=TONE.s1", "let prev=TONE.a1")
 rep("d.style.background=id==='s7b'?", "d.style.background=id==='none'?")
@@ -507,6 +507,11 @@ const GBM={'#0F1426':'radial-gradient(80% 70% at 82% 0%,rgba(74,88,178,.42),rgba
  '#EEF0F6':'radial-gradient(70% 60% at 88% 0%,rgba(178,188,232,.38),rgba(178,188,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(206,208,216,.55),rgba(206,208,216,0) 62%),linear-gradient(180deg,#F7F5F0,#EFEDE7)',
  '#5A6690':'radial-gradient(70% 60% at 72% 0%,rgba(150,164,232,.45),rgba(150,164,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(20,26,51,.6),rgba(20,26,51,0) 62%),linear-gradient(180deg,#2E3560,#1B2140)',
  '#2B3561':'radial-gradient(70% 55% at 72% 0%,rgba(122,136,216,.36),rgba(122,136,216,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(11,15,30,.55),rgba(11,15,30,0) 60%),linear-gradient(180deg,#252C52,#141A33)',
+ '#0B0E1F':'radial-gradient(70% 60% at 85% 0%,rgba(70,82,170,.28),rgba(70,82,170,0) 60%),linear-gradient(170deg,#11152B,#05070F)',
+ '#0F2A5C':'radial-gradient(75% 65% at 78% 10%,rgba(80,150,230,.42),rgba(80,150,230,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(8,20,48,.7),rgba(8,20,48,0) 60%),linear-gradient(165deg,#163A78,#0A1A3D)',
+ '#3A4466':'radial-gradient(70% 55% at 75% 0%,rgba(190,200,230,.38),rgba(190,200,230,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(20,26,51,.55),rgba(20,26,51,0) 60%),linear-gradient(180deg,#46507A,#262D4A)',
+ '#2E1F4A':'radial-gradient(70% 60% at 75% 0%,rgba(170,120,220,.4),rgba(170,120,220,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(14,10,30,.6),rgba(14,10,30,0) 60%),linear-gradient(170deg,#3B2760,#1A1230)',
+ '#1B2140':'radial-gradient(80% 70% at 50% 0%,rgba(110,124,220,.4),rgba(110,124,220,0) 62%),linear-gradient(180deg,#232B57,#121731)',
  '#C7CEF0':'radial-gradient(60% 60% at 90% 0%,rgba(178,188,232,.4),rgba(178,188,232,0) 62%),radial-gradient(60% 60% at 0% 100%,rgba(196,198,208,.6),rgba(196,198,208,0) 62%),linear-gradient(180deg,#EFEDE7,#E6E4DE)'};
 const GB=id=>GBM[TONE[id]]||TONE[id];
 const MB={v:0};""")
@@ -536,7 +541,7 @@ _FC=open('/home/claude/cp/foot/clips.json').read()
 _FL='<div class="fw"><img alt=""><video muted playsinline preload="auto"></video></div><div class="fv"></div>'
 rep('<div id="glow"><i></i><i></i><i></i></div>','<div id="glow"><i></i><i></i><i></i></div><div id="footB" class="foot">'+_FL+'</div>')
 rep('<div class="dim" id="dim"></div>','<div class="dim" id="dim"></div><div id="footT" class="foot">'+_FL+'<div class="fe"></div></div>')
-rep('.grain{position:absolute;','.foot{position:absolute;inset:0;pointer-events:none;visibility:hidden;overflow:hidden}.foot .fw{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;background:#0F1426}.foot .fw img,.foot .fw video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;display:none}.foot .fw.band{-webkit-mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%)}.foot .fv{position:absolute;left:0;top:0;width:100%;height:100%}.foot .fe{position:absolute;top:0;width:2px;margin-left:-1px;background:linear-gradient(180deg,rgba(244,242,237,0),rgba(244,242,237,.95) 30%,rgba(244,242,237,.95) 70%,rgba(244,242,237,0));box-shadow:0 0 22px 4px rgba(199,206,240,.55);opacity:0}\n.grain{position:absolute;')
+rep('.grain{position:absolute;','.foot{position:absolute;inset:0;pointer-events:none;visibility:hidden;overflow:hidden}.foot .fw{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;background:#0F1426}.foot .fw img,.foot .fw video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;display:none}.foot .fw.band{-webkit-mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 10%,#000 90%,transparent 100%)}.foot .fv{position:absolute;left:0;top:0;width:100%;height:100%}.foot .fe{position:absolute;top:0;width:5px;margin-left:-2.5px;transform-origin:50% 50%;background:linear-gradient(180deg,rgba(244,242,237,0),#FFFFFF 25%,#DCE0F4 75%,rgba(244,242,237,0));box-shadow:0 0 30px 8px rgba(159,176,255,.7),0 0 90px 30px rgba(110,124,220,.35);opacity:0}\n.grain{position:absolute;')
 _i=s.index('function frameA(t)')
 s=s[:_i]+'window.FOOTCL='+_FC+';\n'+open('/home/claude/ta/foot.js').read()+'\n'+s[_i:]
 _k=s.index('frameA(t);',s.index('function render('))
@@ -573,9 +578,8 @@ _i=s.index('<rect x="150" y="955" width="700" height="10" rx="5" fill="rgba(238,
 _sg=''
 for _k,_l in enumerate(['Door','Passport','Customs','Your car']):
     _x=116+_k*196
-    _sg+=(f'<g class="sg8" id="sg8{_k}"><rect x="{_x}" y="900" width="180" height="14" rx="7" fill="rgba(238,240,246,.14)"/><rect class="sf" x="{_x}" y="900" width="180" height="14" rx="7" fill="url(#fl8)"/>'
-          f'<text class="sn" x="{_x}" y="966" font-weight="600" font-size="34" fill="#8E97C4">{_l}</text>'
-          f'<path class="sk" d="M{_x+146} 944 l9 9 16 -18" fill="none" stroke="#9FB0FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></g>')
+    _sg+=(f'<g class="sg8" id="sg8{_k}"><rect x="{_x}" y="904" width="184" height="8" rx="4" fill="rgba(238,240,246,.12)"/><rect class="sf" x="{_x}" y="904" width="184" height="8" rx="4" fill="url(#fl8m)"/>'
+          f'<text class="sn" x="{_x}" y="962" font-weight="600" font-size="34" fill="#6B739C">{_l}</text></g>')
 s=s[:_i]+_sg+'</g></g>\n    '+s[_j:]
 rep('id="ft8c" x="116" y="776" font-weight="700" font-size="88"','id="ft8c" x="116" y="812" font-weight="700" font-size="112"')
 # map: a faint graticule under the land
@@ -587,7 +591,7 @@ rep("a.volume=Math.min(1,s.v);","a.volume=Math.min(1,s.v);try{a.preservesPitch=f
 # v15 end card: only the logo and the button, the button rises into the space the text used to take
 rep('.ctaRow{position:absolute;left:0;right:0;top:74cqh;','.ctaRow{position:absolute;left:0;right:0;top:60cqh;')
 rep('.portrait .ctaRow{top:84cqh}','.portrait .ctaRow{top:64cqh}#url12{display:none}')
-rep("tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);","tl.fromTo('#cta',{scale:.6,opacity:0,y:60},{scale:1,opacity:1,y:0,duration:.9,ease:'expo.out'},C('book')-.15);")
+rep("tl.fromTo('#cta',{scale:.9,opacity:0,y:28},{scale:1,opacity:1,y:0,duration:.6,ease:'expo.out'},C('book')-.25);","tl.fromTo('#cta',{scale:.6,opacity:0,y:60},{scale:1,opacity:1,y:0,duration:.9,ease:'expo.out'},C('europe#2')+1.17);")
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')

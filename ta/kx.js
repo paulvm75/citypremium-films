@@ -253,8 +253,8 @@ function apply(t){
      a.strips.forEach((s,i)=>{const t0=tA+.06,d=.5+i*.08,v=ez((t-t0)/d)*.15+eo((t-t0)/d)*.85;s.setAttribute('transform',`translate(0 ${((1-v)*a.roll[i]*a.F*1.02).toFixed(2)})`)});
      const w=eo((t-(tA+.55))/.3);a.ul.setAttribute('stroke-dashoffset',(1-w).toFixed(4));a.ul.setAttribute('opacity',w>0?1:0)}}
   // ---------- K7 ----------
-  {const a=K.k7,T=[CA('paris',95)-.05,CA('london',95)-.05,CA('europe',95)-.05],z0=T[2]+.55,z1=z0+.8;const on=win(t,T[0],z1);vis(a.g,on);
-   {const hide=win(t,T[0]-.02,z0),co=document.getElementById('ctaOv'),tb=document.querySelector('.tb[data-sc="a12"]'),fv=document.querySelector('#footT .fv');
+  {const a=K.k7,T=[CA('paris',95)-.05,CA('london',95)-.05,CA('europe',95)-.05],z0=T[2]+.42,z1=z0+.65;const on=win(t,T[0],z1);vis(a.g,on);
+   {const hide=win(t,T[0]-.02,z1),co=document.getElementById('ctaOv'),tb=document.querySelector('.tb[data-sc="a12"]'),fv=document.querySelector('#footT .fv');
     if(co)co.style.visibility=hide?'hidden':'';if(tb)tb.style.visibility=t>=T[0]-.02?'hidden':'';   // after the city words only the logo and the button remain
    if(fv)fv.style.opacity=on?(t<z0?.2:.2+.8*cl((t-z0)/(z1-z0))).toFixed(3):'';}
    if(on)runCover(a,t,T,z0,z1,H)}

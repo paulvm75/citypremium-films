@@ -139,3 +139,7 @@ Bundle with esbuild as an IIFE that exposes `window.MZ3D`.
 - Cabin window: ivory plastic bezel and reveal on the navy leather wall, a white rim lit by the daylight. No light blob on the push (it read as white dust).
 - Operator beat (K3): "We're an" sits on top of the word as one composition over a 0.9 veil; the letters lift away at operator+0.5 and the City Premium emblem (`#boss`) draws its orbit with a light at its head, a ripple and a glow pulse on `#cpOrbG` when the ring closes. The old "o becomes the ring" morph read as a second circle flying in from the left.
 - End card: after PARIS, LONDON, EUROPE only the logo and the "Book a meeting" button remain (no line of text, no URL); the button rises into the space with the existing sheen and click.
+- End card order: the frame splits open (K7 `z1` = Europe + 1.02 s), then the emblem opens from its centre, the wordmark writes left to right and a glint crosses both; the button rises at Europe + 1.17 s. Keep `#ctaOv` hidden until `z1`.
+- Fleet transition (0:32): a skewed swoosh with a bright streak on its edge (`swin`/`swout` in `foot.js`), with a push in on the footage; it leaves the same way on "chauffeurs".
+- Scene tones are all different (`TONE` in gen.py): ivory for a2/a3/a6/a9/a10, violet-indigo a5, near-black a7, deep blue a8 (map), slate a8b, plum a9x, indigo a11. Mint `#7BE0C3` is allowed as a second accent for "fast" (fast track switch, bar ends, minutes).
+- Fast track: thin bars that fill periwinkle to mint, labels brighten and lift as reached; no tick marks (they crowded the labels).

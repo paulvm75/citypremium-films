@@ -72,15 +72,18 @@
    tl.to('#pl8g,.fb8',{opacity:portrait?0:.4,duration:.8,ease:'power2.inOut'},C('fast')-.55);
    tl.set('.s8 .sl',{scale:0,transformOrigin:'50% 50%'},0);tl.set('#pl8',{scaleX:0,svgOrigin:'150 960'},0);tl.set(FC,{m:75},0);tl.set('#ft8n',{fill:'#EEF0F6'},0);
    tl.fromTo('#jp8w',{opacity:0,y:60},{opacity:1,y:0,duration:.9,ease:'expo.out'},C('charles')+.1);
-   const ON=C('fast')-.15;tl.to('#swT',{fill:'#9FB0FF',duration:.25},ON);tl.to('#swK',{attr:{cx:886},fill:'#0F1426',duration:.4,ease:'back.out(2)'},ON);tl.to('#ft8n',{fill:'#9FB0FF',duration:.5},ON+.25);
+   const ON=C('fast')-.15;tl.to('#swT',{fill:'#7BE0C3',duration:.25},ON);tl.to('#swK',{attr:{cx:886},fill:'#0F1426',duration:.4,ease:'back.out(2)'},ON);tl.to('#ft8n',{fill:'#9FB0FF',duration:.5},ON+.25);
    tl.fromTo('#swR',{opacity:.9,scale:1,transformOrigin:'50% 50%'},{opacity:0,scale:1.9,duration:.8,ease:'power2.out'},ON+.05);
    tl.fromTo('#swR',{opacity:.9,scale:1},{opacity:0,scale:1.9,duration:.8,ease:'power2.out',immediateRender:false},C('want')-.1);
-   // fast track: the chauffeur token bows out before the card arrives; four segments fill in turn, each ticks, and the door-to-car time drops with them
+   // fast track: the chauffeur token bows out before the card arrives; a light fills the track segment by segment in periwinkle to mint,
+   // each label brightens and lifts as it is reached, and the minutes drop with each segment
    const MIN=[58,41,26,15];tl.set('.sg8 .sf',{scaleX:0,transformOrigin:'0% 50%'},0);
    tl.to(TK,{o:0,s:.75,duration:.3,ease:'power2.in'},C('charles')-.2);
+   tl.to('#ft8n',{fill:'#7BE0C3',duration:.5},C('fast')+.2);
    [C('fast')+.5,C('passport')+.4,C('customs')+.35,C('want')-.05].forEach((en,k)=>{
-     tl.to(`#sg8${k} .sf`,{scaleX:1,duration:.55,ease:'expo.inOut'},en-.55);tl.to(`#sg8${k} .sn`,{fill:'#F4F2ED',duration:.3},en-.1);
-     tl.to(`#sg8${k} .sk`,{attr:{'stroke-dashoffset':0},duration:.32,ease:'power2.out'},en-.05);tl.to(FC,{m:MIN[k],duration:.5,ease:'power3.out'},en-.2)});
+     tl.to(`#sg8${k} .sf`,{scaleX:1,duration:.5,ease:'expo.inOut'},en-.5);
+     tl.fromTo(`#sg8${k} .sn`,{y:0},{y:-6,fill:'#F4F2ED',duration:.35,ease:'back.out(2)'},en-.12);
+     tl.to(FC,{m:MIN[k],duration:.5,ease:'power3.out'},en-.2)});
    }
   // A9 the concierge layer
   [['#t1','jet'],['#t2','hotel'],['#t3','ad']].forEach(([id,w])=>{tl.fromTo(id,{y:90,scale:.9,opacity:0,filter:'blur(10px)',transformOrigin:'50% 50%'},{y:0,scale:1,opacity:1,filter:'blur(0px)',duration:.95,ease:'expo.out'},C(w)-.4);tl.fromTo(id+' text',{x:40,opacity:0},{x:0,opacity:1,duration:.7,stagger:.09,ease:'expo.out'},C(w)-.25)});
@@ -177,7 +180,16 @@
   [['#tr1','maisons'],['#tr2','agencies'],['#tr3','vic']].forEach(([id,w])=>{tl.fromTo(id,{x:140,autoAlpha:0},{x:0,autoAlpha:1,duration:.75,ease:'expo.out'},C(w)-.4);tl.from(id+' .ic2',{scale:.4,opacity:0,transformOrigin:'50% 50%',duration:.6,ease:'back.out(2.2)'},C(w)-.2)});
   // v14 glints: a sun reflection crosses the logo at its first reveal, and again when the ending opens up
   tl.fromTo('#glintE1',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut'},C('premium#1')+.2);tl.fromTo('#glint1',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut'},C('premium#1')+.3);
-  tl.fromTo('#glintE',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.2);tl.fromTo('#glint2',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut',immediateRender:false},C('europe#2')+1.3);
+  
 
   // the world road and car fade out under the end card (a far-off car read as a stray white dot)
   tl.to('#car0,#road,#roadC',{opacity:0,duration:.6,ease:'power2.inOut'},SA('a12')-.2);
+
+  // end card: once the ivory frame has split open, the logo writes itself again (emblem opens from its centre, the wordmark draws
+  // left to right, a glint crosses both), then the button rises
+  {const z1=C('europe#2')-.05+.42+.65;
+   tl.set('#wm2',{clipPath:'inset(0 100% 0 0)'},z1-.08);
+   tl.fromTo('#emb2',{'--a':0,rotation:-60,scale:.8},{'--a':1,rotation:0,scale:1,duration:1.1,ease:'expo.out',immediateRender:false},z1-.05);
+   tl.fromTo('#wm2',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:1.0,ease:'power3.inOut',immediateRender:false},z1+.2);
+   tl.fromTo('#glintE',{'--gx':'140%'},{'--gx':'-40%',duration:.7,ease:'power2.inOut',immediateRender:false},z1+1.0);
+   tl.fromTo('#glint2',{'--gx':'140%'},{'--gx':'-40%',duration:.8,ease:'power2.inOut',immediateRender:false},z1+1.15);}

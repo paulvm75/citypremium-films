@@ -28,10 +28,10 @@ function moments(t){
   {const t0=0,tw=SA('a2')-.3,t2=tw+.95;
    if(t<t2){const ap=1,wp=exio((t-tw)/.95);
      out.push({L:'B',k:'dawn',ct:t*.9+.2,op:1,aper:ap,wipe:wp,scale:1.1-.08*eo(t/4.2),veil:'hook'})}}
-  // o2 the fleet: a full-bleed wipe from the right with the car pass, out to the left on "chauffeurs"
-  {const a0=SA('a7')-.3,a1=a0+.95,b0=C('chauffeurs')-.5,b1=b0+.8;
+  // o2 the fleet: a fast diagonal swoosh with a light streak on its edge reveals the saloon, the frame pushes in, and the same swoosh carries it out on "chauffeurs"
+  {const a0=SA('a7')-.3,a1=a0+.8,b0=C('chauffeurs')-.5,b1=b0+.7;
    if(t>a0&&t<b1){const wi=exio((t-a0)/(a1-a0)),wo=exio((t-b0)/(b1-b0));
-     out.push({L:'T',k:'saloon',ct:1.15+(t-a0),op:1,inset:[100*(1-wi),100*wo],scale:1.04-.04*eo((t-a0)/3),veil:'fleet',edge:0})}}
+     out.push({L:'T',k:'saloon',ct:1.15+(t-a0),op:1,swin:wi,swout:wo,scale:1.16-.12*eo((t-a0)/1.4),veil:'fleet'})}}
   // o5 sign-off: Paris at night behind the end card, slowed and dimmed, fading to the clean call to action
   {const t0=SA('a12')-.25,t1=t0+.9,t2=C('book')+.9,t3=t2+1.3;
    if(t>t0&&t<t3){const o=ez((t-t0)/(t1-t0))*(1-ez((t-t2)/(t3-t2)));
@@ -62,9 +62,16 @@ function apply(t){
     // reveal
     let cp='none';
     if(m.aper!==undefined){const v=(1-m.aper)*50;cp=`inset(${v.toFixed(3)}% ${(100*m.wipe).toFixed(3)}% ${v.toFixed(3)}% 0)`}
+    else if(m.swin!==undefined){const K=14;   // skewed edges: the swoosh enters from the right and leaves to the left
+      const L=-K+(100+2*K)*(1-m.swin),Rr=-K+(100+2*K)*(1-m.swout);
+      cp=`polygon(${(L+K).toFixed(2)}% 0,${(Rr+K).toFixed(2)}% 0,${(Rr-K).toFixed(2)}% 100%,${(L-K).toFixed(2)}% 100%)`;
+      if(m.swout<=0)cp=`polygon(${(L+K).toFixed(2)}% 0,${100+K}% 0,${100+K}% 100%,${(L-K).toFixed(2)}% 100%)`}
     else if(m.inset){cp=`inset(0 ${m.inset[1].toFixed(3)}% 0 ${m.inset[0].toFixed(3)}%)`}
     l.win.style.clipPath=cp;l.veil.style.clipPath=cp;
-    if(l.edge){const e=m.edge||0;l.edge.style.opacity=(e>0&&e<1?Math.sin(Math.PI*e):0).toFixed(3);
+    if(l.edge&&m.swin!==undefined){const ph=m.swin<1?m.swin:m.swout,live=ph>0&&ph<1,K=14,x=-K+(100+2*K)*(1-ph);
+      l.edge.style.opacity=live?Math.sin(Math.PI*ph).toFixed(3):0;l.edge.style.left=x.toFixed(2)+'%';l.edge.style.top=wy+'px';l.edge.style.height=wh+'px';
+      l.edge.style.transform=`skewX(${(-Math.atan2(2*K/100*W,wh)*180/Math.PI).toFixed(2)}deg)`}
+    else     if(l.edge){const e=m.edge||0;l.edge.style.opacity=(e>0&&e<1?Math.sin(Math.PI*e):0).toFixed(3);
       const ex=m.inset?(m.inset[0]>0?m.inset[0]:100-m.inset[1]):0;l.edge.style.left=ex.toFixed(3)+'%';l.edge.style.top=wy+'px';l.edge.style.height=wh+'px'}
     l.veil.style.background=(P?VEILP:VEIL)[m.veil];l.veil.style.top=wy+'px';l.veil.style.height=wh+'px';
     if(media===l.img){const s=SRC(m.k,fidx(m.k,m.ct));if(l.src!==s){l.src=s;l.img.src=s}}
