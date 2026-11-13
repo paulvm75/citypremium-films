@@ -581,6 +581,9 @@ rep('id="ft8c" x="116" y="776" font-weight="700" font-size="88"','id="ft8c" x="1
 # map: a faint graticule under the land
 _gr=''.join(f'M{x} -300V1400' for x in range(-300,1400,70))+''.join(f'M-300 {y}H1400' for y in range(-300,1400,70))
 rep('<g id="mapG"><path','<g id="mapG"><path d="'+_gr+'" fill="none" stroke="rgba(199,206,240,.07)" stroke-width="1" vector-effect="non-scaling-stroke"/><path')
+# v16: SFX take an optional playback rate (pitch), used to vary one swish per animation type
+rep("const SFX=[];const add=(k,t,v)=>SFX.push({k,t,v});","const SFX=[];const add=(k,t,v,r)=>SFX.push({k,t,v,r:r||1});")
+rep("a.volume=Math.min(1,s.v);","a.volume=Math.min(1,s.v);try{a.preservesPitch=false;a.playbackRate=s.r||1}catch(e){}")
 # ---- Katana kinetic type (kx.js): full-frame type set pieces, a tracked-in hero word, mask-roll exits, a real jet ----
 rep('<div class="bug" id="bug">','<div id="kx"></div><div class="bug" id="bug">')
 rep('<div id="text">','<div id="kxbg"></div><div id="text">')

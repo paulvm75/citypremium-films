@@ -7,7 +7,7 @@ f.append(f"[1:a]volume=0.44,volume='if(lt(t,{e}),0.9,if(lt(t,{a}),1,if(lt(t,{a+.
 L=['[vo]','[mu]'];k=2
 for s in m['sfx']:
   if s['t']<0:continue
-  inp+=['-i',A+F[s['k']]+'.mp3'];ms=int(s['t']*1000);f.append(f"[{k}:a]adelay={ms}|{ms},volume={s['v']*0.9*(0.75 if s['k'] in ('pop','popl') else 1):.3f}[s{k}]");L.append(f'[s{k}]');k+=1
+  inp+=['-i',A+F[s['k']]+'.mp3'];ms=int(s['t']*1000);r=s.get('r',1) or 1;f.append(f"[{k}:a]"+(f"asetrate={int(44100*r)},aresample=44100," if abs(r-1)>.01 else "")+f"adelay={ms}|{ms},volume={s['v']*0.9*(0.75 if s['k'] in ('pop','popl') else 1):.3f}[s{k}]");L.append(f'[s{k}]');k+=1
 f.append(''.join(L)+f"amix=inputs={len(L)}:normalize=0,apad,atrim=0:{end},alimiter=limit=0.95[out]")
 subprocess.run(['ffmpeg','-y','-v','error',*inp,'-filter_complex',';'.join(f),'-map','[out]','-c:a','aac','-b:a','192k',f'ta9audio_{mode}.m4a'],check=True)
 name='CityPremium_agencies_v9_16x9.mp4' if mode=='render' else 'CityPremium_agencies_v9_9x16.mp4'

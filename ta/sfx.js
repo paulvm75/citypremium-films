@@ -25,9 +25,35 @@ add('popl',SA('a9x')+.45,.16);add('tick',C('locals')-.15,.14);for(let i=0;i<10;i
 
 // v11 kinetic type: the clock rolls to two, the name board flips, the odometer runs to 2010 (soft mechanical ticks only)
 [0,1,2].forEach(i=>add('tick',C('two')+.02+i*.05,.12));
-{const E=C('everything#2')-.1,Wt=C('white')-.04,S=C('name')-.4;for(let i=0;i<12;i++){add('tick',Wt+i*.03+.02,.045);add('tick',S+i*.032+.08,.05)}}
 for(let i=0;i<8;i++)add("tick",C("since")+.02+i*.06*(1+i*.1),.05);
 // v13 day dial: soft ticks as the clock turns at the restaurant and at two
 [0,1,2,3].forEach(i=>add('tick',C('restaurant')-.02+i*.05,.09));add('tick',C('two')+.17,.1);
 // v14 ending: a soft click on each city word
 ['paris#3','london#2','europe#2'].forEach(w=>add('popl',C(w)-.05,.3));
+// ---- v16: sound for the kinetic set pieces. One swish sample, pitched per animation type (r = playback rate):
+// slow and low for big frame moves, mid for sweeps, fast and light for text.
+{const CAf=(w,after)=>{for(const x of WORDS)if(x.n===w&&x.a>=after-.01)return x.a;return 0};
+ // opening: a breath of air on the slit, a click per cut-out word, a low swish as the frame splits open
+ add('swish',.05,.16,.55);[['your#1',.82],['lands',.92],['in#1',1.02]].forEach(([w,r])=>add('popl',C(w)-.06,.3,r));add('swish',C('tomorrow')-.14,.32,.62);
+ // text: scene-opening lines get a soft swish, big words a quicker one, every other line a faint flick
+ let last='';VIS.forEach((c,i)=>{if(c.t<2.2||c.sc==='a12')return;const first=c.sc!==last;last=c.sc;
+   if(first)add('swish',c.t-.1,.1,1.1+.15*hash(i));else if(i%2===0)add('swish',c.t-.08,.045,1.65+.3*hash(i+3));
+   c.words.forEach((w,j)=>{if(w.big&&!(c.sc==='a5'&&w.el.textContent.startsWith('operator')))add('swish',w.t-.08,.13,1.35+.1*hash(i+j))})});
+ // day dial: it arrives, then the clock hand sweeps twice
+ add('swish',C('aircraft')-.36,.14,.85);add('swish',C('restaurant')-.16,.17,1.0);add('swish',C('two')-.1,.17,.9);
+ // that's / where, and the dive through the o
+ add('popl',C('thats')-.05,.24,1.1);add('popl',C('where')-.05,.24,.95);add('swish',CAf('in',C('comes'))+.04,.3,.6);
+ // operator: the o opens into the orbit
+ add('swish',C('orbit')-.62,.18,.75);
+ // towers draw on with light pencil ticks
+ for(let i=0;i<6;i++)add('tick',C('city#2')-.55+i*.12,.05,1.3+.08*i);
+ // map pull-out
+ add('swish',C('airports')-.6,.16,.58);
+ // fast track: a tick as each segment lands, rising in pitch
+ [C('fast')+.5,C('passport')+.4,C('customs')+.35,C('want')-.05].forEach((t,k)=>add('tick',t-.05,.2,1+.12*k));
+ // question mark draws; made-to-measure frame resizes twice
+ add('swish',C('something')-.25,.12,.5);{const t0=CAf('every',80)-.12;add('swish',t0,.12,1.2);add('popl',t0+.62,.14,1.3);add('popl',t0+1.2,.14,1.45)}
+ // white label blinds: three turns, each a run of soft ticks under a low swish
+ [[C('white')-.52,.8],[CAf('your',90.5)-.15,.7],[SA('a11')-.15,.9]].forEach(([t,r])=>{add('swish',t,.16,r);for(let i=0;i<10;i++)add('tick',t+.04+i*.028,.05,.8+.03*i)});
+ // ending: the frame splits open
+ add('swish',CAf('europe',95)+.5,.32,.62);}
